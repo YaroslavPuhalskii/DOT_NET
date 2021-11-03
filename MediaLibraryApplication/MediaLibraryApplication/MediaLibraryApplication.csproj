@@ -44,8 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\File.cs" />
+    <Compile Include="Core\IFile.cs" />
+    <Compile Include="Core\IMediaFileFunction.cs" />
+    <Compile Include="Core\MediaLibrary\IMediaLibrary.cs" />
     <Compile Include="Core\Players\MediaPlayer.cs" />
     <Compile Include="Core\PlayList\IPlayList.cs" />
+    <Compile Include="Core\PlayList\IPlayListFunction.cs" />
     <Compile Include="Models\DataModel\Music.cs" />
     <Compile Include="Models\DataModel\Photo.cs" />
     <Compile Include="Models\DataModel\Video.cs" />

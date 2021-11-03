@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MediaLibraryApplication.Core.PlayList
 {
-    public interface IPlayList
-    {
-        int Id { get; }
-        string Name { get; set; }
-    }
+    public interface IPlayList : IPlayListFunction, IFile
+    { }
 }

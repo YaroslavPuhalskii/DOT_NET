@@ -3,7 +3,7 @@ using System;
 
 namespace MediaLibraryApplication.Core
 {
-    public abstract class File
+    public abstract class File : IFile
     {
         private int _id;
         private string _name;
@@ -35,8 +35,5 @@ namespace MediaLibraryApplication.Core
             Id = id;
             Name = name;
         }
-
-        public abstract void Play(File file);
-        public abstract void Play(IPlayList playList);
     }
 }

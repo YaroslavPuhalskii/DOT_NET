@@ -1,4 +1,5 @@
 ﻿using MediaLibraryApplication.Core;
+using MediaLibraryApplication.Core.PlayList;
 using MediaLibraryApplication.Models.Specifications;
 
 namespace MediaLibraryApplication.Models.DataModel

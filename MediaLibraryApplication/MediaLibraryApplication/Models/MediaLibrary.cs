@@ -1,13 +1,12 @@
 ﻿using MediaLibraryApplication.Core;
-using MediaLibraryApplication.Core.Players;
+using MediaLibraryApplication.Core.MediaLibrary;
 using MediaLibraryApplication.Core.PlayList;
-using MediaLibraryApplication.Players;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MediaLibraryApplication.Models
 {
-    class MediaLibrary
+    public class MediaLibrary : IMediaLibrary
     {
         private ICollection<File> MediaFiles { get; set; }
         private ICollection<IPlayList> PlayLists { get; set; }
@@ -29,7 +28,7 @@ namespace MediaLibraryApplication.Models
             MediaFiles.Remove(file);
         }
 
-        public IEnumerable<File> FindMediaFiles(string name)
+        public IEnumerable<File> FindMediaFile(string name)
         {
             return MediaFiles.Where(x => x.Name == name);
         }
@@ -59,16 +58,6 @@ namespace MediaLibraryApplication.Models
         {
             return PlayLists.Where(x => x.Name == name);
         }
-        #endregion 
-
-        //public void Play(File file)
-        //{
-        //  
-        //}
-
-        //public void Play(IPlayList playList)
-        //{
-        //    
-        //}
+        #endregion
     }
 }
