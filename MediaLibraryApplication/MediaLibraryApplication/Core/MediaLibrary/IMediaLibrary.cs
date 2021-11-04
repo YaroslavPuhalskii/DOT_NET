@@ -9,5 +9,7 @@ namespace MediaLibraryApplication.Core.MediaLibrary
 {
     public interface IMediaLibrary : IPlayListFunction, IMediaFileFunction
     {
+        //void Play(File file);
+        //void Play();
     }
 }

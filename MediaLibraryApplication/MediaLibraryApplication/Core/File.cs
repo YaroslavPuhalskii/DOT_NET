@@ -7,6 +7,7 @@ namespace MediaLibraryApplication.Core
     {
         private int _id;
         private string _name;
+        private string _format;
         public int Id
         {
             get => _id;
@@ -29,11 +30,23 @@ namespace MediaLibraryApplication.Core
                 _name = value;
             }
         }
+        public string Format
+        {
+            get => _format;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException();
 
-        public File(int id, string name)
+                _format = value;
+            }
+        }
+
+        public File(int id, string name, string format)
         {
             Id = id;
             Name = name;
+            Format = format;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace MediaLibraryApplication.Models.DataModel
     {
         public VideoParameters Parameters { get; set; }
 
-        public Video(int id, string name, VideoParameters parameters) : base(id, name)
+        public Video(int id, string name, string format, VideoParameters parameters) 
+            : base(id, name, format)
         {
             Parameters = parameters;
         }

@@ -1,5 +1,7 @@
 ﻿using MediaLibraryApplication.Core;
+using MediaLibraryApplication.Factory;
 using MediaLibraryApplication.Core.MediaLibrary;
+using MediaLibraryApplication.Core.Players;
 using MediaLibraryApplication.Core.PlayList;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,18 @@ namespace MediaLibraryApplication.Models
         private ICollection<File> MediaFiles { get; set; }
         private ICollection<IPlayList> PlayLists { get; set; }
 
-        public MediaLibrary()
+        private MediaPlayer musicPlayer;
+        private MediaPlayer videoPlayer;
+        private MediaPlayer photoPlayer;
+
+        public MediaLibrary(MediaPlayer musicPlayer, MediaPlayer videoPlayer, MediaPlayer photoPlayer)
         {
             MediaFiles = new List<File>();
             PlayLists = new List<IPlayList>();
+
+            this.musicPlayer = musicPlayer;
+            this.videoPlayer = videoPlayer;
+            this.photoPlayer = photoPlayer;
         }
 
         #region work with mideafiles
@@ -59,5 +69,43 @@ namespace MediaLibraryApplication.Models
             return PlayLists.Where(x => x.Name == name);
         }
         #endregion
+        
+
+        public void Play(File file)
+        {
+            if (file.IsVideo())
+            {
+                PlayVideo(file);
+            }
+            else if (file.IsMusic())
+            {
+                PlayMusic(file);
+            }
+            else if (file.IsPhoto())
+            {
+                PlayPhoto(file);
+            }
+
+        }
+
+        public void Play(IPlayList playList)
+        {
+            playList.GetMediaFiles().ToList().ForEach(x => Play(x));
+        }
+
+        public void PlayMusic(File file)
+        {
+            musicPlayer.Play(file);
+        }
+
+        public void PlayVideo(File file)
+        {
+            videoPlayer.Play(file);
+        }
+
+        public void PlayPhoto(File file)
+        {
+            photoPlayer.Play(file);
+        }
     }
 }
