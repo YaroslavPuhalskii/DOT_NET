@@ -5,6 +5,9 @@ namespace MediaLibraryApplication.Models.Specifications
     public class PhotoParameters
     {
         private string _photographer;
+        /// <summary>
+        /// The author of the photo
+        /// </summary>
         public string Photographer
         {
             get => _photographer;
