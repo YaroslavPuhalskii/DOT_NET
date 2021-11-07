@@ -1,14 +1,12 @@
-﻿using MediaLibraryApplication.Core;
+﻿using MediaLibraryApplication.Core.Media;
 using MediaLibraryApplication.Models.Specifications;
 
 namespace MediaLibraryApplication.Models.DataModel
 {
-    public class Photo : File
+    public class Photo : MediaFile
     {
-        /// <summary>
-        /// Photo parameters
-        /// </summary>
         public PhotoParameters Parameters { get; set; }
+
         public Photo(int id, string name, string format, PhotoParameters parameters)
             : base(id, name, format)
         {

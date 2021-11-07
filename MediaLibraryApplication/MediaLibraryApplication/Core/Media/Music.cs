@@ -1,14 +1,12 @@
-﻿using MediaLibraryApplication.Core;
+﻿using MediaLibraryApplication.Core.Media;
 using MediaLibraryApplication.Models.Specifications;
 
 namespace MediaLibraryApplication.Models.DataModel
 {
-    public class Music : File
+    public class Music : MediaFile
     {
-        /// <summary>
-        /// Music parameters
-        /// </summary>
         public MusicParameters Parameters { get; set; }
+
         public Music(int id, string name, string format, MusicParameters parameters)
             : base(id, name, format)
         {

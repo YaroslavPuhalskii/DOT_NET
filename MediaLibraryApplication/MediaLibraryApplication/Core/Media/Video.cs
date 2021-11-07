@@ -1,13 +1,10 @@
-﻿using MediaLibraryApplication.Core;
+﻿using MediaLibraryApplication.Core.Media;
 using MediaLibraryApplication.Models.Specifications;
 
 namespace MediaLibraryApplication.Models.DataModel
 {
-    public class Video : File
+    public class Video : MediaFile
     {
-        /// <summary>
-        /// Video parameters
-        /// </summary>
         public VideoParameters Parameters { get; set; }
 
         public Video(int id, string name, string format, VideoParameters parameters) 

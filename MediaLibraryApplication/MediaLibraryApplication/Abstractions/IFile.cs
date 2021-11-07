@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaLibraryApplication.Core
+namespace MediaLibraryApplication.Abstractions
 {
     public interface IFile
     {
         int Id { get; }
+
         string Name { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using MediaLibraryApplication.Core;
-using MediaLibraryApplication.Core.PlayList;
+﻿using MediaLibraryApplication.Abstractions;
+using MediaLibraryApplication.Core.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace MediaLibraryApplication.Models
     public class PlayList : IPlayList
     {
         private int _id;
-        private string _name;
+        private string _name;   
         public int Id
         {
             get => _id;
@@ -33,32 +33,22 @@ namespace MediaLibraryApplication.Models
             }
         }
 
-        private ICollection<File> MediaFiles { get; set; }
+        private ICollection<MediaFile> _mediaFiles;
+
+        public IEnumerable<MediaFile> MediaFiles => _mediaFiles;
 
         public PlayList(int id, string name)
         {
             Id = id;
             Name = name;
+            _mediaFiles = new List<MediaFile>();
         }
 
-        public IEnumerable<File> GetMediaFiles()
-        {
-            return MediaFiles;
-        }
+        public void Add(MediaFile file) => _mediaFiles.Add(file);
 
-        public void AddMediaFile(File file)
-        {
-            MediaFiles.Add(file);
-        }
+        public void Remove(MediaFile file) => _mediaFiles.Remove(file);
 
-        public void RemoveMediaFile(File file)
-        {
-            MediaFiles.Remove(file);
-        }
+        public IEnumerable<MediaFile> FindBy(Func<MediaFile, bool> func) => _mediaFiles.Where(func);
 
-        public IEnumerable<File> FindMediaFile(string name)
-        {
-            return MediaFiles.Where(x => x.Name == name);
-        }
     }
 }

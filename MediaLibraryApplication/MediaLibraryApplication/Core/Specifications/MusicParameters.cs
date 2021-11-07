@@ -9,9 +9,6 @@ namespace MediaLibraryApplication.Models.Specifications
         private DateTime _releaseDate;
         private string _author;
 
-        /// <summary>
-        /// Genre of the song
-        /// </summary>
         public string Genre
         {
             get => _genre;
@@ -23,9 +20,7 @@ namespace MediaLibraryApplication.Models.Specifications
                 _genre = value;
             }
         }
-        /// <summary>
-        /// Release date of the song
-        /// </summary>
+
         public DateTime ReleaseDate
         {
             get => _releaseDate;
@@ -37,9 +32,7 @@ namespace MediaLibraryApplication.Models.Specifications
                 _releaseDate = value;
             }
         }
-        /// <summary>
-        /// Author of the song
-        /// </summary>
+
         public string Author
         {
             get => _author;

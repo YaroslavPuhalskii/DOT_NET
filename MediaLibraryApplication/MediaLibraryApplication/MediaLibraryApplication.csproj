@@ -43,26 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\File.cs" />
-    <Compile Include="Core\IFile.cs" />
-    <Compile Include="Core\IMediaFileFunction.cs" />
-    <Compile Include="Core\MediaLibrary\IMediaLibrary.cs" />
-    <Compile Include="Core\Players\MediaPlayer.cs" />
-    <Compile Include="Core\PlayList\IPlayList.cs" />
-    <Compile Include="Core\PlayList\IPlayListFunction.cs" />
-    <Compile Include="Factory\PlayerFactory.cs" />
-    <Compile Include="Models\DataModel\Music.cs" />
-    <Compile Include="Models\DataModel\Photo.cs" />
-    <Compile Include="Models\DataModel\Video.cs" />
-    <Compile Include="Models\MediaLibrary.cs" />
-    <Compile Include="Models\PlayList.cs" />
-    <Compile Include="Models\Specifications\MusicParameters.cs" />
-    <Compile Include="Models\Specifications\PhotoParameters.cs" />
-    <Compile Include="Models\Specifications\VideoParameters.cs" />
-    <Compile Include="Models\Specifications\WindowParameters.cs" />
-    <Compile Include="Players\MusicPlayer.cs" />
-    <Compile Include="Players\PhotoPlayer.cs" />
-    <Compile Include="Players\VideoPlayer.cs" />
+    <Compile Include="Abstractions\IFile.cs" />
+    <Compile Include="Abstractions\IMediaLibrary.cs" />
+    <Compile Include="Abstractions\IMediaPlayer.cs" />
+    <Compile Include="Abstractions\IPlayList.cs" />
+    <Compile Include="Core\Media\MediaFile.cs" />
+    <Compile Include="Core\Media\Music.cs" />
+    <Compile Include="Core\Media\Photo.cs" />
+    <Compile Include="Core\Media\Video.cs" />
+    <Compile Include="Core\MediaLibrary.cs" />
+    <Compile Include="Core\Media\PlayList.cs" />
+    <Compile Include="Core\Specifications\MusicParameters.cs" />
+    <Compile Include="Core\Specifications\PhotoParameters.cs" />
+    <Compile Include="Core\Specifications\VideoParameters.cs" />
+    <Compile Include="Core\Specifications\WindowParameters.cs" />
+    <Compile Include="Core\Players\MusicPlayer.cs" />
+    <Compile Include="Core\Players\PhotoPlayer.cs" />
+    <Compile Include="Core\Players\VideoPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

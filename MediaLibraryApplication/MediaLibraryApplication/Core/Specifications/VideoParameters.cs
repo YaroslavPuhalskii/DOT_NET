@@ -5,9 +5,7 @@ namespace MediaLibraryApplication.Models.Specifications
     public class VideoParameters
     {
         private int _quality;
-        /// <summary>
-        /// Video quality
-        /// </summary>
+
         public int Quality
         {
             get => _quality;

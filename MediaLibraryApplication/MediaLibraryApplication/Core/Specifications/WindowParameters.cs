@@ -6,9 +6,7 @@ namespace MediaLibraryApplication.Models.Specifications
     {
         private int _width;
         private int _height;
-        /// <summary>
-        /// Window width
-        /// </summary>
+
         public int Width
         {
             get => _width;
@@ -20,9 +18,7 @@ namespace MediaLibraryApplication.Models.Specifications
                 _width = value;
             }
         }
-        /// <summary>
-        /// Window height
-        /// </summary>
+
         public int Height
         {
             get => _height;
@@ -34,7 +30,6 @@ namespace MediaLibraryApplication.Models.Specifications
                 _height = value;
             }
         }
-
         public WindowParameters(int width, int height)
         {
             Width = width;
