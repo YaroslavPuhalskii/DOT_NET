@@ -53,13 +53,11 @@
     <Compile Include="Core\Media\Video.cs" />
     <Compile Include="Core\MediaLibrary.cs" />
     <Compile Include="Core\Media\PlayList.cs" />
+    <Compile Include="Core\Players\MediaPlayer.cs" />
     <Compile Include="Core\Specifications\MusicParameters.cs" />
     <Compile Include="Core\Specifications\PhotoParameters.cs" />
     <Compile Include="Core\Specifications\VideoParameters.cs" />
     <Compile Include="Core\Specifications\WindowParameters.cs" />
-    <Compile Include="Core\Players\MusicPlayer.cs" />
-    <Compile Include="Core\Players\PhotoPlayer.cs" />
-    <Compile Include="Core\Players\VideoPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

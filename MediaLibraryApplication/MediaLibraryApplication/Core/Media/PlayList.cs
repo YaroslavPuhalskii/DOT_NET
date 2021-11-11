@@ -9,7 +9,7 @@ namespace MediaLibraryApplication.Models
     public class PlayList : IPlayList
     {
         private int _id;
-        private string _name;   
+        private string _name;
         public int Id
         {
             get => _id;
@@ -43,6 +43,8 @@ namespace MediaLibraryApplication.Models
             Name = name;
             _mediaFiles = new List<MediaFile>();
         }
+
+        public void Play(IMediaPlayer player) => player.Play(this);
 
         public void Add(MediaFile file) => _mediaFiles.Add(file);
 

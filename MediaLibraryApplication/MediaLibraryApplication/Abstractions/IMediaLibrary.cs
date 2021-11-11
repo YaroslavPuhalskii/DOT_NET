@@ -1,21 +1,29 @@
 ﻿using MediaLibraryApplication.Core.Media;
-using MediaLibraryApplication.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MediaLibraryApplication.Abstractions
 {
     public interface IMediaLibrary
     {
-        PlayList DefaultPlaylist { get; }
+        void Add(IPlayList playlist);
 
-        ICollection<IPlayList> PlayLists { get; }
+        void Remove(IPlayList playlist);
 
-        void Play(MediaFile file);
+        void Add(MediaFile file);
 
-        void PlayPlaylist();
+        void Remove(MediaFile file);
+
+        IEnumerable<MediaFile> MediaFiles { get; }
+
+        IEnumerable<IPlayList> PlayLists { get; }
+
+        IEnumerable<MediaFile> FindMediaFileBy(Func<MediaFile, bool> func);
+
+        IEnumerable<IPlayList> FindPlaylistBy(Func<IPlayList, bool> func);
+
+        void PlayMediaFiles();
+
+        void PlayPlaylists();
     }
 }

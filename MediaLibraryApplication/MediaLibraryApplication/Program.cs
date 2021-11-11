@@ -1,9 +1,9 @@
 ﻿using MediaLibraryApplication.Abstractions;
 using MediaLibraryApplication.Core.Media;
+using MediaLibraryApplication.Core.Players;
 using MediaLibraryApplication.Models;
 using MediaLibraryApplication.Models.DataModel;
 using MediaLibraryApplication.Models.Specifications;
-using MediaLibraryApplication.Players;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +16,7 @@ namespace MediaLibraryApplication
             #region Music
             MediaFile firstMusic = new Music
                 (
-                id: 1, 
+                id: 1,
                 name: "99 Problems",
                 format: ".mp3",
                 new MusicParameters("Rap", new DateTime(2021, 11, 1), "Big baby Tape")
@@ -47,16 +47,16 @@ namespace MediaLibraryApplication
             MediaFile firstVideo = new Video
                 (
                 id: 1,
-                name: "РЕДАКЦИЯ", 
+                name: "РЕДАКЦИЯ",
                 format: ".mp4",
-                new VideoParameters(new WindowParameters(width: 150, height: 150), quality: 1080) 
+                new VideoParameters(new WindowParameters(width: 150, height: 150), quality: 1080)
                 );
             MediaFile secondVideo = new Video
                 (
                 id: 2,
-                name: "NONSTOP", 
+                name: "NONSTOP",
                 format: ".mp4",
-                new VideoParameters(new WindowParameters(width: 150, height: 150), quality: 1080) 
+                new VideoParameters(new WindowParameters(width: 150, height: 150), quality: 1080)
                 );
             #endregion
             #region Playlist
@@ -65,25 +65,20 @@ namespace MediaLibraryApplication
             firstPlaylist.Add(secondMusic);
             #endregion
 
-            IMediaLibrary library = new MediaLibrary(new Dictionary<Type, IMediaPlayer>()
-            {
-                { typeof(Music), new MusicPlayer() },
-                { typeof(Photo), new PhotoPlayer() },
-                { typeof(Video), new VideoPlayer() }
-            }, new PlayList(id: 1, name: "for relax"));
+            IMediaLibrary library = new MediaLibrary(new List<MediaFile>(), new MediaPlayer());
 
-            library.DefaultPlaylist.Add(firstMusic);
-            library.DefaultPlaylist.Add(firstVideo);
-            library.DefaultPlaylist.Add(secondMusic);
-            library.DefaultPlaylist.Add(secondVideo);
-            library.DefaultPlaylist.Add(thirdMusic);
-            library.DefaultPlaylist.Add(fourthMusic);
+            library.Add(firstMusic);
+            library.Add(firstVideo);
+            library.Add(secondMusic);
+            library.Add(secondVideo);
+            library.Add(thirdMusic);
+            library.Add(fourthMusic);
 
-            library.PlayLists.Add(firstPlaylist);
+            library.Add(firstPlaylist);
 
-            library.Play(firstMusic);
+            library.PlayMediaFiles();
 
-            library.PlayPlaylist();
+            library.PlayPlaylists();
 
             Console.ReadLine();
         }

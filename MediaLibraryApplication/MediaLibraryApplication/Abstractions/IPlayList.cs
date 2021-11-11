@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MediaLibraryApplication.Abstractions
 {
-    public interface IPlayList
+    public interface IPlayList : IFile
     {
         IEnumerable<MediaFile> MediaFiles { get; }
 

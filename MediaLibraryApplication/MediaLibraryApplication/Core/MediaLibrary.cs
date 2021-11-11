@@ -2,52 +2,63 @@
 using MediaLibraryApplication.Core.Media;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaLibraryApplication.Models
 {
     public class MediaLibrary : IMediaLibrary
     {
-        public IDictionary<Type, IMediaPlayer> playersMap;
+        private ICollection<MediaFile> _mediaFiles { get; }
 
-        public  PlayList DefaultPlaylist { get; }
+        private ICollection<IPlayList> _playLists { get; set; }
 
-        public ICollection<IPlayList> PlayLists { get; set; }
+        private IMediaPlayer player;
 
+        public IEnumerable<MediaFile> MediaFiles => _mediaFiles;
 
-        public MediaLibrary(IDictionary<Type, IMediaPlayer> players, PlayList playList)
+        public IEnumerable<IPlayList> PlayLists => _playLists;
+
+        public MediaLibrary(ICollection<MediaFile> mediaFiles, IMediaPlayer player)
         {
-            playersMap = players;
-            DefaultPlaylist = playList;
-            PlayLists = new List<IPlayList>();
+            _mediaFiles = mediaFiles;
+            _playLists = new List<IPlayList>();
+            this.player = player;
+        }
+
+        public void PlayMediaFiles()
+        {
+            foreach (var file in _mediaFiles)
+            {
+                file.Play(player);
+            }
         }
 
         public void Play(MediaFile file)
         {
-            if (!playersMap.TryGetValue(file.GetType(), out var player))
-            {
-                throw new NotImplementedException();
-            }
-
-            player.Play(file);
+            file.Play(player);
         }
 
-        public void PlayPlaylist()
+        public void PlayPlaylists()
         {
             if (PlayLists == null)
                 throw new ArgumentNullException();
 
             foreach (var playlist in PlayLists)
             {
-                PlayFiles(playlist.MediaFiles);
+                playlist.Play(player);
             }
         }
 
-        private void PlayFiles(IEnumerable<MediaFile> files)
-        {
-            foreach (var file in files)
-            {
-                Play(file);
-            }
-        }
+        public void Add(IPlayList playlist) => _playLists.Add(playlist);
+
+        public void Remove(IPlayList playlist) => _playLists.Remove(playlist);
+
+        public IEnumerable<IPlayList> FindPlaylistBy(Func<IPlayList, bool> func) => _playLists.Where(func);
+
+        public void Add(MediaFile file) => _mediaFiles.Add(file);
+
+        public void Remove(MediaFile file) => _mediaFiles.Add(file);
+
+        public IEnumerable<MediaFile> FindMediaFileBy(Func<MediaFile, bool> func) => _mediaFiles.Where(func);
     }
 }

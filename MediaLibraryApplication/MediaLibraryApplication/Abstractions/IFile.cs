@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MediaLibraryApplication.Abstractions
+﻿namespace MediaLibraryApplication.Abstractions
 {
     public interface IFile
     {
         int Id { get; }
 
         string Name { get; set; }
+
+        void Play(IMediaPlayer player);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediaLibraryApplication.Core.Media;
+﻿using MediaLibraryApplication.Abstractions;
+using MediaLibraryApplication.Core.Media;
 using MediaLibraryApplication.Models.Specifications;
 
 namespace MediaLibraryApplication.Models.DataModel
@@ -12,5 +13,7 @@ namespace MediaLibraryApplication.Models.DataModel
         {
             Parameters = parameters;
         }
+
+        public override void Play(IMediaPlayer player) => player.Play(this);
     }
 }
