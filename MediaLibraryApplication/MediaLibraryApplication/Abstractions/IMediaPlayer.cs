@@ -1,4 +1,6 @@
-﻿namespace MediaLibraryApplication.Abstractions
+﻿using MediaLibraryApplication.Models.DataModel;
+
+namespace MediaLibraryApplication.Abstractions
 {
     public interface IMediaPlayer
     {

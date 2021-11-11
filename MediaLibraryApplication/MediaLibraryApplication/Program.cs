@@ -76,6 +76,8 @@ namespace MediaLibraryApplication
 
             library.Add(firstPlaylist);
 
+            library.Play(firstMusic);
+
             library.PlayMediaFiles();
 
             library.PlayPlaylists();

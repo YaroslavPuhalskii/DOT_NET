@@ -22,6 +22,8 @@ namespace MediaLibraryApplication.Abstractions
 
         IEnumerable<IPlayList> FindPlaylistBy(Func<IPlayList, bool> func);
 
+        void Play(MediaFile media);
+
         void PlayMediaFiles();
 
         void PlayPlaylists();
