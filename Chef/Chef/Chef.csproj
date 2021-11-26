@@ -43,11 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\ISalad.cs" />
+    <Compile Include="Core\Models\Ingredient.cs" />
+    <Compile Include="Core\Models\Product.cs" />
+    <Compile Include="Core\Models\Spices\Salts\HimalayanPinkSalt.cs" />
+    <Compile Include="Core\Models\Spices\Salts\IndianBlackSalt.cs" />
+    <Compile Include="Core\Models\Spices\Salts\Salt.cs" />
+    <Compile Include="Core\Models\Spices\Spice.cs" />
+    <Compile Include="Core\Models\Vegetables\Onions\Leeks.cs" />
+    <Compile Include="Core\Models\Vegetables\Onions\Onion.cs" />
+    <Compile Include="Core\Models\Vegetables\Onions\Sturon.cs" />
+    <Compile Include="Core\Models\Vegetables\Tomatos\BullHeart.cs" />
+    <Compile Include="Core\Models\Vegetables\Tomatos\Cherry.cs" />
+    <Compile Include="Core\Models\Vegetables\Tomatos\Tomato.cs" />
+    <Compile Include="Core\Models\Vegetables\Vegetable.cs" />
+    <Compile Include="Core\Salad.cs" />
+    <Compile Include="Core\Specifications\Manufacturer.cs" />
+    <Compile Include="Core\Specifications\OnionSort.cs" />
+    <Compile Include="Core\Specifications\TomatoShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
