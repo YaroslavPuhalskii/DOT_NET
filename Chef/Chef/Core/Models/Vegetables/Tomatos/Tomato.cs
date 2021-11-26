@@ -7,7 +7,8 @@ namespace Chef.Core.Models.Vegetables.Tomatos
     {
         public TomatoShape TomatoShape { get;  }
 
-        public Tomato(string name, DateTime ripeningDate, Manufacturer manufacturer) : base(name, ripeningDate, manufacturer)
+        public Tomato(string name, DateTime ripeningDate, TomatoShape tomatoShape, Manufacturer manufacturer)
+            : base(name, ripeningDate, manufacturer)
         { }
     }
 }

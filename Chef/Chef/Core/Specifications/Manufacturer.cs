@@ -17,7 +17,7 @@ namespace Chef.Core.Specifications
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Name can't be empty or null!");
                 }
 
                 _name = value;
@@ -31,7 +31,7 @@ namespace Chef.Core.Specifications
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Country can't be empty or null!");
                 }
 
                 _country = value;
@@ -45,7 +45,7 @@ namespace Chef.Core.Specifications
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Address can't be empty or null!");
                 }
 
                 _address = value;

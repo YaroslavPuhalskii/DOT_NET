@@ -1,4 +1,5 @@
 ﻿using Chef.Core.Specifications;
+using System;
 
 namespace Chef.Core.Models.Spices.Salts
 {
@@ -12,7 +13,7 @@ namespace Chef.Core.Models.Spices.Salts
 
         public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
 
-        public HimalayanPinkSalt(string name, Manufacturer manufacturer) : base(name, manufacturer)
+        public HimalayanPinkSalt(string name, DateTime manufacturingDate, Manufacturer manufacturer) : base(name, manufacturingDate, manufacturer)
         { }
     }
 }

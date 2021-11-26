@@ -13,7 +13,8 @@ namespace Chef.Core.Models.Vegetables.Tomatos
 
         public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
 
-        public BullHeart(string name, DateTime ripeningDate, Manufacturer manufacturer) : base(name, ripeningDate, manufacturer)
+        public BullHeart(string name, DateTime ripeningDate, TomatoShape tomatoShape, Manufacturer manufacturer)
+            : base(name, ripeningDate, tomatoShape, manufacturer)
         { }
     }
 }

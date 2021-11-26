@@ -13,7 +13,8 @@ namespace Chef.Core.Models.Vegetables.Onions
 
         public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
 
-        public Sturon(string name, DateTime ripeningDate, Manufacturer manufcturer) : base(name, ripeningDate, manufcturer)
+        public Sturon(string name, DateTime ripeningDate, OnionSort onionSort, Manufacturer manufcturer)
+            : base(name, ripeningDate, onionSort, manufcturer)
         { }
     }
 }

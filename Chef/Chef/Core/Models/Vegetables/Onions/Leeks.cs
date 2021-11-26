@@ -13,7 +13,8 @@ namespace Chef.Core.Models.Vegetables.Onions
 
         public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
 
-        public Leeks(string name, DateTime ripeningDate, Manufacturer manufacturer) : base(name, ripeningDate, manufacturer)
+        public Leeks(string name, DateTime ripeningDate, OnionSort onionSort, Manufacturer manufacturer)
+            : base(name, ripeningDate, onionSort, manufacturer)
         { }
 
     }

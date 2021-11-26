@@ -20,7 +20,7 @@ namespace Chef.Core
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Name can't be empty or null!");
                 }
 
                 _name = value;

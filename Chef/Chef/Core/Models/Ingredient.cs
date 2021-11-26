@@ -17,7 +17,7 @@ namespace Chef.Core.Models
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Amount can't be less than one unit!");
                 }
 
                 _amount = value;
@@ -31,7 +31,7 @@ namespace Chef.Core.Models
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Weight can't be less than one unit!");
                 }
 
                 _weight = value;
@@ -44,7 +44,7 @@ namespace Chef.Core.Models
         {
             if (product == null)
             {
-                throw new NullReferenceException("Porduct can't be null");
+                throw new NullReferenceException("Porduct can't be null!");
             }
 
             Product = product;
