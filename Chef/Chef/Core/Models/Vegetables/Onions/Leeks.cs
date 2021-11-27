@@ -11,7 +11,7 @@ namespace Chef.Core.Models.Vegetables.Onions
 
         const double carbohydrates = 6.3;
 
-        public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
+        public override double CaloriePerHundred => CalculateCalories(fats, proteins, carbohydrates);
 
         public Leeks(string name, DateTime ripeningDate, OnionSort onionSort, Manufacturer manufacturer)
             : base(name, ripeningDate, onionSort, manufacturer)

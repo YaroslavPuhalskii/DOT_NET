@@ -44,7 +44,7 @@ namespace Chef.Core.Models
         {
             if (product == null)
             {
-                throw new NullReferenceException("Porduct can't be null!");
+                throw new NullReferenceException("Product can't be null!");
             }
 
             Product = product;

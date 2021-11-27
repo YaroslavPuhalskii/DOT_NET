@@ -35,11 +35,11 @@ namespace Chef
             salad.Add(himalayanSalt);
             salad.Add(indianSalt);
 
-            Console.WriteLine($"Каллорийность салата: {salad.TotalCaloric}");
+            Console.WriteLine($"Каллорийность салата: {salad.TotalCaloric} kcal");
 
             salad.Remove(leeks);
 
-            Console.WriteLine($"Каллорийность салата (без лука-порея): {salad.TotalCaloric}");
+            Console.WriteLine($"Каллорийность салата (без лука-порея): {salad.TotalCaloric} kcal");
 
             Console.WriteLine("Сортировка овощей салата по дате созревания(по возрастанию):");
 
@@ -52,10 +52,10 @@ namespace Chef
 
             foreach (var item in salad.SortByDescending(x => x.CaloriePerHundred))
             {
-                Console.WriteLine($"{item.Name} - {item.CaloriePerHundred}kcal");
+                Console.WriteLine($"{item.Name} - {item.CaloriePerHundred} kcal");
             }
 
-            Console.WriteLine($"Каллорийность овощей в диапазоне от 10 до 100 :");
+            Console.WriteLine($"Каллорийность овощей в диапазоне [10;100] :");
 
             var vegetableByCaloric = salad.FindBy(x => x.CaloriePerHundred >= 10 && x.CaloriePerHundred <= 100);
 
@@ -67,7 +67,7 @@ namespace Chef
             {
                 foreach (var item in vegetableByCaloric)
                 {
-                    Console.WriteLine($"{item.Name} - {item.CaloriePerHundred}kcal");
+                    Console.WriteLine($"{item.Name} - {item.CaloriePerHundred} kcal");
                 }
             }
 

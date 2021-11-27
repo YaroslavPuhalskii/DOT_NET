@@ -5,7 +5,8 @@ namespace Chef.Core.Models.Spices.Salts
 {
     public abstract class Salt : Spice
     {
-        public Salt(string name, DateTime manufacturingDate, Manufacturer manufacturer) : base(name, manufacturingDate, manufacturer)
+        public Salt(string name, DateTime manufacturingDate, Manufacturer manufacturer) 
+            : base(name, manufacturingDate, manufacturer)
         { }
     }
 }

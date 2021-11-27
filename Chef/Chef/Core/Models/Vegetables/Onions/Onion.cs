@@ -9,6 +9,8 @@ namespace Chef.Core.Models.Vegetables.Onions
 
         public Onion(string name, DateTime ripeningDate, OnionSort onionSort, Manufacturer manufacturer)
             : base(name, ripeningDate, manufacturer)
-        { }
+        {
+            OnionSort = onionSort;
+        }
     }
 }

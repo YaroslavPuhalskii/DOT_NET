@@ -11,9 +11,10 @@ namespace Chef.Core.Models.Spices.Salts
 
         const double carbohydrates = 0.1;
 
-        public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
+        public override double CaloriePerHundred => CalculateCalories(fats, proteins, carbohydrates);
 
-        public IndianBlackSalt(string name, DateTime manufacturingDate, Manufacturer manufacturer) : base(name, manufacturingDate, manufacturer)
+        public IndianBlackSalt(string name, DateTime manufacturingDate, Manufacturer manufacturer)
+            : base(name, manufacturingDate, manufacturer)
         { }
     }
 }

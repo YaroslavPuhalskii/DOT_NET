@@ -11,7 +11,7 @@ namespace Chef.Core.Models.Vegetables.Tomatos
 
         const double carbohydrates = 2.8;
 
-        public override double CaloriePerHundred => 9 * fats + 4 * proteins + 4 * carbohydrates;
+        public override double CaloriePerHundred => CalculateCalories(fats, proteins, carbohydrates);
 
         public Cherry(string name, DateTime ripeningDate, TomatoShape tomatoShape, Manufacturer manufacturer)
             : base(name, ripeningDate, tomatoShape, manufacturer)

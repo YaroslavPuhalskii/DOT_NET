@@ -30,5 +30,10 @@ namespace Chef.Core.Models
         }
 
         public abstract double CaloriePerHundred { get; }
+
+        protected double CalculateCalories(double fats, double proteins, double carbohydrates)
+        {
+            return 9 * fats + 4 * proteins + 4 * carbohydrates;
+        }
     }
 }
