@@ -52,5 +52,19 @@
   <ItemGroup>
     <Content Include="FileFolder\InputFile.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TextParser.Abstractions\TextParser.Abstractions.csproj">
+      <Project>{45f5bff4-df00-49c6-9235-8524ced4d723}</Project>
+      <Name>TextParser.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextParser.Core\TextParser.Core.csproj">
+      <Project>{0908fb70-386a-472e-b4be-d50f2d13228f}</Project>
+      <Name>TextParser.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextParser.Model\TextParser.Model.csproj">
+      <Project>{ebd91bab-4c05-42f1-a435-7888f2092816}</Project>
+      <Name>TextParser.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
