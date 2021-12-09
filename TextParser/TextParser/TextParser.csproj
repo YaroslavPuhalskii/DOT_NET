@@ -50,12 +50,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FileFolder\ConcordanceFile.txt" />
     <Content Include="FileFolder\InputFile.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TextParser.Abstractions\TextParser.Abstractions.csproj">
       <Project>{45f5bff4-df00-49c6-9235-8524ced4d723}</Project>
       <Name>TextParser.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextParser.Concordance\TextParser.Concordance.csproj">
+      <Project>{83083568-f160-4535-bdf7-ad7c549ee684}</Project>
+      <Name>TextParser.Concordance</Name>
     </ProjectReference>
     <ProjectReference Include="..\TextParser.Core\TextParser.Core.csproj">
       <Project>{0908fb70-386a-472e-b4be-d50f2d13228f}</Project>

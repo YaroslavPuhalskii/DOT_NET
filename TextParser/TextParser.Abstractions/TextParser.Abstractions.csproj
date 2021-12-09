@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concordance\Helper\IPaginator.cs" />
     <Compile Include="Concordance\IBook.cs" />
     <Compile Include="Concordance\ILine.cs" />
     <Compile Include="Concordance\IPage.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="IText.cs" />
     <Compile Include="IToken.cs" />
     <Compile Include="IWord.cs" />
+    <Compile Include="Parse\IPageParser.cs" />
     <Compile Include="Parse\ITextBuilder.cs" />
     <Compile Include="Parse\ITextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

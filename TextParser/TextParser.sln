@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextParser.Core", "TextPars
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextParser.Model", "TextParser.Model\TextParser.Model.csproj", "{EBD91BAB-4C05-42F1-A435-7888F2092816}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextParser.Concordance", "TextParser.Concordance\TextParser.Concordance.csproj", "{83083568-F160-4535-BDF7-AD7C549EE684}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EBD91BAB-4C05-42F1-A435-7888F2092816}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBD91BAB-4C05-42F1-A435-7888F2092816}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBD91BAB-4C05-42F1-A435-7888F2092816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83083568-F160-4535-BDF7-AD7C549EE684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83083568-F160-4535-BDF7-AD7C549EE684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83083568-F160-4535-BDF7-AD7C549EE684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83083568-F160-4535-BDF7-AD7C549EE684}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

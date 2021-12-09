@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory\FactoryLetter.cs" />
+    <Compile Include="Parse\Concordance\PageParser.cs" />
     <Compile Include="Parse\TextBuilder.cs" />
     <Compile Include="Parse\TextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\TextParser.Abstractions\TextParser.Abstractions.csproj">
       <Project>{45f5bff4-df00-49c6-9235-8524ced4d723}</Project>
       <Name>TextParser.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextParser.Concordance\TextParser.Concordance.csproj">
+      <Project>{83083568-f160-4535-bdf7-ad7c549ee684}</Project>
+      <Name>TextParser.Concordance</Name>
     </ProjectReference>
     <ProjectReference Include="..\TextParser.Model\TextParser.Model.csproj">
       <Project>{ebd91bab-4c05-42f1-a435-7888f2092816}</Project>
