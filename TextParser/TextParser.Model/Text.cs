@@ -10,6 +10,8 @@ namespace TextParser.Model
     {
         private IList<ISentence> sentences;
 
+        private StringBuilder builder = new StringBuilder();
+
         public IEnumerable<ISentence> Sentences => sentences;
 
         public ISentence this[int index]
@@ -37,7 +39,7 @@ namespace TextParser.Model
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            builder.Clear();
             sentences.ToList().ForEach(x => builder.Append(x.ToString()));
 
             return builder.ToString();

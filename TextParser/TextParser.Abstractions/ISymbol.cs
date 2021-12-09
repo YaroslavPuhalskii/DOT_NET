@@ -2,6 +2,6 @@
 {
     public interface ISymbol
     {
-        string Value { get; set; }
+        char Value { get; set; }
     }
 }

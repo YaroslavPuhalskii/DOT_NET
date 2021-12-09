@@ -5,25 +5,18 @@ namespace TextParser.Model
 {
     public class Symbol : ISymbol
     {
-        private string value;
+        private char value;
 
-        public string Value
+        public char Value
         {
             get => value;
             set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException();
-                }
-
                 this.value = value;
             }
         }
 
-        public int Length { get; set; }
-
-        public Symbol(string value)
+        public Symbol(char value)
         {
             Value = value;
         }

@@ -9,11 +9,9 @@ namespace TextParser.Model
     {
         private ICollection<IToken> tokens;
 
+        private StringBuilder builder = new StringBuilder();
+
         public IEnumerable<IToken> Tokens => tokens;
-
-        public int Length => CalculateSentenceLength;
-
-        private int CalculateSentenceLength => tokens.Sum(x => x.Length);
 
         public Sentence()
         {
@@ -36,7 +34,7 @@ namespace TextParser.Model
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            builder.Clear();
             tokens.ToList().ForEach(x => builder.Append(x.Value));
 
             return builder.ToString();

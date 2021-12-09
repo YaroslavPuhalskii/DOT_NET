@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using TextParser.Abstractions;
 
 namespace TextParser.Model
@@ -8,9 +10,26 @@ namespace TextParser.Model
     {
         private ICollection<ISymbol> symbols;
 
+        private StringBuilder builder = new StringBuilder();
+
+        private string value;
+
         public IEnumerable<ISymbol> Symbols => symbols;
 
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                builder.Clear();
+                symbols.ToList().ForEach(x => builder.Append(x.Value));
+
+                return builder.ToString();
+            }
+            set
+            {
+                this.value = value;
+            }
+        }
 
         public int Length => Value.Length;
 
@@ -22,7 +41,6 @@ namespace TextParser.Model
         public void Add(ISymbol symbol)
         {
             symbols.Add(symbol);
-            Value += symbol.Value;
         }
 
         public override bool Equals(object obj)
@@ -41,6 +59,11 @@ namespace TextParser.Model
         public override int GetHashCode()
         {
             return HashCode.Combine(this.Value.ToLower());
+        }
+
+        public override string ToString()
+        {
+            return value;
         }
     }
 }

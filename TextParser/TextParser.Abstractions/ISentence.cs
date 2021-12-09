@@ -6,8 +6,6 @@ namespace TextParser.Abstractions
     {
         IEnumerable<IToken> Tokens { get; }
 
-        int Length { get; }
-
         void Add(IToken token);
 
         void Remove(IToken token);
