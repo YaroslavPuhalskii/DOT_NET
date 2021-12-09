@@ -24,13 +24,13 @@ namespace TextParser.Core.Services
             }
         }
 
-        public static void ReplaceWordByLength(this IText text, int index, int length, string substring)
+        public static void ReplaceWordByLength(this IText text, int index, int length, IList<ISymbol> substring)
         {
             var sentence = text[index];
 
             var wordReplace = sentence.GetWords.Where(x => x.Length == length).ToList();
 
-            wordReplace.ForEach(x => x.Value = substring);
+            wordReplace.ForEach(x => x.Replace(substring));
         }
     }
 }

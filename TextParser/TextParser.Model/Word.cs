@@ -43,6 +43,16 @@ namespace TextParser.Model
             symbols.Add(symbol);
         }
 
+        public void Replace(ICollection<ISymbol> symbols)
+        {
+            if (symbols == null)
+            {
+                throw new ArgumentException(nameof(symbols));
+            }
+
+            this.symbols = symbols;
+        }
+
         public override bool Equals(object obj)
         {
             return this.Equals(obj as IWord);

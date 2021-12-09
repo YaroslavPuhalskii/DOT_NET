@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concordance\IBook.cs" />
+    <Compile Include="Concordance\ILine.cs" />
+    <Compile Include="Concordance\IPage.cs" />
     <Compile Include="IPunctuation.cs" />
     <Compile Include="ISentence.cs" />
     <Compile Include="ISymbol.cs" />
