@@ -47,6 +47,8 @@
     <Compile Include="IText.cs" />
     <Compile Include="IToken.cs" />
     <Compile Include="IWord.cs" />
+    <Compile Include="Parse\ITextBuilder.cs" />
+    <Compile Include="Parse\ITextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

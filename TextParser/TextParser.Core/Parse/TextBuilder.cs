@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TextParser.Abstractions;
+using TextParser.Abstractions.Parse;
 using TextParser.Core.Factory;
 using TextParser.Model;
 
 namespace TextParser.Core.Parse
 {
-    public class TextBuilder
+    public class TextBuilder : ITextBuilder
     {
-        private FactoryLetter factoryLetter;
+         private FactoryLetter factoryLetter;
 
         private IText text;
         private ISentence sentence;
+
+        public IText GetText => text;
 
         public TextBuilder()
         {
@@ -23,15 +22,13 @@ namespace TextParser.Core.Parse
             sentence = new Sentence();
         }
 
-        public IText GetText => text;
-
-        public void Add()
+        private void AddSentence()
         {
             text.Add(sentence);
             sentence = new Sentence();
         }
 
-        public void Add(IWord word)
+        private void Add(IWord word)
         {
             if (word != null)
             {
@@ -42,7 +39,7 @@ namespace TextParser.Core.Parse
             }
         }
 
-        public void Add(IPunctuation punctuation)
+        private void Add(IPunctuation punctuation)
         {
             if (punctuation != null)
             {
@@ -53,9 +50,16 @@ namespace TextParser.Core.Parse
             }
         }
 
-        public bool IsKeySign(IPunctuation punctuation)
+        public bool IsFullKeySign(IPunctuation punctuation)
         {
-            return factoryLetter.IsEnd(punctuation) || factoryLetter.IsPunctuation(punctuation);
+            return factoryLetter.IsEnd(punctuation);
+        }
+
+        public bool IsKeySign(ISymbol symbol)
+        {
+            return factoryLetter.IsEnd(symbol)
+                || factoryLetter.IsPunctuation(symbol)
+                || char.IsWhiteSpace(symbol.Value);
         }
 
         public void Action(IWord word, IPunctuation punctuation)
@@ -69,9 +73,9 @@ namespace TextParser.Core.Parse
             {
                 Add(word);
                 Add(punctuation);
-                Add();
+                AddSentence();
             }
-            else if (char.IsWhiteSpace(Convert.ToChar(punctuation.Value)))
+            else if (factoryLetter.IsSpace(punctuation))
             {
                 Add(word);
                 Add(punctuation);

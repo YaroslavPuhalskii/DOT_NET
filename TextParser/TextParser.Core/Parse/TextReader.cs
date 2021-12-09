@@ -3,60 +3,60 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using TextParser.Abstractions;
+using TextParser.Abstractions.Parse;
 using TextParser.Model;
 
 namespace TextParser.Core.Parse
 {
-    public class TextReader
+    public class TextReader : ITextReader
     {
-        private TextBuilder textBuilder;
+        private ITextBuilder textBuilder;
 
         private string path = ConfigurationManager.AppSettings.Get("inputFile");
 
-        public TextReader()
+        public TextReader(ITextBuilder textBuilder)
         {
-            if (!File.Exists(path))
-            {
-                throw new ArgumentException();
-            }
-
-            textBuilder = new TextBuilder();
+            this.textBuilder = textBuilder;
         }
 
         public IText Read()
         {
-            using (var reader = new StreamReader(path, System.Text.Encoding.Default))
+            try
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                using (var reader = new StreamReader(path))
                 {
-                    IWord word = new Word();
-
-                    line = DeleteSpaces(line);
-
-                    for (int i = 0; i < line.Length; i++)
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        ISymbol symbol = new Symbol(line[i].ToString());
+                        IWord word = new Word();
 
-                        if (!char.IsLetter(Convert.ToChar(symbol.Value)))
+                        line = DeleteSpaces(line);
+
+                        for (int i = 0; i < line.Length; i++)
                         {
-                            IPunctuation punctuation = new Punctuation();
-                            punctuation.Add(symbol);
+                            ISymbol symbol = new Symbol(line[i]);
 
-                            if (textBuilder.IsKeySign(punctuation))
+                            if (textBuilder.IsKeySign(symbol))
                             {
+                                IPunctuation punctuation = new Punctuation();
+                                punctuation.Add(symbol);
+
                                 punctuation.Value = FindWholeSign(punctuation, line, ref i);
+
+                                textBuilder.Action(word, punctuation);
+
+                                word = new Word();
+                                continue;
                             }
 
-                            textBuilder.Action(word, punctuation);
-
-                            word = new Word();
-                            continue;
+                            word.Add(symbol);
                         }
-
-                        word.Add(symbol);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("The file doesn't exist!", nameof(ex));
             }
 
             return textBuilder.GetText;
@@ -77,15 +77,15 @@ namespace TextParser.Core.Parse
             return string.Join(" ", list);
         }
 
-        public string FindWholeSign(IPunctuation punctuation, string line, ref int i)
+        private string FindWholeSign(IPunctuation punctuation, string line, ref int i)
         {
             string result = punctuation.Value;
             i++;
             for (; i < line.Length; i++)
             {
-                ISymbol symbol = new Symbol(line[i].ToString());
+                ISymbol symbol = new Symbol(line[i]);
                 punctuation.Add(symbol);
-                if (textBuilder.IsKeySign(punctuation))
+                if (textBuilder.IsFullKeySign(punctuation))
                 {
                     result += line[i];
                     continue;
