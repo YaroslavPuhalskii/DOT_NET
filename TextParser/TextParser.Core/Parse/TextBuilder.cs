@@ -1,5 +1,4 @@
-﻿using System;
-using TextParser.Abstractions;
+﻿using TextParser.Abstractions;
 using TextParser.Abstractions.Parse;
 using TextParser.Core.Factory;
 using TextParser.Model;
@@ -8,9 +7,10 @@ namespace TextParser.Core.Parse
 {
     public class TextBuilder : ITextBuilder
     {
-         private FactoryLetter factoryLetter;
+        private readonly FactoryLetter factoryLetter;
 
-        private IText text;
+        private readonly IText text;
+
         private ISentence sentence;
 
         public IText GetText => text;
@@ -20,34 +20,6 @@ namespace TextParser.Core.Parse
             factoryLetter = new FactoryLetter();
             text = new Text();
             sentence = new Sentence();
-        }
-
-        private void AddSentence()
-        {
-            text.Add(sentence);
-            sentence = new Sentence();
-        }
-
-        private void Add(IWord word)
-        {
-            if (word != null)
-            {
-                if (!string.IsNullOrEmpty(word.Value))
-                {
-                    sentence.Add(word);
-                }
-            }
-        }
-
-        private void Add(IPunctuation punctuation)
-        {
-            if (punctuation != null)
-            {
-                if (!string.IsNullOrEmpty(punctuation.Value))
-                {
-                    sentence.Add(punctuation);
-                }
-            }
         }
 
         public bool IsFullKeySign(IPunctuation punctuation)
@@ -79,6 +51,38 @@ namespace TextParser.Core.Parse
             {
                 Add(word);
                 Add(punctuation);
+            }
+        }
+
+        private void AddSentence()
+        {
+            text.Add(sentence);
+            sentence = new Sentence();
+        }
+
+        private void Add(IWord word)
+        {
+            if (word == null)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(word.Value))
+            {
+                sentence.Add(word);
+            }
+        }
+
+        private void Add(IPunctuation punctuation)
+        {
+            if (punctuation == null || sentence.CountWord == 0)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(punctuation.Value))
+            {
+                sentence.Add(punctuation);
             }
         }
     }

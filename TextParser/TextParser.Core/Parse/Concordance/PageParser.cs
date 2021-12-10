@@ -7,10 +7,12 @@ namespace TextParser.Core.Parse.Concordance
 {
     public class PageParser : IPageParser
     {
-        private IPaginator paginator;
+        private readonly IPaginator paginator;
 
         private IBook book;
+
         private IPage page;
+
         private ILine line;
 
         public PageParser(IPaginator paginator)

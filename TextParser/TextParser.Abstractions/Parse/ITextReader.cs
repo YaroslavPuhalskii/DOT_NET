@@ -2,6 +2,6 @@
 {
     public interface ITextReader
     {
-        IText Read();
+        void Read(string path);
     }
 }

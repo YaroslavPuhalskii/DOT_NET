@@ -6,62 +6,32 @@ namespace TextParser.Core.Factory
 {
     public class FactoryLetter
     {
-        private string[] _endLetters { get; } = { "!", ".", "?", "..", "...", "?!", "!?" };
+        private static string[] EndLetters { get; } = { "!", ".", "?", "..", "...", "?!", "!?" };
 
-        private string[] _separativeSymbol { get; } = { "<", "(", "[", "{", "„", "«", "‘", ")", ">", "]", "}", "“", "»", "’", ",", ";", ":" };
+        private static string[] SeparativeSymbol { get; } = { "<", "(", "[", "{", "„", "«", "‘", ")", ">", "]", "}", "“", "»", "’", ",", ";", ":" };
 
-        private string[] _conconantLetter { get; } = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
+        private static string[] ConconantLetter { get; } = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
 
-        private string _space = " ";
+        private readonly string space = " ";
 
         public bool IsSpace(IPunctuation punctuation)
         {
-            if (punctuation == null || punctuation.Value == null)
+            if (punctuation?.Value == null)
             {
                 throw new ArgumentNullException();
             }
 
-            return _space.Contains(punctuation.Value);
+            return space.Contains(punctuation.Value);
         }
 
         public bool IsPunctuation(IPunctuation punctuation)
         {
-            if (punctuation == null || punctuation.Value == null)
+            if (punctuation?.Value == null)
             {
                 throw new ArgumentNullException();
             }
 
-            return _separativeSymbol.Contains(punctuation.Value);
-        }
-
-        public bool IsEnd(IPunctuation punctuation)
-        {
-            if (punctuation == null || punctuation.Value == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            return _endLetters.Contains(punctuation.Value);
-        }
-
-        public bool IsConsonant(IWord item)
-        {
-            if (item == null || item.Value == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            return _conconantLetter.Contains(item.Value[0].ToString().ToLower());
-        }
-
-        public bool IsEnd(ISymbol symbol)
-        {
-            if (symbol == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            return _endLetters.Contains(symbol.Value.ToString());
+            return SeparativeSymbol.Contains(punctuation.Value);
         }
 
         public bool IsPunctuation(ISymbol symbol)
@@ -71,7 +41,37 @@ namespace TextParser.Core.Factory
                 throw new ArgumentNullException();
             }
 
-            return _separativeSymbol.Contains(symbol.Value.ToString());
+            return SeparativeSymbol.Contains(symbol.Value.ToString());
+        }
+
+        public bool IsEnd(IPunctuation punctuation)
+        {
+            if (punctuation?.Value == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return EndLetters.Contains(punctuation.Value);
+        }
+
+        public bool IsEnd(ISymbol symbol)
+        {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return EndLetters.Contains(symbol.Value.ToString());
+        }
+
+        public bool IsConsonant(IWord word)
+        {
+            if (word?.Value == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return ConconantLetter.Contains(word.Value[0].ToString().ToLower());
         }
     }
 }
