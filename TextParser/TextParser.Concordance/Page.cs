@@ -11,9 +11,9 @@ namespace TextParser.Concordance
         private int size;
         private int number;
 
-        private ICollection<ILine> lines;
+        private readonly ICollection<ILine> lines;
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public IEnumerable<ILine> Lines => lines;
 
@@ -69,6 +69,7 @@ namespace TextParser.Concordance
 
         public override string ToString()
         {
+            builder = builder ?? new StringBuilder();
             builder.Clear();
             builder.AppendLine(Number.ToString());
             lines.ToList().ForEach(x => builder.AppendLine(x.ToString()));

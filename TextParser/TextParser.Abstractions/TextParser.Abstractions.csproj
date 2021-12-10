@@ -53,6 +53,7 @@
     <Compile Include="IWord.cs" />
     <Compile Include="Parse\IPageParser.cs" />
     <Compile Include="Parse\ITextBuilder.cs" />
+    <Compile Include="Parse\ITextParser.cs" />
     <Compile Include="Parse\ITextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

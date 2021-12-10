@@ -10,24 +10,17 @@ namespace TextParser.Model
     {
         private ICollection<ISymbol> symbols;
 
-        private StringBuilder builder = new StringBuilder();
-
-        private string value;
-
-        public IEnumerable<ISymbol> Symbols => symbols;
+        private StringBuilder builder;
 
         public string Value
         {
             get
             {
+                builder = builder ?? new StringBuilder();
                 builder.Clear();
                 symbols.ToList().ForEach(x => builder.Append(x.Value));
 
                 return builder.ToString();
-            }
-            set
-            {
-                this.value = value;
             }
         }
 
@@ -45,35 +38,12 @@ namespace TextParser.Model
 
         public void Replace(ICollection<ISymbol> symbols)
         {
-            if (symbols == null)
-            {
-                throw new ArgumentException(nameof(symbols));
-            }
-
-            this.symbols = symbols;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as IWord);
-        }
-
-        private bool Equals(IWord that)
-        {
-            if (that == null)
-                return false;
-
-            return object.Equals(this.Value.ToLower(), that.Value.ToLower());
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this.Value.ToLower());
+            this.symbols = symbols ?? throw new ArgumentException(nameof(symbols));
         }
 
         public override string ToString()
         {
-            return value;
+            return Value;
         }
     }
 }

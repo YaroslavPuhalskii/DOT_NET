@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TextParser.Abstractions
 {
@@ -10,7 +9,5 @@ namespace TextParser.Abstractions
         ISentence this[int index] { get; }
 
         void Add(ISentence sentence);
-
-        string ToString();
     }
 }

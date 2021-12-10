@@ -8,11 +8,16 @@ namespace TextParser.Model
 {
     public class Text : IText
     {
-        private IList<ISentence> sentences;
+        private readonly IList<ISentence> sentences;
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public IEnumerable<ISentence> Sentences => sentences;
+
+        public Text()
+        {
+            sentences = new List<ISentence>();
+        }
 
         public ISentence this[int index]
         {
@@ -27,11 +32,6 @@ namespace TextParser.Model
             }
         }
 
-        public Text()
-        {
-            sentences = new List<ISentence>();
-        }
-
         public void Add(ISentence sentence)
         {
             sentences.Add(sentence);
@@ -39,8 +39,9 @@ namespace TextParser.Model
 
         public override string ToString()
         {
+            builder = builder ?? new StringBuilder();
             builder.Clear();
-            sentences.ToList().ForEach(x => builder.Append(x.ToString()));
+            sentences.ToList().ForEach(x => builder.Append(x));
 
             return builder.ToString();
         }

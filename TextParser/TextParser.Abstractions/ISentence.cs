@@ -13,7 +13,5 @@ namespace TextParser.Abstractions
         IEnumerable<IWord> GetWords { get; }
 
         int CountWord { get; }
-
-        string ToString();
     }
 }

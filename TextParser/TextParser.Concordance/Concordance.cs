@@ -11,9 +11,9 @@ namespace TextParser.Concordance
 {
     public class Concordance
     {
-        private string path = ConfigurationManager.AppSettings.Get("concordanceFile");
+        private readonly string path = ConfigurationManager.AppSettings.Get("concordanceFile");
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public struct PositionInfo
         {
@@ -33,6 +33,7 @@ namespace TextParser.Concordance
                         writer.WriteLine(group.Key);
                         foreach (var item in group)
                         {
+                            builder = builder ?? new StringBuilder();
                             builder.Append($"{item.Key}---------{item.Value.Counter} : ");
                             item.Value.Lines.ToList().ForEach(x => builder.Append($"{x} "));
                             writer.WriteLine(builder.ToString());

@@ -10,11 +10,12 @@ namespace TextParser.Concordance
     public class Line : ILine
     {
         private int maxLength;
+
         private int length;
 
-        private ICollection<IToken> tokens;
+        private readonly ICollection<IToken> tokens;
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public IEnumerable<IToken> Tokens => tokens;
 
@@ -69,6 +70,7 @@ namespace TextParser.Concordance
 
         public override string ToString()
         {
+            builder = builder ?? new StringBuilder();
             builder.Clear();
             tokens.ToList().ForEach(x => builder.Append(x.Value));
 

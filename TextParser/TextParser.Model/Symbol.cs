@@ -1,20 +1,10 @@
-﻿using System;
-using TextParser.Abstractions;
+﻿using TextParser.Abstractions;
 
 namespace TextParser.Model
 {
     public class Symbol : ISymbol
     {
-        private char value;
-
-        public char Value
-        {
-            get => value;
-            set
-            {
-                this.value = value;
-            }
-        }
+        public char Value { get; }
 
         public Symbol(char value)
         {

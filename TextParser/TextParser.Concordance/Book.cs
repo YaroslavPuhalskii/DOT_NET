@@ -7,9 +7,9 @@ namespace TextParser.Concordance
 {
     public class Book : IBook
     {
-        private ICollection<IPage> pages;
+        private readonly ICollection<IPage> pages;
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public IEnumerable<IPage> Pages => pages;
 
@@ -28,6 +28,7 @@ namespace TextParser.Concordance
 
         public override string ToString()
         {
+            builder = builder ?? new StringBuilder();
             builder.Clear();
             pages.ToList().ForEach(x => builder.Append(x.ToString()));
 

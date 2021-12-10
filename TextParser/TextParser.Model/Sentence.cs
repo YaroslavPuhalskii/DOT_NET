@@ -7,9 +7,9 @@ namespace TextParser.Model
 {
     public class Sentence : ISentence
     {
-        private ICollection<IToken> tokens;
+        private readonly ICollection<IToken> tokens;
 
-        private StringBuilder builder = new StringBuilder();
+        private StringBuilder builder;
 
         public IEnumerable<IToken> Tokens => tokens;
 
@@ -34,6 +34,7 @@ namespace TextParser.Model
 
         public override string ToString()
         {
+            builder = builder ?? new StringBuilder();
             builder.Clear();
             tokens.ToList().ForEach(x => builder.Append(x.Value));
 

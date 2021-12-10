@@ -4,9 +4,7 @@ namespace TextParser.Abstractions
 {
     public interface IToken
     {
-        IEnumerable<ISymbol> Symbols { get; }
-
-        string Value { get; set; }
+        string Value { get; }
 
         int Length { get; }
 

@@ -7,30 +7,23 @@ namespace TextParser.Model
 {
     public class Punctuation : IPunctuation
     {
-        private ICollection<ISymbol> symbols;
+        private readonly ICollection<ISymbol> symbols;
 
-        private StringBuilder builder = new StringBuilder();
-
-        private string value;
+        private StringBuilder builder;
 
         public string Value
         {
             get
             {
+                builder = builder ?? new StringBuilder();
                 builder.Clear();
                 symbols.ToList().ForEach(x => builder.Append(x.Value));
 
                 return builder.ToString();
             }
-            set
-            {
-                this.value = value;
-            }
         }
 
         public int Length => Value.Length;
-
-        public IEnumerable<ISymbol> Symbols => symbols;
 
         public Punctuation()
         {
@@ -49,7 +42,7 @@ namespace TextParser.Model
 
         public override string ToString()
         {
-            return value;
+            return Value;
         }
     }
 }
