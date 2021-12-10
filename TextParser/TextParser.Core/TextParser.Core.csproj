@@ -45,9 +45,9 @@
     <Compile Include="Factory\FactoryLetter.cs" />
     <Compile Include="Parse\Concordance\PageParser.cs" />
     <Compile Include="Parse\TextBuilder.cs" />
+    <Compile Include="Parse\TextParser.cs" />
     <Compile Include="Parse\TextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SentenceService.cs" />
     <Compile Include="Services\TextService.cs" />
   </ItemGroup>
   <ItemGroup>

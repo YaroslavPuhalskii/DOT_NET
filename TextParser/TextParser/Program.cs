@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using TextParser.Abstractions;
 using TextParser.Abstractions.Concordance;
 using TextParser.Abstractions.Parse;
@@ -15,9 +16,15 @@ namespace TextParser
     {
         static void Main(string[] args)
         {
-            ITextReader reader = new TextReader(new TextBuilder());
+            var path = ConfigurationManager.AppSettings.Get("inputFile");
 
-            IText text = reader.Read();
+            ITextBuilder textBuilder = new TextBuilder();
+            ITextParser textParser = new Core.Parse.TextParser(textBuilder);
+            ITextReader reader = new TextReader(textParser);
+            
+            reader.Read(path);
+            
+            IText text = textBuilder.GetText;
 
             IPageParser parse = new PageParser(new Paginator(lineLength: 20, pageSize: 3));
             IBook book = parse.Parse(text);
@@ -36,29 +43,33 @@ namespace TextParser
         {
             Console.WriteLine(text.ToString());
 
+            var textService = new TextService();
+
             int i = 0;
-            foreach (var item in text.SortSentencesByWordCount())
+            foreach (var item in textService.SortSentencesByWordCount(text))
             {
                 Console.WriteLine($"{++i}) {item} - {item.CountWord}");
             }
 
             i = 0;
-            foreach (var item in text.Sentences.QuestionSentenceByWordLengthDistinct(5))
+            foreach (var item in textService.QuestionSentenceByWordLength(text, 5))
             {
                 Console.WriteLine($"{++i}] {item.Value}");
             }
 
-            text.RemoveWordsStartWithConsonantByLength(5);
+            textService.RemoveWordsFirstConsonantLetter(text, 5);
             Console.WriteLine(text.ToString());
 
-            var substring = new List<ISymbol>();
-            substring.Add(new Symbol('A'));
-            substring.Add(new Symbol('p'));
-            substring.Add(new Symbol('p'));
-            substring.Add(new Symbol('l'));
-            substring.Add(new Symbol('e'));
+            var substring = new List<ISymbol>
+            {
+                new Symbol('A'),
+                new Symbol('p'),
+                new Symbol('p'),
+                new Symbol('l'),
+                new Symbol('e')
+            };
 
-            text.ReplaceWordByLength(2, 7, substring);
+            textService.ReplaceWordByLength(text, 2, 7, substring);
 
             Console.WriteLine(text.ToString());
         }
