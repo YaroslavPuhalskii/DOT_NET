@@ -30,7 +30,7 @@ namespace TextParser.Concordance
         {
             builder = builder ?? new StringBuilder();
             builder.Clear();
-            pages.ToList().ForEach(x => builder.Append(x.ToString()));
+            pages.ToList().ForEach(x => builder.Append(x));
 
             return builder.ToString();
         }

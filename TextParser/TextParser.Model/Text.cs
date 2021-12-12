@@ -41,7 +41,7 @@ namespace TextParser.Model
         {
             builder = builder ?? new StringBuilder();
             builder.Clear();
-            sentences.ToList().ForEach(x => builder.Append(x));
+            sentences.ToList().ForEach(x => builder.Append($"{x} "));
 
             return builder.ToString();
         }

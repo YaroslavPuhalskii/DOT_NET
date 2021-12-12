@@ -75,7 +75,8 @@ namespace TextParser.Core.Parse
 
         private void Add(IPunctuation punctuation)
         {
-            if (punctuation == null || sentence.CountWord == 0)
+            if (punctuation == null 
+                || (sentence.CountWord == 0 && factoryLetter.IsSpace(punctuation)))
             {
                 return;
             }

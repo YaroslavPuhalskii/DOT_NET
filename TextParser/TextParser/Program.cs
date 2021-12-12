@@ -26,20 +26,25 @@ namespace TextParser
             
             IText text = textBuilder.GetText;
 
-            IPageParser parse = new PageParser(new Paginator(lineLength: 20, pageSize: 3));
-            IBook book = parse.Parse(text);
-            var concordance = new TextParser.Concordance.Concordance();
-            concordance.WriteConcordance(book);
+            Concordance(text);
 
-            Console.WriteLine(book.ToString());
-
-            FirstTaskTest(text);
+            Services(text);
 
             Console.ReadLine();
         }
 
+        private static void Concordance(IText text)
+        {
+            IPageParser parse = new PageParser(new Paginator(lineLength: 20, pageSize: 3));
+            IBook book = parse.Parse(text);
 
-        private static void FirstTaskTest(IText text)
+            var concordance = new TextParser.Concordance.Concordance();
+            concordance.WriteConcordance(book);
+
+            Console.WriteLine(book.ToString());
+        }
+
+        private static void Services(IText text)
         {
             Console.WriteLine(text.ToString());
 
