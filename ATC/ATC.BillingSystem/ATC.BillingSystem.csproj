@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFBAC22E-6C70-40F5-8740-AD54D8BD8B90}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ATC</RootNamespace>
-    <AssemblyName>ATC</AssemblyName>
+    <ProjectGuid>{7C8676BC-C801-4DA1-B7EA-5A7F9B78F0D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATC.BillingSystem</RootNamespace>
+    <AssemblyName>ATC.BillingSystem</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,23 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Billing.cs" />
+    <Compile Include="Calls\Call.cs" />
+    <Compile Include="Calls\OutgoingCall.cs" />
+    <Compile Include="ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\CallReport.cs" />
+    <Compile Include="TariffPlan\BusinessTariffPlan.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ATC.Abstractions\ATC.Abstractions.csproj">
       <Project>{8784f2f6-eae6-4e98-89ab-24e32a7c8e68}</Project>
       <Name>ATC.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ATC.BillingSystem\ATC.BillingSystem.csproj">
-      <Project>{7c8676bc-c801-4da1-b7ea-5a7f9b78f0d9}</Project>
-      <Name>ATC.BillingSystem</Name>
     </ProjectReference>
     <ProjectReference Include="..\ATC.Models\ATC.Models.csproj">
       <Project>{cd1c5952-c5b2-4d0e-a1eb-c348a321d6c1}</Project>

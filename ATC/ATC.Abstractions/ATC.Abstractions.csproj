@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFBAC22E-6C70-40F5-8740-AD54D8BD8B90}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ATC</RootNamespace>
-    <AssemblyName>ATC</AssemblyName>
+    <ProjectGuid>{8784F2F6-EAE6-4E98-89AB-24E32A7C8E68}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ATC.Abstractions</RootNamespace>
+    <AssemblyName>ATC.Abstractions</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,28 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ATC\IPort.cs" />
+    <Compile Include="ATC\IStation.cs" />
+    <Compile Include="ATC\ITerminal.cs" />
+    <Compile Include="ATC\Specifications\PortStatus.cs" />
+    <Compile Include="BillingSystem\TariffPlan\ITariffPlan.cs" />
+    <Compile Include="IClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ATC.Abstractions\ATC.Abstractions.csproj">
-      <Project>{8784f2f6-eae6-4e98-89ab-24e32a7c8e68}</Project>
-      <Name>ATC.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ATC.BillingSystem\ATC.BillingSystem.csproj">
-      <Project>{7c8676bc-c801-4da1-b7ea-5a7f9b78f0d9}</Project>
-      <Name>ATC.BillingSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ATC.Models\ATC.Models.csproj">
-      <Project>{cd1c5952-c5b2-4d0e-a1eb-c348a321d6c1}</Project>
-      <Name>ATC.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
