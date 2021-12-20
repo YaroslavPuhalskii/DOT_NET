@@ -1,5 +1,6 @@
 ﻿using ATC.Abstractions;
-using ATC.Models.Specifications;
+using ATC.Abstractions.ATC;
+using ATC.Abstractions.ATC.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,87 +9,55 @@ namespace ATC.Models.ATC
 {
     public class Station
     {
-        public event Func<Terminal, IClient> GetClient;
+        public event Func<ITerminal, IClient> GetClient;
 
         public event Action<IClient, IClient, int> EndOfCall;
 
-        private readonly ICollection<Tuple<Terminal, Terminal>> processingCall;
+        private readonly ICollection<Tuple<ITerminal, ITerminal>> processingCall;
 
-        private readonly ICollection<Tuple<Terminal, int>> waitAnswer;
+        private readonly ICollection<Tuple<ITerminal, int>> waitAnswer;
 
-        private readonly IDictionary<Terminal, Port> terminalPort;
+        private readonly IDictionary<ITerminal, IPort> terminalPort;
 
-        private Queue<Port> freePorts;
+        private readonly Random rnd = new Random();
+
+        private Queue<IPort> freePorts;
 
         public Station(int countPorts)
         {
-            terminalPort = new Dictionary<Terminal, Port>();
-            waitAnswer = new List<Tuple<Terminal, int>>();
-            processingCall = new List<Tuple<Terminal, Terminal>>();
+            terminalPort = new Dictionary<ITerminal, IPort>();
+            waitAnswer = new List<Tuple<ITerminal, int>>();
+            processingCall = new List<Tuple<ITerminal, ITerminal>>();
             CreatePorts(countPorts);
         }
 
-        public void BindtermianlWithPort(Terminal terminal)
+        public void Add(ITerminal terminal)
+        {
+            if (terminal != null)
+            {
+                BindtermianlWithPort(terminal);
+            }
+        }
+
+        public void Remove(ITerminal terminal)
+        {
+            if (terminal != null)
+            {
+                UnBindTerminalWithPort(terminal);
+            }
+        }
+
+        public void Call(ITerminal terminal, int number)
         {
             if (terminal == null)
             {
                 throw new ArgumentNullException(nameof(terminal));
             }
 
-            var port = freePorts.Dequeue();
-
-            if (port == null)
-            {
-                throw new ArgumentNullException(nameof(port));
-            }
-
-            terminal.ActionCall += port.Call;
-            terminal.ActionAnswer += port.Answer;
-            terminal.ActionReject += port.Reject;
-
-            port.PortStatus = PortStatus.Online;
-
-            terminalPort.Add(terminal, port);
+            waitAnswer.Add(new Tuple<ITerminal, int>(terminal, number));
         }
 
-        public void UnBindTerminalWithPort(Terminal terminal)
-        {
-            if (terminal == null)
-            {
-                throw new ArgumentNullException(nameof(terminal));
-            }
-
-            var port = terminalPort[terminal];
-
-            if (port == null)
-            {
-                throw new ArgumentNullException(nameof(port));
-            }
-
-            terminal.ActionCall -= port.Call;
-            terminal.ActionAnswer -= port.Answer;
-            terminal.ActionReject -= port.Reject;
-
-            port.PortStatus = PortStatus.Offline;
-
-            terminalPort.Remove(terminal);
-            freePorts.Enqueue(port);
-        }
-
-        private void Call(Terminal terminal, int number)
-        {
-            if (terminal == null)
-            {
-                throw new ArgumentNullException(nameof(terminal));
-            }
-
-            var port = terminalPort[terminal];
-            port.PortStatus = PortStatus.Busy;
-
-            waitAnswer.Add(new Tuple<Terminal, int>(terminal, number));
-        }
-
-        private void Answer(Terminal terminal)
+        public void Answer(ITerminal terminal)
         {
             if (terminal == null)
             {
@@ -102,15 +71,12 @@ namespace ATC.Models.ATC
                 throw new ArgumentNullException(nameof(call));
             }
 
-            var port = terminalPort[terminal];
-            port.PortStatus = PortStatus.Busy;
-
-            processingCall.Add(new Tuple<Terminal, Terminal>(call.Item1, terminal));
+            processingCall.Add(new Tuple<ITerminal, ITerminal>(call.Item1, terminal));
 
             waitAnswer.Remove(call);
         }
 
-        private void Reject(Terminal terminal)
+        public void Reject(ITerminal terminal)
         {
             if (terminal == null)
             {
@@ -134,22 +100,67 @@ namespace ATC.Models.ATC
             var caller = GetClient(call.Item1);
             var receiver = GetClient(call.Item2);
 
-            Random rnd = new Random();
-            var time = rnd.Next(1, 60);
+            var time = rnd.Next(1, 3600);
 
             EndOfCall(caller, receiver, time);
         }
 
+        private void BindtermianlWithPort(ITerminal terminal)
+        {
+            IPort port = freePorts.Dequeue();
+
+            if (port == null)
+            {
+                throw new ArgumentNullException(nameof(port));
+            }
+
+            terminal.ActionCall += (number) => port.Call(terminal, number);
+            terminal.ActionAnswer += () => port.Answer(terminal);
+            terminal.ActionReject += () => port.Reject(terminal);
+
+            terminal.ConnectToPort += () => port.Link(terminal);
+            terminal.DisconnectToPort += () => port.Unlink(terminal);
+
+            port.PortStatus = PortStatus.Online;
+
+            terminalPort.Add(terminal, port);
+        }
+
+        private void UnBindTerminalWithPort(ITerminal terminal)
+        {
+            var port = terminalPort[terminal];
+
+            if (port == null)
+            {
+                throw new ArgumentNullException(nameof(port));
+            }
+
+            terminal.ActionCall -= (number) => port.Call(terminal, number);
+            terminal.ActionAnswer -= () => port.Answer(terminal);
+            terminal.ActionReject -= () => port.Reject(terminal);
+
+            terminal.ConnectToPort -= () => port.Link(terminal);
+            terminal.DisconnectToPort -= () => port.Unlink(terminal);
+
+            port.PortStatus = PortStatus.Offline;
+
+            terminalPort.Remove(terminal);
+            freePorts.Enqueue(port);
+        }
+
         private void CreatePorts(int countPorts)
         {
-            freePorts = new Queue<Port>();
+            freePorts = new Queue<IPort>();
 
             for (int i = 0; i < countPorts; i++)
             {
-                var port = new Port(i);
+                IPort port = new Port(i);
                 port.ActionCall += Call;
                 port.ActionAnswer += Answer;
                 port.ActionReject += Reject;
+
+                port.LinkTerminal += Add;
+                port.UnlinkTerminal += Remove;
 
                 freePorts.Enqueue(port);
             }

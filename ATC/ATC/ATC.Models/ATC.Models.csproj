@@ -47,7 +47,6 @@
     <Compile Include="ATC\Terminal.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specifications\PortStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ATC.Abstractions\ATC.Abstractions.csproj">

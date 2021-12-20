@@ -1,4 +1,5 @@
 ﻿using ATC.Abstractions;
+using ATC.Abstractions.ATC;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +9,9 @@ namespace ATC.Models.ATC
     {
         public event Action<IClient, int> RegistrationInBilling;
 
-        public event Action<Terminal> RegestrarionInStation;
+        public event Action<ITerminal> RegestrationInStation;
 
-        private readonly IDictionary<Terminal, IClient> clientsTerminal;
+        private readonly IDictionary<ITerminal, IClient> clientsTerminal;
 
         private readonly Random rnd = new Random();
 
@@ -18,22 +19,22 @@ namespace ATC.Models.ATC
 
         public Operator()
         {
-            clientsTerminal = new Dictionary<Terminal, IClient>();
+            clientsTerminal = new Dictionary<ITerminal, IClient>();
             currenNumber = rnd.Next(1000000, 9999999);
         }
 
 
-        public Terminal Registarion(IClient client, int startBalance)
+        public ITerminal Registarion(IClient client, int startBalance)
         {
-            var terminal = new Terminal(currenNumber++);
+            ITerminal terminal = new Terminal(currenNumber++);
             clientsTerminal.Add(terminal, client);
             RegistrationInBilling(client, startBalance);
-            RegestrarionInStation(terminal);
+            RegestrationInStation(terminal);
 
             return terminal;
         }
 
-        public IClient GetClient(Terminal terminal)
+        public IClient GetClient(ITerminal terminal)
         {
             if (terminal == null)
             {

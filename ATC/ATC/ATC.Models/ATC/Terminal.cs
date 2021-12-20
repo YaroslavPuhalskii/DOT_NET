@@ -1,36 +1,50 @@
-﻿using System;
+﻿using ATC.Abstractions.ATC;
+using System;
 
 namespace ATC.Models.ATC
 {
-    public class Terminal
+    public class Terminal : ITerminal
     {
         public int Number { get; set; }
 
-        public event Action<Terminal, int> ActionCall;
+        public event Action<int> ActionCall;
 
-        public event Action<Terminal> ActionAnswer;
+        public event Action ActionAnswer;
 
-        public event Action<Terminal> ActionReject;
+        public event Action ActionReject;
+
+        public event Action ConnectToPort;
+
+        public event Action DisconnectToPort;
 
         public Terminal(int number)
         {
             Number = number;
         }
 
-
         public void Call(int number)
         {
-            ActionCall?.Invoke(this, number);
+            ActionCall?.Invoke(number);
         }
 
         public void Answer()
         {
-            ActionAnswer?.Invoke(this);
+            ActionAnswer?.Invoke();
         }
 
         public void Reject()
         {
-            ActionReject?.Invoke(this);
+            ActionReject?.Invoke();
+        }
+
+        public void Connect()
+        {
+            ConnectToPort?.Invoke();
+        }
+
+        public void Disconnect()
+        {
+            DisconnectToPort?.Invoke();
         }
     }
 }

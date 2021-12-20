@@ -13,5 +13,10 @@ namespace ATC.Models
             FirstName = firstName;
             LastName = lastName;
         }
+
+        public override string ToString()
+        {
+            return string.Format($"{FirstName} {LastName}");
+        }
     }
 }
