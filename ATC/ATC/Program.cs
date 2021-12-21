@@ -1,16 +1,11 @@
 ﻿using ATC.Abstractions;
-using ATC.Abstractions.ATC;
 using ATC.BillingSystem;
 using ATC.BillingSystem.Reports;
 using ATC.BillingSystem.TariffPlan;
 using ATC.Models;
 using ATC.Models.ATC;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ATC
 {
