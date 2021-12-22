@@ -4,13 +4,13 @@ namespace ATC.BillingSystem
 {
     public class ClientInfo
     {
-        public IClient client;
+        public IClient Client { get; }
 
         public decimal Balance { get; set; }
 
         public ClientInfo(IClient client, decimal balance)
         {
-            this.client = client;
+            Client = client;
             Balance = balance;
         }
     }

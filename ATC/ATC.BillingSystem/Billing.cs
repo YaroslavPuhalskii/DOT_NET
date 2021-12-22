@@ -11,20 +11,16 @@ namespace ATC.BillingSystem
     {
         private readonly ICollection<ClientInfo> clients;
 
-        private readonly ICollection<Call> calls;
+        private readonly ICollection<OutgoingCall> calls;
 
         private readonly ITariffPlan tariffPlan;
 
-        public IEnumerable<OutgoingCall> GetOutgoingCalls => calls.OfType<OutgoingCall>();
-
-        public IEnumerable<Call> GetCalls => calls;
-
-        public IEnumerable<ClientInfo> GetClients => clients;
+        public IEnumerable<OutgoingCall> GetOutgoingCalls => calls;
 
         public Billing(ITariffPlan tariffPlan)
         {
             this.tariffPlan = tariffPlan;
-            calls = new List<Call>();
+            calls = new List<OutgoingCall>();
             clients = new List<ClientInfo>();
         }
 
@@ -52,14 +48,20 @@ namespace ATC.BillingSystem
 
             var cost = tariffPlan.GetPrice(time);
 
-            WrittingOffMoney(caller, cost);
+            WritingOffMoney(caller, cost);
 
             calls.Add(new OutgoingCall(caller, receiver, DateTime.Now, time, cost));
         }
 
-        private void WrittingOffMoney(IClient caller, decimal money)
+        private void WritingOffMoney(IClient caller, decimal money)
         {
-            var client = clients.FirstOrDefault(x => x.client == caller);
+            var client = clients.FirstOrDefault(x => x.Client == caller);
+
+            if (client == null)
+            {
+                throw new ArgumentNullException($"{client} can't be null!");
+            }
+
             client.Balance -= money;
         }
     }

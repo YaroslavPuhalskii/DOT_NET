@@ -21,9 +21,9 @@ namespace ATC.BillingSystem.Calls
             builder = builder ?? new StringBuilder();
             builder.Clear();
 
-            builder.AppendLine($"Outgoing call : {caller} - > {receiver}");
+            builder.AppendLine($"Outgoing call : {Caller} - > {Receiver}");
             builder.AppendLine($"Date : {DateTime}");
-            builder.AppendLine($"Time : {time}s.");
+            builder.AppendLine($"Time : {Time}s.");
             builder.AppendLine($"Price : {Price}");
 
             return builder.ToString();

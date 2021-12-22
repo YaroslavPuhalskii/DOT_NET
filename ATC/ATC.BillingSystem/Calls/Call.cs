@@ -5,20 +5,20 @@ namespace ATC.BillingSystem.Calls
 {
     public abstract class Call
     {
-        public IClient caller;
+        public IClient Caller { get; }
 
-        public IClient receiver;
+        public IClient Receiver { get; }
 
         public DateTime DateTime { get; }
 
-        public int time;
+        public int Time { get; }
 
-        public Call(IClient caller, IClient receiver, DateTime DateTime, int time)
+        protected Call(IClient caller, IClient receiver, DateTime dateTime, int time)
         {
-            this.caller = caller;
-            this.receiver = receiver;
-            this.DateTime = DateTime;
-            this.time = time;
+            Caller = caller;
+            Receiver = receiver;
+            DateTime = dateTime;
+            Time = time;
         }
     }
 }

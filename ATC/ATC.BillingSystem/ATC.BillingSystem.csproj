@@ -55,10 +55,6 @@
       <Project>{8784f2f6-eae6-4e98-89ab-24e32a7c8e68}</Project>
       <Name>ATC.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ATC.Models\ATC.Models.csproj">
-      <Project>{cd1c5952-c5b2-4d0e-a1eb-c348a321d6c1}</Project>
-      <Name>ATC.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
