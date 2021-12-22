@@ -1,26 +1,24 @@
 ﻿using ATC.Abstractions;
 using ATC.Abstractions.ATC;
+using ATC.Core.Models;
 using System;
 using System.Collections.Generic;
 
-namespace ATC.Models.ATC
+namespace ATC.Core
 {
     public class Operator
     {
         public event Action<IClient, int> RegistrationInBilling;
 
-        public event Action<ITerminal> RegestrationInStation;
+        public event Action<ITerminal> RegistrationInStation;
 
         private readonly IDictionary<ITerminal, IClient> clientsTerminal;
 
-        private readonly Random rnd = new Random();
-
-        private int currenNumber;
+        private int currenNumber = 1000000;
 
         public Operator()
         {
             clientsTerminal = new Dictionary<ITerminal, IClient>();
-            currenNumber = rnd.Next(1000000, 9999999);
         }
 
 
@@ -29,7 +27,7 @@ namespace ATC.Models.ATC
             ITerminal terminal = new Terminal(currenNumber++);
             clientsTerminal.Add(terminal, client);
             RegistrationInBilling(client, startBalance);
-            RegestrationInStation(terminal);
+            RegistrationInStation(terminal);
 
             return terminal;
         }

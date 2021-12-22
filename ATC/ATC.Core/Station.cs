@@ -1,13 +1,14 @@
 ﻿using ATC.Abstractions;
 using ATC.Abstractions.ATC;
 using ATC.Abstractions.ATC.Specifications;
+using ATC.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ATC.Models.ATC
+namespace ATC.Core
 {
-    public class Station
+    public class Station : IStation
     {
         public event Func<ITerminal, IClient> GetClient;
 
@@ -47,7 +48,7 @@ namespace ATC.Models.ATC
             }
         }
 
-        public void Call(ITerminal terminal, int number)
+        private void Call(ITerminal terminal, int number)
         {
             if (terminal == null)
             {
@@ -57,7 +58,7 @@ namespace ATC.Models.ATC
             waitAnswer.Add(new Tuple<ITerminal, int>(terminal, number));
         }
 
-        public void Answer(ITerminal terminal)
+        private void Answer(ITerminal terminal)
         {
             if (terminal == null)
             {
@@ -76,7 +77,7 @@ namespace ATC.Models.ATC
             waitAnswer.Remove(call);
         }
 
-        public void Reject(ITerminal terminal)
+        private void Reject(ITerminal terminal)
         {
             if (terminal == null)
             {
@@ -114,12 +115,12 @@ namespace ATC.Models.ATC
                 throw new ArgumentNullException(nameof(port));
             }
 
-            terminal.ActionCall += (number) => port.Call(terminal, number);
-            terminal.ActionAnswer += () => port.Answer(terminal);
-            terminal.ActionReject += () => port.Reject(terminal);
+            terminal.ActionCall += port.Call;
+            terminal.ActionAnswer += port.Answer;
+            terminal.ActionReject += port.Reject;
 
-            terminal.ConnectToPort += () => port.Link(terminal);
-            terminal.DisconnectToPort += () => port.Unlink(terminal);
+            terminal.ConnectToPort += port.Link;
+            terminal.DisconnectToPort += port.Unlink;
 
             port.PortStatus = PortStatus.Online;
 
@@ -135,12 +136,9 @@ namespace ATC.Models.ATC
                 throw new ArgumentNullException(nameof(port));
             }
 
-            terminal.ActionCall -= (number) => port.Call(terminal, number);
-            terminal.ActionAnswer -= () => port.Answer(terminal);
-            terminal.ActionReject -= () => port.Reject(terminal);
-
-            terminal.ConnectToPort -= () => port.Link(terminal);
-            terminal.DisconnectToPort -= () => port.Unlink(terminal);
+            terminal.ActionCall -= port.Call;
+            terminal.ActionAnswer -= port.Answer;
+            terminal.ActionReject -= port.Reject;
 
             port.PortStatus = PortStatus.Offline;
 

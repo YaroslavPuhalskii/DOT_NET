@@ -2,7 +2,7 @@
 using ATC.Abstractions.ATC.Specifications;
 using System;
 
-namespace ATC.Models.ATC
+namespace ATC.Core.Models
 {
     public class Port : IPort
     {

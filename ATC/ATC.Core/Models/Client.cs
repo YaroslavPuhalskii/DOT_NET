@@ -1,6 +1,6 @@
 ﻿using ATC.Abstractions;
 
-namespace ATC.Models
+namespace ATC.Core.Models
 {
     public class Client : IClient
     {
