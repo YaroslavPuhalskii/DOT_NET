@@ -6,15 +6,15 @@ namespace ATC.Abstractions.ATC
     {
         int Number { get; }
 
-        event Action<int> ActionCall;
+        event Action<ITerminal, int> ActionCall;
 
-        event Action ActionAnswer;
+        event Action<ITerminal> ActionAnswer;
 
-        event Action ActionReject;
+        event Action<ITerminal> ActionReject;
 
-        event Action ConnectToPort;
+        event Action<ITerminal> ConnectToPort;
 
-        event Action DisconnectToPort;
+        event Action<ITerminal> DisconnectToPort;
 
         void Call(int number);
 

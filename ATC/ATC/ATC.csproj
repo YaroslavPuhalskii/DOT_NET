@@ -61,9 +61,9 @@
       <Project>{7c8676bc-c801-4da1-b7ea-5a7f9b78f0d9}</Project>
       <Name>ATC.BillingSystem</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ATC.Models\ATC.Models.csproj">
-      <Project>{cd1c5952-c5b2-4d0e-a1eb-c348a321d6c1}</Project>
-      <Name>ATC.Models</Name>
+    <ProjectReference Include="..\ATC.Core\ATC.Core.csproj">
+      <Project>{e46ec80d-384c-45d7-8604-b9456849a140}</Project>
+      <Name>ATC.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

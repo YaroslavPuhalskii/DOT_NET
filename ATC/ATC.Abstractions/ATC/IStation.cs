@@ -6,12 +6,10 @@ namespace ATC.Abstractions.ATC
     {
         event Func<ITerminal, IClient> GetClient;
 
+        event Action<IClient, IClient, int> EndOfCall;
+
         void Add(ITerminal terminal);
 
         void Remove(ITerminal terminal);
-
-        void Call(ITerminal terminal);
-
-        void Answer(ITerminal terminal);
     }
 }
