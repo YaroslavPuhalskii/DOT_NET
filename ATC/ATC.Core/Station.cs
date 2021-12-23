@@ -36,7 +36,7 @@ namespace ATC.Core
         {
             if (terminal != null)
             {
-                BindtermianlWithPort(terminal);
+                BindTerminalWithPort(terminal);
             }
         }
 
@@ -52,7 +52,7 @@ namespace ATC.Core
         {
             if (terminal == null)
             {
-                throw new ArgumentNullException(nameof(terminal));
+                throw new ArgumentNullException($"{nameof(terminal)} can't be null!");
             }
 
             waitAnswer.Add(new Tuple<ITerminal, int>(terminal, number));
@@ -62,14 +62,14 @@ namespace ATC.Core
         {
             if (terminal == null)
             {
-                throw new ArgumentNullException(nameof(terminal));
+                throw new ArgumentNullException($"{nameof(terminal)} can't be null!");
             }
 
             var call = waitAnswer.FirstOrDefault(x => x.Item2 == terminal.Number);
 
             if (call == null)
             {
-                throw new ArgumentNullException(nameof(call));
+                throw new ArgumentNullException($"{nameof(call)} can't be null!");
             }
 
             processingCall.Add(new Tuple<ITerminal, ITerminal>(call.Item1, terminal));
@@ -81,7 +81,7 @@ namespace ATC.Core
         {
             if (terminal == null)
             {
-                throw new ArgumentNullException(nameof(terminal));
+                throw new ArgumentNullException($"{nameof(terminal)} can't be null!");
             }
 
             var call = processingCall.FirstOrDefault(x => x.Item1.Number == terminal.Number
@@ -89,7 +89,7 @@ namespace ATC.Core
 
             if (call == null)
             {
-                throw new ArgumentNullException(nameof(call));
+                throw new ArgumentNullException($"{nameof(call)} can't be null!");
             }
 
             var port1 = terminalPort[call.Item1];
@@ -98,21 +98,21 @@ namespace ATC.Core
 
             processingCall.Remove(call);
 
-            var caller = GetClient(call.Item1);
-            var receiver = GetClient(call.Item2);
+            var caller = GetClient?.Invoke(call.Item1);
+            var receiver = GetClient?.Invoke(call.Item2);
 
             var time = rnd.Next(1, 3600);
 
-            EndOfCall(caller, receiver, time);
+            EndOfCall?.Invoke(caller, receiver, time);
         }
 
-        private void BindtermianlWithPort(ITerminal terminal)
+        private void BindTerminalWithPort(ITerminal terminal)
         {
             IPort port = freePorts.Dequeue();
 
             if (port == null)
             {
-                throw new ArgumentNullException(nameof(port));
+                throw new ArgumentNullException($"{nameof(port)} can't be null!");
             }
 
             terminal.ActionCall += port.Call;
@@ -133,7 +133,7 @@ namespace ATC.Core
 
             if (port == null)
             {
-                throw new ArgumentNullException(nameof(port));
+                throw new ArgumentNullException($"{nameof(port)} can't be null!");
             }
 
             terminal.ActionCall -= port.Call;

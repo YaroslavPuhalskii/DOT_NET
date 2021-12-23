@@ -23,6 +23,7 @@ namespace ATC
             station.EndOfCall += billing.EndOfCall;
             station.GetClient += @operator.GetClient;
 
+
             IClient c1 = new Client("Mike", "Gomez");
             IClient c2 = new Client("Maxim", "Swift");
             IClient c3 = new Client("Petr", "Swift");
@@ -35,6 +36,11 @@ namespace ATC
 
             TestBillingSystem(billing, c1);
 
+            @operator.RegistrationInBilling -= billing.Registration;
+            @operator.RegistrationInStation -= station.Add;
+            station.EndOfCall -= billing.EndOfCall;
+            station.GetClient -= @operator.GetClient;
+
             Console.ReadLine();
         }
 
@@ -42,7 +48,7 @@ namespace ATC
         {
             if (t1 == null || t2 == null || t3 == null)
             {
-                throw new ArgumentNullException($"{t1} or {t2} or {t3} is null!");
+                throw new ArgumentNullException($"{nameof(t1)} or {nameof(t2)} or {nameof(t3)} is null!");
             }
 
             t1.Call(t2.Number);
@@ -68,7 +74,7 @@ namespace ATC
         {
             if (billing == null || client == null)
             {
-                throw new ArgumentNullException($"{billing} or {client} is null!");
+                throw new ArgumentNullException($"{nameof(billing)} or {nameof(client)} is null!");
             }
 
             var report = new CallReport();

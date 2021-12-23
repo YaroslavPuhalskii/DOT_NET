@@ -26,8 +26,8 @@ namespace ATC.Core
         {
             ITerminal terminal = new Terminal(currenNumber++);
             clientsTerminal.Add(terminal, client);
-            RegistrationInBilling(client, startBalance);
-            RegistrationInStation(terminal);
+            RegistrationInBilling?.Invoke(client, startBalance);
+            RegistrationInStation?.Invoke(terminal);
 
             return terminal;
         }
@@ -36,7 +36,7 @@ namespace ATC.Core
         {
             if (terminal == null)
             {
-                throw new ArgumentNullException(nameof(terminal));
+                throw new ArgumentNullException($"{nameof(terminal)} can't be null!");
             }
 
             return clientsTerminal[terminal];

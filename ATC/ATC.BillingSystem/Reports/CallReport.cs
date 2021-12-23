@@ -12,7 +12,7 @@ namespace ATC.BillingSystem.Reports
         {
             if (billing == null || client == null)
             {
-                throw new ArgumentNullException($"{billing} or {client} is null!");
+                throw new ArgumentNullException($"{nameof(billing)} or {nameof(client)} is null!");
             }
 
             return billing.GetOutgoingCalls.Where(x => x.Caller == client)
@@ -23,7 +23,7 @@ namespace ATC.BillingSystem.Reports
         {
             if (billing == null || client == null)
             {
-                throw new ArgumentNullException($"{billing} or {client} is null!");
+                throw new ArgumentNullException($"{nameof(billing)} or {nameof(client)} is null!");
             }
 
             return billing.GetOutgoingCalls.Where(x => x.Caller == client)
@@ -34,7 +34,7 @@ namespace ATC.BillingSystem.Reports
         {
             if (billing == null || client == null)
             {
-                throw new ArgumentNullException($"{billing} or {client} is null!");
+                throw new ArgumentNullException($"{nameof(billing)} or {nameof(client)} is null!");
             }
 
             return billing.GetOutgoingCalls.Where(x => x.Caller == client)
@@ -46,7 +46,7 @@ namespace ATC.BillingSystem.Reports
         {
             if (billing == null || client == null)
             {
-                throw new ArgumentNullException($"{billing} or {client} is null!");
+                throw new ArgumentNullException($"{nameof(billing)} or {nameof(client)} is null!");
             }
 
             return billing.GetOutgoingCalls.Where(x => x.Caller == client);

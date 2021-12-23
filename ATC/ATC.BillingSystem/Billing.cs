@@ -28,12 +28,12 @@ namespace ATC.BillingSystem
         {
             if (client == null)
             {
-                throw new ArgumentNullException(nameof(client));
+                throw new ArgumentNullException($"{nameof(client)} can't be null");
             }
 
             if (startBalance < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(startBalance));
+                throw new ArgumentOutOfRangeException($"{nameof(startBalance)} can't be less 0!");
             }
 
             clients.Add(new ClientInfo(client, startBalance));
@@ -59,7 +59,7 @@ namespace ATC.BillingSystem
 
             if (client == null)
             {
-                throw new ArgumentNullException($"{client} can't be null!");
+                throw new ArgumentNullException($"{nameof(client)} can't be null!");
             }
 
             client.Balance -= money;
