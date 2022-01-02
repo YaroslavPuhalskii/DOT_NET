@@ -89,8 +89,8 @@ namespace Sales.Core
                         _formatLines.Add(new FormatLine
                         {
                             DateTime = DateTime.ParseExact(formatLine[0], "dd.MM.yyyy", CultureInfo.InvariantCulture),
-                            Client = new Client() { Name = formatLine[1]},
-                            Product = new Product() { Name = formatLine[2]},
+                            Client = new Client() { Name = formatLine[1] },
+                            Product = new Product() { Name = formatLine[2] },
                             Sum = decimal.Parse(formatLine[3])
                         });
                     }
@@ -98,7 +98,7 @@ namespace Sales.Core
 
                 return _formatLines;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new ArgumentException("File can't be exists!");
             }
