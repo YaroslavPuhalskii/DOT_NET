@@ -1,20 +1,25 @@
-﻿using Sales.Entities;
-using System;
+﻿using System;
 using System.Data.Entity;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Sales.DAL.Repositories
 {
     public class BaseRepo<T> : IBaseRepo<T> where T : class
     {
-        protected readonly DbContext _context = new EFContext();
+        protected readonly DbContext _context;
 
-        public async Task Insert(T item)
+        public BaseRepo(DbContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public void Insert(T item)
         {
             try
             {
                 _context.Set<T>().Add(item);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -22,13 +27,13 @@ namespace Sales.DAL.Repositories
             }
         }
 
-        public async Task Update(T item)
+        public void Update(T item)
         {
             try
             {
                 _context.Set<T>().Attach(item);
                 _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -36,25 +41,37 @@ namespace Sales.DAL.Repositories
             }
         }
 
-        public async Task Remove(T item)
+        public void Remove(T item)
         {
             try
             {
                 _context.Set<T>().Remove(item);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(item)}");
+            }
+        }
+
+        public void Remove(int item)
+        {
+            try
+            {
+                T t = _context.Set<T>().Find(item);
+                _context.Set<T>().Remove(t);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
                 throw new ArgumentException($"{ex.Message}");
             }
-
         }
-
-        public async Task<T> GetT(Func<T, bool> func)
+        public T GetT(Expression<Func<T, bool>> func)
         {
             try
             {
-                return await _context.Set<T>().FindAsync(func);
+                return _context.Set<T>().FirstOrDefault(func);
             }
             catch (Exception ex)
             {

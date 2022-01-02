@@ -10,9 +10,9 @@ namespace Sales.Entities.Models
 
         public Product Product { get; set; }
 
-        public Manager Manager { get; set; }
-
         public DateTime DateTime { get; set; }
+
+        public FileData FileData { get; set; }
 
         public decimal Sum { get; set; }
     }

@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Sales.DAL
 {
     public interface IBaseRepo<T> where T : class
     {
-        Task Insert(T item);
+        void Insert(T item);
 
-        Task Remove(T item);
+        void Remove(T item);
 
-        Task Update(T item);
+        void Remove(int item);
 
-        Task<T> GetT(Func<T, bool> func);
+        void Update(T item);
+
+        T GetT(Expression<Func<T, bool>> func);
     }
 }
