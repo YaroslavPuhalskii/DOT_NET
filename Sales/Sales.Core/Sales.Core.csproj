@@ -49,15 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\IFileLoader.cs" />
+    <Compile Include="Abstractions\IFileParse.cs" />
+    <Compile Include="Abstractions\IProcessManager.cs" />
     <Compile Include="FileLoader.cs" />
     <Compile Include="FileParse.cs" />
     <Compile Include="FolderWatcher.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abstractions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Sales.DAL\Sales.DAL.csproj">
       <Project>{337ea994-5119-4d08-9d89-d483b97e8cfe}</Project>

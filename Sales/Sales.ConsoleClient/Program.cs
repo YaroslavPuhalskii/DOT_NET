@@ -1,4 +1,5 @@
 ﻿using Sales.Core;
+using Sales.Core.Abstractions;
 using Sales.Entities.Abstractions;
 using Sales.Entities.Factory;
 using System;
@@ -9,12 +10,12 @@ namespace Sales.ConsoleClient
     {
         static void Main(string[] args)
         {
-            IEFContextFactory _context = new EFContextFactory();
-
-            ProcessManager manager = new ProcessManager(new FileParse(), new FileLoader(_context.GetContext()));
+            IEFContextFactory contextFactory = new EFContextFactory();
+            IFileParse fileParse = new FileParse();
+            IProcessManager manager = new ProcessManager(fileParse, contextFactory);
 
             var watcher = new FolderWatcher(manager);
-            watcher.Run();
+            watcher.Start();
 
             Console.ReadLine();
         }

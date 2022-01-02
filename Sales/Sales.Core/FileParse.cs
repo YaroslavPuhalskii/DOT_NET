@@ -1,4 +1,5 @@
-﻿using Sales.Entities.Models;
+﻿using Sales.Core.Abstractions;
+using Sales.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,7 +21,7 @@ namespace Sales.Core
         public decimal Sum { get; set; }
     }
 
-    public class FileParse
+    public class FileParse : IFileParse
     {
         private readonly string _headerDate = ConfigurationManager.AppSettings["headerDate"];
 
@@ -88,7 +89,7 @@ namespace Sales.Core
 
                         _formatLines.Add(new FormatLine
                         {
-                            DateTime = DateTime.ParseExact(formatLine[0], "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                            DateTime = DateTime.ParseExact(formatLine[0], _fileDate, CultureInfo.InvariantCulture),
                             Client = new Client() { Name = formatLine[1] },
                             Product = new Product() { Name = formatLine[2] },
                             Sum = decimal.Parse(formatLine[3])

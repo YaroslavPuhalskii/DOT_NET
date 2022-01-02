@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sales.Core.Abstractions;
+using System;
 using System.Configuration;
 using System.IO;
 
@@ -16,20 +17,31 @@ namespace Sales.Core
 
         private bool disposedValue;
 
-        private readonly ProcessManager _processManager;
+        private readonly IProcessManager _processManager;
 
-        public FolderWatcher(ProcessManager processManager)
+        public FolderWatcher(IProcessManager processManager)
         {
             _processManager = processManager;
         }
 
-        public void Run()
+        public void Start()
         {
-            _watcher = new FileSystemWatcher(startFolder);
+            Init();
+        }
 
-            _watcher.NotifyFilter = NotifyFilters.Attributes
+        public void Stop()
+        {
+            Dispose();
+        }
+
+        private void Init()
+        {
+            _watcher = new FileSystemWatcher(startFolder)
+            {
+                NotifyFilter = NotifyFilters.Attributes
                                 | NotifyFilters.DirectoryName
-                                | NotifyFilters.FileName;
+                                | NotifyFilters.FileName
+            };
 
 
             _watcher.Created += OnCreated;

@@ -1,4 +1,5 @@
-﻿using Sales.DAL;
+﻿using Sales.Core.Abstractions;
+using Sales.DAL;
 using Sales.DAL.Repositories;
 using Sales.Entities.Models;
 using System;
@@ -7,7 +8,7 @@ using System.Data.Entity;
 
 namespace Sales.Core
 {
-    public class FileLoader
+    public class FileLoader : IFileLoader
     {
         private readonly IFileDataRepo fileDataRepo;
         private readonly IManagerRepo managerRepo;

@@ -1,22 +1,22 @@
-﻿using Sales.Entities.Abstractions;
+﻿using Sales.Core.Abstractions;
+using Sales.Entities.Abstractions;
 using Sales.Entities.Factory;
 using System;
 using System.Threading.Tasks;
 
 namespace Sales.Core
 {
-    public class ProcessManager
+    public class ProcessManager : IProcessManager
     {
-        private readonly IEFContextFactory _context;
+        private readonly IEFContextFactory _contextFactory;
 
-        private readonly FileParse _fileParse;
+        private readonly IFileParse _fileParse;
 
-        private readonly FileLoader _fileLoader;
+        private IFileLoader _fileLoader;
 
-        public ProcessManager(FileParse fileParse, FileLoader loader)
+        public ProcessManager(IFileParse fileParse, IEFContextFactory contextFactory)
         {
-            _context = new EFContextFactory();
-            _fileLoader = loader;
+            _contextFactory = contextFactory;
             _fileParse = fileParse;
         }
 
@@ -29,12 +29,14 @@ namespace Sales.Core
 
             return Task.Run(() =>
             {
-                using (var context = _context.GetContext())
+                using (var context = _contextFactory.GetContext())
                 {
                     using (var transaction = context.Database.BeginTransaction())
                     {
                         try
                         {
+                            _fileLoader = _fileLoader ?? new FileLoader(context);
+
                             var data = _fileParse.Parse(path);
 
                             _fileLoader.Add(data.Item1, data.Item2);
