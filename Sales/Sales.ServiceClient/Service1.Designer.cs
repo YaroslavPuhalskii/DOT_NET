@@ -30,7 +30,7 @@ namespace Sales.ServiceClient
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.ServiceName = "Sales Service";
         }
 
         #endregion

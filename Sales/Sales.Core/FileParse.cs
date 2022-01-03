@@ -99,9 +99,9 @@ namespace Sales.Core
 
                 return _formatLines;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ArgumentException("File can't be exists!");
+                throw new ArgumentException($"{ex.Message}");
             }
         }
     }
