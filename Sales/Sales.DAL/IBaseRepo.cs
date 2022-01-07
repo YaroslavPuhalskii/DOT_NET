@@ -13,6 +13,6 @@ namespace Sales.DAL
 
         void Update(T item);
 
-        T GetT(Expression<Func<T, bool>> func);
+        T Get(Expression<Func<T, bool>> func);
     }
 }

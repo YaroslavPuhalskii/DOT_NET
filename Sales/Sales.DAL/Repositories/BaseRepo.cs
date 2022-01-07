@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,6 +9,8 @@ namespace Sales.DAL.Repositories
     public class BaseRepo<T> : IBaseRepo<T> where T : class
     {
         protected readonly DbContext _context;
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public BaseRepo(DbContext context)
         {
@@ -23,7 +26,8 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"{ex.Message}");
+                logger.Error(ex.Message);
+                throw new ArgumentException(ex.Message);
             }
         }
 
@@ -37,7 +41,8 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"{ex.Message}");
+                logger.Error(ex.Message);
+                throw new ArgumentException(ex.Message);
             }
         }
 
@@ -50,7 +55,8 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception($"{nameof(item)}");
+                logger.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -64,10 +70,12 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"{ex.Message}");
+                logger.Error(ex.Message);
+                throw new ArgumentException(ex.Message);
             }
         }
-        public T GetT(Expression<Func<T, bool>> func)
+
+        public T Get(Expression<Func<T, bool>> func)
         {
             try
             {
@@ -75,6 +83,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message);
                 throw new ArgumentException(ex.Message);
             }
         }
