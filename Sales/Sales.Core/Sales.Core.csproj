@@ -37,10 +37,17 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.13\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,11 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\IFileLoader.cs" />
-    <Compile Include="Abstractions\IFileParse.cs" />
+    <Compile Include="Abstractions\IDataService.cs" />
+    <Compile Include="Abstractions\IFileParser.cs" />
+    <Compile Include="Abstractions\IFileReader.cs" />
     <Compile Include="Abstractions\IProcessManager.cs" />
-    <Compile Include="FileLoader.cs" />
-    <Compile Include="FileParse.cs" />
+    <Compile Include="DataService.cs" />
+    <Compile Include="FileParser.cs" />
+    <Compile Include="FileReader.cs" />
     <Compile Include="FolderWatcher.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,10 +1,11 @@
 ﻿using Sales.Entities.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Sales.Core.Abstractions
 {
-    public interface IFileLoader
+    public interface IFileReader
     {
-        void Add(FileData fileData, IEnumerable<FormatLine> formatLines);
+        Tuple<FileData, IEnumerable<FormatLine>> Read(string path);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Sales.Core.Abstractions;
 using Sales.Entities.Abstractions;
-using Sales.Entities.Factory;
 using System;
 using System.Threading.Tasks;
 
@@ -10,48 +9,32 @@ namespace Sales.Core
     {
         private readonly IEFContextFactory _contextFactory;
 
-        private readonly IFileParse _fileParse;
+        private readonly IFileParser _fileParser;
 
-        private IFileLoader _fileLoader;
+        private IDataService _dataService;
 
-        public ProcessManager(IFileParse fileParse, IEFContextFactory contextFactory)
+        public ProcessManager(IFileParser fileParser, IEFContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _fileParse = fileParse;
+            _fileParser = fileParser;
         }
 
         public Task<bool> Run(string path)
         {
             if (string.IsNullOrEmpty(path))
-            {
+            {                
                 throw new ArgumentException(nameof(path));
             }
 
             return Task.Run(() =>
             {
-                using (var context = _contextFactory.GetContext())
-                {
-                    using (var transaction = context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            _fileLoader = _fileLoader ?? new FileLoader(context);
+                IFileReader fileReader = new FileReader(_fileParser);
 
-                            var data = _fileParse.Parse(path);
+                var data = fileReader.Read(path);
 
-                            _fileLoader.Add(data.Item1, data.Item2);
+                _dataService = new DataService(_contextFactory);
 
-                            transaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
+                return _dataService.Save(data.Item1, data.Item2);              
             });
         }
     }

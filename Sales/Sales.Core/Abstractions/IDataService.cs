@@ -1,11 +1,10 @@
 ﻿using Sales.Entities.Models;
-using System;
 using System.Collections.Generic;
 
 namespace Sales.Core.Abstractions
 {
-    public interface IFileParse
+    public interface IDataService
     {
-        Tuple<FileData, IEnumerable<FormatLine>> Parse(string path);
+        bool Save(FileData fileData, IEnumerable<FormatLine> formatLines);
     }
 }
