@@ -11,8 +11,8 @@ namespace Sales.ConsoleClient
         static void Main(string[] args)
         {
             IEFContextFactory contextFactory = new EFContextFactory();
-            IFileParse fileParse = new FileParse();
-            IProcessManager manager = new ProcessManager(fileParse, contextFactory);
+            IFileParser fileParser = new FileParser();
+            IProcessManager manager = new ProcessManager(fileParser, contextFactory);
 
             var watcher = new FolderWatcher(manager);
             watcher.Start();
