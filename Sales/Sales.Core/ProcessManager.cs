@@ -19,7 +19,7 @@ namespace Sales.Core
             _fileParser = fileParser;
         }
 
-        public Task<bool> Run(string path)
+        public Task Run(string path)
         {
             if (string.IsNullOrEmpty(path))
             {                
@@ -34,7 +34,7 @@ namespace Sales.Core
 
                 _dataService = new DataService(_contextFactory);
 
-                return _dataService.Save(data.Item1, data.Item2);              
+                _dataService.Save(data.Item1, data.Item2);              
             });
         }
     }

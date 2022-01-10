@@ -65,7 +65,7 @@ namespace Sales.Core
 
             _processManager.Run(path).ContinueWith(x =>
             {
-                if (x.Result)
+                if (!x.IsFaulted)
                 {
                     var processedPath = string.Concat(processedFolder, e.Name);
                     File.Move(path, processedPath);

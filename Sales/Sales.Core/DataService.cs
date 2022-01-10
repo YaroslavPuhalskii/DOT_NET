@@ -33,7 +33,7 @@ namespace Sales.Core
             _contextFactory = contextFactory;
         }
 
-        public bool Save(FileData fileData, IEnumerable<FormatLine> formatLines)
+        public void Save(FileData fileData, IEnumerable<FormatLine> formatLines)
         {
             using (var context = _contextFactory.GetContext())
             {
@@ -45,8 +45,7 @@ namespace Sales.Core
                         SaveData(fileData, formatLines);
 
                         transaction.Commit();
-                        logger.Info($"Commit : {fileData.Manager}_{fileData.DateCreate}.csv");
-                        return true;
+                        logger.Info($"Commit : {fileData.Manager.Name}_{fileData.DateCreate.ToShortDateString()}.csv");
                     }
                     catch (Exception ex)
                     {
@@ -54,7 +53,6 @@ namespace Sales.Core
                         logger.Error($"{ex.Message}");
 
                         transaction.Rollback();
-                        return false;
                     }
                 }
             }

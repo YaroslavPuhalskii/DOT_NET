@@ -5,6 +5,6 @@ namespace Sales.Core.Abstractions
 {
     public interface IDataService
     {
-        bool Save(FileData fileData, IEnumerable<FormatLine> formatLines);
+        void Save(FileData fileData, IEnumerable<FormatLine> formatLines);
     }
 }
