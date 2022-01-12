@@ -1,4 +1,5 @@
-﻿using Sales.Core.Abstractions;
+﻿using NLog;
+using Sales.Core.Abstractions;
 using Sales.Entities.Models;
 using System;
 using System.Configuration;
@@ -24,12 +25,15 @@ namespace Sales.Core
 
         private readonly string _fileDate = ConfigurationManager.AppSettings["fileDate"];
 
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public FileData ParseHeader(string path)
         {
             var headerLine = Path.GetFileNameWithoutExtension(path);
 
             if (string.IsNullOrEmpty(headerLine))
             {
+                logger.Error($"{nameof(path)} can't be null or empty!");
                 throw new ArgumentException(nameof(headerLine));
             }
 
@@ -37,6 +41,7 @@ namespace Sales.Core
 
             if (header.Length != 2)
             {
+                logger.Error($"{nameof(header)} length should be 2!");
                 throw new ArgumentOutOfRangeException(nameof(header));
             }
 
@@ -51,14 +56,16 @@ namespace Sales.Core
         {
             if (string.IsNullOrEmpty(line))
             {
-                throw new ArgumentNullException();
+                logger.Error($"{nameof(line)} can't be null or empty!");
+                throw new ArgumentNullException(nameof(line));
             }
 
             var formatLine = line.Split(';');
 
             if (formatLine.Length != 4)
             {
-                throw new ArgumentOutOfRangeException();
+                logger.Error($"{nameof(formatLine)} length should be 4!");
+                throw new ArgumentOutOfRangeException(nameof(formatLine));
             }
 
             return new FormatLine()

@@ -24,6 +24,7 @@ namespace Sales.Core
         {
             if (string.IsNullOrEmpty(path))
             {
+                logger.Error($"{nameof(path)} can't be null or empty!");
                 throw new ArgumentNullException(nameof(path));
             }
 
@@ -48,6 +49,7 @@ namespace Sales.Core
             }
             catch (Exception ex)
             {
+                logger.Error($"{nameof(path)} can't be read: {ex.Message}");
                 throw new Exception(ex.Message);
             }
         }

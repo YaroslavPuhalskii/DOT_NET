@@ -8,11 +8,11 @@ namespace Sales.Core
 {
     public class FolderWatcher : IDisposable
     {
-        private readonly string startFolder = ConfigurationManager.AppSettings["forManager"];
+        private readonly string _startFolder = ConfigurationManager.AppSettings["forManager"];
 
-        private readonly string processingFolder = ConfigurationManager.AppSettings["processing"];
+        private readonly string _processingFolder = ConfigurationManager.AppSettings["processing"];
 
-        private readonly string processedFolder = ConfigurationManager.AppSettings["processed"];
+        private readonly string _processedFolder = ConfigurationManager.AppSettings["processed"];
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -41,7 +41,7 @@ namespace Sales.Core
 
         private void Init()
         {
-            _watcher = new FileSystemWatcher(startFolder)
+            _watcher = new FileSystemWatcher(_startFolder)
             {
                 NotifyFilter = NotifyFilters.Attributes
                                 | NotifyFilters.DirectoryName
@@ -58,7 +58,7 @@ namespace Sales.Core
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             logger.Info($"Create file: {e.FullPath}");
-            string path = string.Concat(processingFolder, e.Name);
+            string path = string.Concat(_processingFolder, e.Name);
 
             File.Move(e.FullPath, path);
             logger.Info($"{e.Name} move to {path}");
@@ -67,7 +67,7 @@ namespace Sales.Core
             {
                 if (!x.IsFaulted)
                 {
-                    var processedPath = string.Concat(processedFolder, e.Name);
+                    var processedPath = string.Concat(_processedFolder, e.Name);
                     File.Move(path, processedPath);
                     logger.Info($"{e.Name} move to {processedPath}");
                 }

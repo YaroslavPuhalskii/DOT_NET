@@ -14,7 +14,11 @@ namespace Sales.DAL.Repositories
 
         public BaseRepo(DbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                logger.Error($"{nameof(context)} can't be null");
+                throw new ArgumentNullException(nameof(context));
+            }
         }
 
         public void Insert(T item)
@@ -26,7 +30,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"Failed to insert item: {ex.Message}");
                 throw new ArgumentException(ex.Message);
             }
         }
@@ -41,7 +45,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"The item could not be updated: {ex.Message}");
                 throw new ArgumentException(ex.Message);
             }
         }
@@ -55,7 +59,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"The item could not be removed: {ex.Message}");
                 throw new Exception(ex.Message);
             }
         }
@@ -70,7 +74,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"The item could not be removed: {ex.Message}");
                 throw new ArgumentException(ex.Message);
             }
         }
@@ -83,7 +87,7 @@ namespace Sales.DAL.Repositories
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"Item can't be found: {ex.Message}");
                 throw new ArgumentException(ex.Message);
             }
         }

@@ -14,15 +14,15 @@ namespace Sales.Core
     {
         private readonly IEFContextFactory _contextFactory;
 
-        private IFileDataRepo fileDataRepo;
+        private IFileDataRepo _fileDataRepo;
 
-        private IManagerRepo managerRepo;
+        private IManagerRepo _managerRepo;
 
-        private IClientRepo clientRepo;
+        private IClientRepo _clientRepo;
 
-        private IProductRepo productRepo;
+        private IProductRepo _productRepo;
 
-        private ISaleRepo saleRepo;
+        private ISaleRepo _saleRepo;
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -49,8 +49,7 @@ namespace Sales.Core
                     }
                     catch (Exception ex)
                     {
-                        logger.Info("Rollback!");
-                        logger.Error($"{ex.Message}");
+                        logger.Error($"Rollback! Data can't be added! {ex.Message}");
 
                         transaction.Rollback();
                     }
@@ -60,34 +59,34 @@ namespace Sales.Core
 
         private void Init(DbContext context)
         {
-            fileDataRepo = new FileDataRepo(context);
+            _fileDataRepo = new FileDataRepo(context);
 
-            managerRepo = new ManagerRepo(context);
+            _managerRepo = new ManagerRepo(context);
 
-            clientRepo = new ClientRepo(context);
+            _clientRepo = new ClientRepo(context);
 
-            productRepo = new ProductRepo(context);
+            _productRepo = new ProductRepo(context);
 
-            saleRepo = new SaleRepo(context);
+            _saleRepo = new SaleRepo(context);
         }
 
         private void SaveData(FileData fileData, IEnumerable<FormatLine> formatLines)
         {
             lock (locker)
             {
-                var manager = managerRepo.Get(x => x.Name == fileData.Manager.Name);
+                var manager = _managerRepo.Get(x => x.Name == fileData.Manager.Name);
 
                 if (manager != null)
                 {
                     fileData.Manager = manager;
                 }
 
-                fileDataRepo.Insert(fileData);
+                _fileDataRepo.Insert(fileData);
 
                 foreach (var line in formatLines)
                 {
-                    var client = clientRepo.Get(x => x.Name.Equals(line.Client.Name));
-                    var product = productRepo.Get(x => x.Name.Equals(line.Product.Name));
+                    var client = _clientRepo.Get(x => x.Name.Equals(line.Client.Name));
+                    var product = _productRepo.Get(x => x.Name.Equals(line.Product.Name));
 
                     if (client != null)
                     {
@@ -99,7 +98,7 @@ namespace Sales.Core
                         line.Product = product;
                     }
 
-                    saleRepo.Insert(new Sale()
+                    _saleRepo.Insert(new Sale()
                     {
                         DateTime = line.DateTime,
                         Client = line.Client,
