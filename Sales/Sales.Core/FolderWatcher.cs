@@ -14,6 +14,8 @@ namespace Sales.Core
 
         private readonly string _processedFolder = ConfigurationManager.AppSettings["processed"];
 
+        private readonly string _errorsFolder = ConfigurationManager.AppSettings["errors"];
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private FileSystemWatcher _watcher;
@@ -65,7 +67,14 @@ namespace Sales.Core
 
             _processManager.Run(path).ContinueWith(x =>
             {
-                if (!x.IsFaulted)
+                if (x.IsFaulted)
+                {
+                    var errorsPath = string.Concat(_errorsFolder, e.Name);
+                    File.Move(path, errorsPath);
+                    logger.Info($"{e.Name} move to {errorsPath}");
+
+                }
+                else
                 {
                     var processedPath = string.Concat(_processedFolder, e.Name);
                     File.Move(path, processedPath);

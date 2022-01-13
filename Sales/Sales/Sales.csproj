@@ -35,10 +35,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="LocalFolder\" />
-    <Folder Include="Processed\" />
-    <Folder Include="Processing\" />
+    <Content Include="ErrorsFolder\Info.txt" />
+    <Content Include="LocalFolder\Info.txt" />
+    <Content Include="Processed\Info.txt" />
+    <Content Include="Processing\Info.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

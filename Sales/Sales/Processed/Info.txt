@@ -1,0 +1,1 @@
+﻿Folder where processed files are placed.
