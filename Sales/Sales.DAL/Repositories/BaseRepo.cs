@@ -19,6 +19,8 @@ namespace Sales.DAL.Repositories
                 logger.Error($"{nameof(context)} can't be null");
                 throw new ArgumentNullException(nameof(context));
             }
+
+            _context = context;
         }
 
         public void Insert(T item)
