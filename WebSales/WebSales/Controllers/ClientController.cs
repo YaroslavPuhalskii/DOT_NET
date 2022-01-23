@@ -26,12 +26,13 @@ namespace WebSales.Controllers
             return PartialView(clients);
         }
 
-        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public PartialViewResult Create()
         {
             return PartialView();
         }
 
+        [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult Create(ClientCreateView obj)
         {
