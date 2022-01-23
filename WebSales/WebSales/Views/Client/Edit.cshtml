@@ -1,0 +1,81 @@
+﻿@model WebSales.Models.ClientEditView
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+    .close {
+        top: 20px;
+        left: 560px;
+        position: fixed;
+    }
+
+    #updateBtn {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+
+    #editeForm {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+</style>
+
+<div class="modal fade" id="modalEdite" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="nameModalOperation" class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <label id="serverError"></label>
+                    @Html.ValidationSummary(false)
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="form-group" id="editeForm">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    <input id="updateBtn" type="submit" class="btn btn-success" value="Update" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#modalEdite").ready(() => {
+        showEditeClient();
+    });
+    function editeClient() {
+        if ($("form").validate()) {
+            $("form").on("submit", function (e) {
+                e.preventDefault();
+                console.log($("form").serialize());
+                $.post('@Url.Action("Edit", "Client")',
+                    $("form").serialize(),
+                    function (data, textStatus, jHXR) {
+                        if (data.result == true) {
+                            hideEditeClient();
+                            load();
+                        }
+                        else {
+                            var message = data.message != undefined ? data.message : "Error on server";
+                            $("#serverError").text(message);
+                        }
+                    });
+            });
+        }
+    }
+    function showEditeClient() {
+        $("#modalEdite").modal();
+    }
+    function hideEditeClient() {
+        $("#modalEdite").modal('hide');
+    }
+    $("#updateBtn").click(editeClient);
+</script>

@@ -1,0 +1,72 @@
+﻿@model WebSales.Models.ClientIndexView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Information about clients.</h2>
+
+<div id="loader">
+    <h2>Loading data...</h2>
+    <div class="load_spinner"></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div id="data_clients"> </div>
+    </div>
+    <div class="col-sm-5">
+        @if (User.IsInRole("Admin"))
+        {
+            <button id="openCreateFormBtn" class="btn btn-primary">Add client</button>
+        }
+        <div id="dialog_form"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+    $(document).ready(function () {
+        load();
+    });
+
+    function load() {
+         $("#loader").css('display', "display");
+        $("#data_clients").load('@Url.Action("Load", "Client")',
+            function () {
+                $("#loader").css('display', "none");
+            }
+        );
+    }
+
+    $("#openCreateFormBtn").click(openCreateForm);
+
+    function openCreateForm() {
+        $("#dialog_form").load('@Url.Action("Create", "Client")');
+        }
+
+    function deleteClient(id) {
+        $.post('@Url.Action("Delete", "Client")/'+ id,
+            function (data) {
+                if (data.result == true) {
+                    load();
+                }
+                else {
+                    alert("Нельзя удалить клиента.");
+                }
+            }
+        );
+        return false;
+        }
+
+    openEditForm = function (idClient) {
+        console.log("Edit opening")
+        $("#dialog_form").load('@Url.Action("Edit", "Client")/' + idClient);
+        return false;
+    }
+
+
+    </script>
+    }
+
+
