@@ -1,0 +1,80 @@
+﻿@model WebSales.Models.ManagerCreateView
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+    .close {
+        top: 20px;
+        left: 560px;
+        position: fixed;
+    }
+
+    #createBtn {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+
+    #createForm {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+</style>
+
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="nameModalOperation" class="modal-title">Add manager</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <label id="serverError"></label>
+                    @Html.ValidationSummary(false)
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    <input id="createBtn" type="submit" class="btn btn-success" value="Create" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#modalCreate").ready(() => {
+        showCreateSeller();
+    });
+    function createSeller() {
+        if ($("form").validate()) {
+            $("form").on("submit", function (e) {
+                e.preventDefault();
+                console.log($("form").serialize());
+                $.post('@Url.Action("Create", "Manager")',
+                    $("form").serialize(),
+                    function (data) {
+                        if (data.result == true) {
+                            hideCreateSeller();
+                            load();
+                        }
+                        else {
+                            var message = data.message != undefined ? data.message : "Error on server";
+                            $("#serverError").text(message);
+                        }
+                    });
+            });
+        }
+    }
+    function showCreateSeller() {
+        $("#modalCreate").modal();
+    }
+    function hideCreateSeller() {
+        $("#modalCreate").modal('hide');
+    }
+    $("#createBtn").click(createSeller);
+</script>

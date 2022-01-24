@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Information about products.</h2>
+
+<div id="loader">
+    <h2>Loading data...</h2>
+    <div class="load_spinner"></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div id="data_clients"> </div>
+    </div>
+    <div class="col-sm-5">
+        @if (User.IsInRole("Admin"))
+        {
+            <button id="openCreateFormBtn" class="btn btn-primary">Add product</button>
+        }
+        <div id="dialog_form"></div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+    $(document).ready(function () {
+        load();
+    });
+
+    openAddForm = function () {
+        $("#dialog_form").load('@Url.Action("Create", "Product")');
+    }
+    openEditForm = function (idClient) {
+        $("#dialog_form").load('@Url.Action("Edit", "Product")/' + idClient);
+        return false;
+    }
+    function deleteProduct(id) {
+        $.post('@Url.Action("Delete", "Product")/'+ id,
+            function (data) {
+                if (data.result == true) {
+                    load();
+                }
+                else {
+                    alert("Нельзя удалить продукт.");
+                }
+            }
+        );
+        return false;
+    }
+    function load() {
+        $("#loader").css('display', "display");
+        $("#data_clients").load('@Url.Action("Load", "Product")',
+            function () {
+                $("#loader").css('display', "none");
+            }
+        );
+    }
+
+    $("#openCreateFormBtn").click(openAddForm);
+    </script>
+}

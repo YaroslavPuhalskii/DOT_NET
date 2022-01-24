@@ -10,21 +10,21 @@ namespace WebSales.DAL
 
         private bool disposedValue;
 
-        private readonly IGenericRepository<Client> _clientRepo;
+        private IGenericRepository<Client> _clientRepo;
 
-        private readonly IGenericRepository<Manager> _managerRepo;
+        private IGenericRepository<Manager> _managerRepo;
 
-        private readonly IGenericRepository<Product> _productRepo;
+        private IGenericRepository<Product> _productRepo;
 
-        private readonly IGenericRepository<Sale> _saleRepo;
+        private IGenericRepository<Sale> _saleRepo;
 
-        public IGenericRepository<Client> ClientRepo => _clientRepo ?? new GenericRepository<Client>(_context);
+        public IGenericRepository<Client> ClientRepo => _clientRepo = _clientRepo ?? new GenericRepository<Client>(_context);
 
-        public IGenericRepository<Manager> ManagerRepo => _managerRepo ?? new GenericRepository<Manager>(_context);
+        public IGenericRepository<Manager> ManagerRepo => _managerRepo = _managerRepo ?? new GenericRepository<Manager>(_context);
 
-        public IGenericRepository<Product> ProductRepo => _productRepo ?? new GenericRepository<Product>(_context);
+        public IGenericRepository<Product> ProductRepo => _productRepo = _productRepo ?? new GenericRepository<Product>(_context);
 
-        public IGenericRepository<Sale> SaleRepo => _saleRepo ?? new GenericRepository<Sale>(_context);
+        public IGenericRepository<Sale> SaleRepo => _saleRepo = _saleRepo ?? new GenericRepository<Sale>(_context);
 
         public void Save()
         {

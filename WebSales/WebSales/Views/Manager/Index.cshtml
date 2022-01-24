@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Information about managers.</h2>
+
+<div id="loader">
+    <h2>Идет загрузка данных...</h2>
+    <div class="load_spinner"></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div id="data_sellers"> </div>
+    </div>
+    <div class="col-sm-5">
+        @if (User.IsInRole("Admin"))
+        {
+            <button id="openCreateFormBtn" class="btn btn-primary">Add manager</button>
+        }
+        <div id="dialog_form"></div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+    $(document).ready(function () {
+        load();
+    });
+    openAddForm = function () {
+        $("#dialog_form").load('@Url.Action("Create", "Manager")');
+    }
+    openEditForm = function (idClient) {
+        $("#dialog_form").load('@Url.Action("Edit", "Manager")/' + idClient);
+        return false;
+        }
+    @*function DeleteSeller(id) {
+        $.ajax({
+            url: '@Url.Action("Delete", "Manager")/' + id,
+            type: 'POST',
+            success: function (result) {
+                if (result.result) {
+                    openSellerform();
+                }
+                else {
+                    alert("Нельзя удалить продавца!");
+                }
+            }
+        });
+    }*@
+    function deleteSeller(id) {
+        $.post('@Url.Action("Delete", "Manager")/'+ id,
+            function (data) {
+                if (data.result == true) {
+                    load();
+                }
+                else {
+                    alert("Нельзя удалить продовца");
+                }
+            }
+        );
+        return false;
+    }
+    function load() {
+        $("#loader").css('display', "display");
+        $("#data_sellers").load('@Url.Action("Load", "Manager")',
+            function () {
+                $("#loader").css('display', "none");
+            }
+        );
+    }
+    $("#openCreateFormBtn").click(openAddForm);
+    </script>
+}

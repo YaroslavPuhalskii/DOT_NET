@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebSales.Models.ManagerIndexView>
+
+@{
+    bool isValidForAction = (Request.IsAuthenticated && User.IsInRole("Admin"));
+}
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                @if (isValidForAction)
+                {
+                    <th scope="col">Function</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var seller in Model)
+            {
+                <tr>
+                    <th scope="row">@seller.Id</th>
+                    <td>@seller.Name</td>
+                    @if (isValidForAction)
+                    {
+                        <td>
+                            <a href="#" onclick="return openEditForm(@seller.Id)">Edit</a> | <a href="#" onclick="return deleteSeller(@seller.Id)">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>Database is empty!</h2>
+}
