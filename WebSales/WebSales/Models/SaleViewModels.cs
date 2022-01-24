@@ -4,6 +4,17 @@ using System.Web.Mvc;
 
 namespace WebSales.Models
 {
+    public class SaleFilter
+    {
+        public string Client { get; set; }
+
+        public string Manager { get; set; }
+
+        public string Product { get; set; }
+
+        public int Sum { get; set; }
+    }
+
     public class SaleIndexView
     {
         [HiddenInput(DisplayValue = false)]
