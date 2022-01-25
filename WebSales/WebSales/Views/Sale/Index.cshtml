@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "SalesIndex";
+}
+
+<h2>Sales</h2>
+
+<div id="loader">
+    <h2>Loading data...</h2>
+    <div class="load_spinner"></div>
+</div>
+<div class="container">
+    <div id="salesBlock"></div>
+    @if (User.IsInRole("Admin"))
+    {
+        <button id="openCreateFormBtn" style="display: none;" class="btn btn-primary">Add sale</button>
+    }
+</div>
+
+<div id="dialog_window"></div>
+
+@section scripts {
+    <script>
+        $(document).ready(() => {
+            load();
+        });
+
+        $("#openCreateFormBtn").click(() => {
+            $("#dialog_window").load('@Url.Action("Create", "Sale")');
+        });
+
+        function editForm(id) {
+            $("#dialog_window").load('@Url.Action("Edit", "Sale")/' + id);
+        }
+
+        function deleteSale(id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Sale")/' + id,
+            success: function (result) {
+                if (result.result) {
+                    load();
+                }
+                else {
+                    alert("Невозможно удалить продажу");
+                }
+            }
+        });
+        }
+
+        function load(data) {
+            $("#loader").css('display', "display");
+            $("#openCreateFormBtn").hide();
+            $("#salesBlock").load('@Url.Action("Load", "Sale")/?' + data,
+                function () {
+                $("#openCreateFormBtn").show();
+                    $("#loader").css('display', "none");
+                }
+            );
+        }
+    </script>
+}

@@ -1,0 +1,118 @@
+﻿@model IEnumerable<WebSales.Models.SaleIndexView>
+
+@{
+    var isValidAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet">
+
+<style>
+    #form_container {
+        margin: 1% auto 1%;
+    }
+
+    #filterBtn {
+        margin: 1% auto 1%;
+    }
+
+    .form-inline {
+        margin: 1% auto;
+    }
+</style>
+
+
+<div class="mainBtnContainer">
+    <button id="filterBtn" type="button" class="btn btn-success">Filters</button>
+</div>
+
+<div id="form_container" hidden class="col-sm-8">
+    <form id="form_filter">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="ClientFilter">Client: </label>
+                @Html.TextBox("Client", ViewBag.Filter.Client as string, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="ManagerFilter">Manager: </label>
+                @Html.TextBox("Manager", ViewBag.Filter.Manager as string, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="ProductFilter">Product</label>
+                @Html.TextBox("Product", ViewBag.Filter.Product as string, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Sum">Sum</label>
+                @Html.TextBox("Sum", ViewBag.Filter.Sum as string, new { @class = "form-control" })
+            </div>
+        </div>
+        <hr />
+        <div id="search_button" class="form-inline">
+            <div class="form-group row">
+                <div class="form-inline">
+                    <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
+                    <button id="cleanBtn" type="submit" class="btn btn-primary">Clean</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div id="dataSales">
+    <div class="col-sm-8">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Client</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Manager</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
+                    @if (isValidAdmin)
+                    {
+                        <th scope="col">Function</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sale in Model)
+                {
+                    <tr onclick="editSale(@sale.Id)">
+                        <td>@sale.Client</td>
+                        <td>@sale.Product</td>
+                        <td>@sale.Manager</td>
+                        <td>@sale.Sum</td>
+                        <td>@Html.DisplayFor(m => sale.Date)</td>
+                        @if (isValidAdmin)
+                        {
+                            <td>
+                                <a href="#" onclick="return editForm(@sale.Id)">Edit</a> | <a href="#" onclick="return deleteSale(@sale.Id)">Delete</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $("#filterBtn").click(() => {
+        $("#form_container").toggle();
+    })
+
+    $("#searchBtn").click((event) => {
+        event.preventDefault();
+        $("#form_container").toggle();
+        load($("#form_filter").serialize());
+    })
+
+    $("#cleanBtn").click((event) => {
+        event.preventDefault();
+        $("#form_filter :input").each(function () {
+            $(this).val("");
+        })
+    })
+</script>

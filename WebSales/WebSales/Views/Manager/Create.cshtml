@@ -48,33 +48,34 @@
 
 <script type="text/javascript">
     $("#modalCreate").ready(() => {
-        showCreateSeller();
+        showCreateForm();
     });
-    function createSeller() {
-        if ($("form").validate()) {
-            $("form").on("submit", function (e) {
-                e.preventDefault();
-                console.log($("form").serialize());
-                $.post('@Url.Action("Create", "Manager")',
-                    $("form").serialize(),
-                    function (data) {
-                        if (data.result == true) {
-                            hideCreateSeller();
-                            load();
-                        }
-                        else {
-                            var message = data.message != undefined ? data.message : "Error on server";
-                            $("#serverError").text(message);
-                        }
-                    });
-            });
-        }
-    }
-    function showCreateSeller() {
+
+    $('form').on("submit", function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create", "Manager")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideCreateForm();
+                    load();
+                }
+                else {
+                    var message = result.message != undefined ? result.message : "Error on server";
+                    $("#serverError").text(message);
+                }
+            }
+        });
+    })
+
+    function showCreateForm() {
         $("#modalCreate").modal();
     }
-    function hideCreateSeller() {
+
+    function hideCreateForm() {
         $("#modalCreate").modal('hide');
     }
-    $("#createBtn").click(createSeller);
 </script>

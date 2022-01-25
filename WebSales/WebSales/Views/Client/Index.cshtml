@@ -26,46 +26,41 @@
 
 @section scripts {
     <script>
-    $(document).ready(function () {
-        load();
-    });
+        $(document).ready(function () {
+            load();
+        });
 
-    function load() {
-         $("#loader").css('display', "display");
-        $("#data_clients").load('@Url.Action("Load", "Client")',
-            function () {
-                $("#loader").css('display', "none");
-            }
-        );
-    }
-
-    $("#openCreateFormBtn").click(openCreateForm);
-
-    function openCreateForm() {
-        $("#dialog_form").load('@Url.Action("Create", "Client")');
+        function load() {
+            $("#loader").css('display', "display");
+            $("#data_clients").load('@Url.Action("Load", "Client")',
+                function () {
+                    $("#loader").css('display', "none");
+                }
+            );
         }
 
-    function deleteClient(id) {
-        $.post('@Url.Action("Delete", "Client")/'+ id,
-            function (data) {
-                if (data.result == true) {
-                    load();
+        $("#openCreateFormBtn").click(() => {
+            $("#dialog_form").load('@Url.Action("Create", "Client")');
+        });
+
+        function deleteClient(id) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Client")/' + id,
+                type: 'POST',
+                success: function (result) {
+                    if (result.result == true) {
+                        load();
+                    }
+                    else {
+                        alert("Нельзя удалить клиента!");
+                    }
                 }
-                else {
-                    alert("Нельзя удалить клиента.");
-                }
-            }
-        );
-        return false;
+            });
         }
 
-    openEditForm = function (idClient) {
-        console.log("Edit opening")
-        $("#dialog_form").load('@Url.Action("Edit", "Client")/' + idClient);
-        return false;
-    }
-
-
+        openEditForm = function (id) {
+            $("#dialog_form").load('@Url.Action("Edit", "Client")/' + id);
+        }
     </script>
     }
 

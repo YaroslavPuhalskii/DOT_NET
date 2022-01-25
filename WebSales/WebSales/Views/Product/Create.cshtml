@@ -52,50 +52,31 @@
         showCreateForm();
     });
 
-    @*$('form').on("submit", function (event) {
+    $('form').on("submit", function (event) {
         event.preventDefault();
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Create", "Product")',
             data: $('form').serialize(),
             success: function (result) {
                 if (result.result) {
-                    hideClientCreateform();
-                    function {
-                        $("#window").load('@Url.Action("Load", "Product")');
-                    }
+                    hideCreateForm();
+                    load();
                 }
                 else {
-                    alert("Не удалось удалить клиента!");
+                    var message = result.message != undefined ? result.message : "Error on server";
+                    $("#serverError").text(message);
                 }
             }
         });
-    })*@
+    })
 
-    function createClient() {
-        if ($("form").validate()) {
-            $("form").on("submit", function (e) {
-                e.preventDefault();
-                $.post('@Url.Action("Create", "Product")',
-                    $("form").serialize(),
-                    function (data) {
-                        if (data.result == true) {
-                            hideCreateForm();
-                            loadData();
-                        }
-                        else {
-                            var message = data.message != undefined ? data.message : "Error on server";
-                            $("#serverError").text(message);
-                        }
-                    });
-            });
-        }
-    }
     function showCreateForm() {
         $("#modalCreate").modal();
     }
+
     function hideCreateForm() {
         $("#modalCreate").modal('hide');
     }
-    $("#createBtn").click(createClient);
 </script>

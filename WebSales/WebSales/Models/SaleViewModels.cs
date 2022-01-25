@@ -34,8 +34,8 @@ namespace WebSales.Models
 
         [Display(Name = "Дата продажи")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime Date { get; set; }
     }
 
     public class SaleCreateView
@@ -57,14 +57,14 @@ namespace WebSales.Models
 
         [Display(Name = "Стоимость")]
         [Required(ErrorMessage = "Введите стоимость")]
-        [Range(1, int.MaxValue, ErrorMessage = "Введите корректные данные")]
+        [Range(0, int.MaxValue, ErrorMessage = "Введите корректные данные")]
         public int Sum { get; set; }
 
         [Display(Name = "Дата продажи")]
         [Required(ErrorMessage = "Введите дату продажи")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateTime { get; set; }
+        public DateTime Date { get; set; }
     }
 
     public class SaleEditView
@@ -93,6 +93,6 @@ namespace WebSales.Models
         [Required(ErrorMessage = "Введите дату продажи")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateTime { get; set; }
+        public DateTime Date { get; set; }
     }
 }

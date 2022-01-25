@@ -48,33 +48,34 @@
 
 <script type="text/javascript">
     $("#modalEdit").ready(() => {
-        showEditSeller();
+        showEditForm();
     });
-    function onUpdateSeller() {
-        if ($("form").validate()) {
-            $("form").on("submit", function (e) {
-                e.preventDefault();
-                $.post('@Url.Action("Edit", "Manager")',
-                    $("form").serialize(),
-                    function (data) {
-                        if (data.result == true) {
-                            hideEditSeller();
-                            load();
-                        }
-                        else {
-                            var message = data.message != undefined ? data.message : "Error on server";
-                            $("#serverError").text(message);
-                        }
-                    }
-                );
-            });
-        }
-    }
-    function showEditSeller() {
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Edit", "Manager")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideEditForm();
+                    load();
+                }
+                else {
+                    var message = data.message != undefined ? data.message : "Error on server";
+                    $("#serverError").text(message);
+                }
+            }
+        })
+    })
+
+    function showEditForm() {
         $("#modalEdit").modal();
     }
-    function hideEditSeller() {
+
+    function hideEditForm() {
         $("#modalEdit").modal('hide');
     }
-    $("#updateBtn").click(onUpdateSeller);
 </script>

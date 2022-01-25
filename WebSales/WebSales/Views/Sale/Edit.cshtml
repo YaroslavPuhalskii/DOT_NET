@@ -1,0 +1,103 @@
+﻿@model WebSales.Models.SaleEditView
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+    #createForm {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+
+    .close {
+        top: 20px;
+        left: 560px;
+        position: fixed;
+    }
+
+    #createBtn {
+        width: 300px;
+        position: relative;
+        left: 150px
+    }
+</style>
+
+<div class="modal fade" id="modalEdite" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="nameModalOperation" class="modal-title">Editing</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    <label id="serverError"></label>
+                    @Html.ValidationSummary(false)
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.ManagerId)
+                        @Html.DropDownListFor(m => m.ManagerId, ViewBag.Managers as SelectList, new { @class = "form-control", @name = "Managerss" })
+                        @Html.ValidationMessageFor(model => model.ManagerId)
+                    </div>
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.ClientId)
+                        @Html.DropDownListFor(m => m.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
+                        @Html.ValidationMessageFor(model => model.ClientId)
+                    </div>
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.ProductId)
+                        @Html.DropDownListFor(m => m.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
+                        @Html.ValidationMessageFor(model => model.ProductId)
+                    </div>
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.Sum)
+                        @Html.TextAreaFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
+                        @Html.ValidationMessageFor(model => model.Sum)
+                    </div>
+                    <div class="form-group" id="createForm">
+                        @Html.LabelFor(m => m.Date)
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @name = "Date" })
+                        @Html.ValidationMessageFor(model => model.Date)
+                    </div>
+
+                    <input id="createBtn" type="submit" class="btn btn-success" value="Update" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#modalEdite").ready(() => {
+        showEditeForm();
+    });
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Edit", "Sale")',
+            data: $("#saveForm").serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideEditeForm();
+                    load();
+                }
+                else {
+                    var message = data.message != undefined ? data.message : "Error on server";
+                    aler("Невозможно обновить продажу!");
+                }
+            }
+        })
+    })
+
+    function showEditeForm() {
+        $("#modalEdite").modal();
+    }
+
+    function hideEditeForm() {
+        $("#modalEdite").modal('hide');
+    }
+</script>

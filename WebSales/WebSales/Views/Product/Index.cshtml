@@ -23,41 +23,41 @@
 </div>
 
 @section scripts {
-
     <script>
-    $(document).ready(function () {
-        load();
-    });
+        $(document).ready(function () {
+            load();
+        });
 
-    openAddForm = function () {
-        $("#dialog_form").load('@Url.Action("Create", "Product")');
-    }
-    openEditForm = function (idClient) {
-        $("#dialog_form").load('@Url.Action("Edit", "Product")/' + idClient);
-        return false;
-    }
-    function deleteProduct(id) {
-        $.post('@Url.Action("Delete", "Product")/'+ id,
-            function (data) {
-                if (data.result == true) {
-                    load();
-                }
-                else {
-                    alert("Нельзя удалить продукт.");
-                }
-            }
-        );
-        return false;
-    }
-    function load() {
-        $("#loader").css('display', "display");
-        $("#data_clients").load('@Url.Action("Load", "Product")',
-            function () {
-                $("#loader").css('display', "none");
-            }
-        );
-    }
+        $("#openCreateFormBtn").click(() => {
+            $("#dialog_form").load('@Url.Action("Create", "Product")');
+        });
 
-    $("#openCreateFormBtn").click(openAddForm);
+        openEditForm = function (id) {
+            $("#dialog_form").load('@Url.Action("Edit", "Product")/' + id);
+        }
+
+        function deleteProduct(id) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Product")/' + id,
+                type: 'POST',
+                success: function (result) {
+                    if (result.result == true) {
+                        load();
+                    }
+                    else {
+                        alert("Нельзя удалить клиента!");
+                    }
+                }
+            });
+        }
+
+        function load() {
+            $("#loader").css('display', "display");
+            $("#data_clients").load('@Url.Action("Load", "Product")',
+                function () {
+                    $("#loader").css('display', "none");
+                }
+            );
+        }
     </script>
 }

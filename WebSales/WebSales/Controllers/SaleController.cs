@@ -56,9 +56,9 @@ namespace WebSales.Controllers
         [Authorize(Roles = "Admin")]
         public PartialViewResult Create()
         {
-            ViewBag.Clients = new SelectList(unitOfWork.ClientRepo.GetAll(), "ClientId", "Name");
-            ViewBag.Products = new SelectList(unitOfWork.ProductRepo.GetAll(), "ProductId", "Name");
-            ViewBag.Managers = new SelectList(unitOfWork.ManagerRepo.GetAll(), "ManagerId", "Name");
+            ViewBag.Clients = new SelectList(unitOfWork.ClientRepo.GetAll(), "Id", "Name");
+            ViewBag.Products = new SelectList(unitOfWork.ProductRepo.GetAll(), "Id", "Name");
+            ViewBag.Managers = new SelectList(unitOfWork.ManagerRepo.GetAll(), "Id", "Name");
 
             return PartialView();
         }
@@ -100,9 +100,9 @@ namespace WebSales.Controllers
                     var map = new Mapper(config);
                     var sale = map.Map<Sale, SaleEditView>(unitOfWork.SaleRepo.GetById(id));
 
-                    ViewBag.Clients = new SelectList(unitOfWork.ClientRepo.GetAll(), "ClientId", "Name");
-                    ViewBag.Products = new SelectList(unitOfWork.ProductRepo.GetAll(), "ProductId", "Name");
-                    ViewBag.Managers = new SelectList(unitOfWork.ManagerRepo.GetAll(), "M`anagerId", "Name");
+                    ViewBag.Clients = new SelectList(unitOfWork.ClientRepo.GetAll(), "Id", "Name");
+                    ViewBag.Products = new SelectList(unitOfWork.ProductRepo.GetAll(), "Id", "Name");
+                    ViewBag.Managers = new SelectList(unitOfWork.ManagerRepo.GetAll(), "Id", "Name");
 
                     return PartialView(sale);
                 }

@@ -52,49 +52,31 @@
         showEditForm();
     });
 
-    @*$('form').on("submit", function (event) {
+    $('form').on('submit', function (event) {
         event.preventDefault();
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Edit", "Product")',
             data: $('form').serialize(),
             success: function (result) {
                 if (result.result) {
-                    hideProductEdit();
+                    hideEditForm();
                     load();
                 }
                 else {
-                    alert("Невозможно произвести действие!");
+                    var message = data.message != undefined ? data.message : "Error on server";
+                    $("#serverError").text(message);
                 }
             }
-        });
-    });*@
+        })
+    })
 
-    function onUpdateProduct() {
-        if ($("form").validate()) {
-            $("form").on("submit", function (e) {
-                e.preventDefault();
-                $.post('@Url.Action("Edit", "Product")',
-                    $("form").serialize(),
-                    function (data, textStatus, jHXR) {
-                        if (data.result == true) {
-                            hideEditForm();
-                            loadData();
-                        }
-                        else {
-                            var message = data.message != undefined ? data.message : "Error on server";
-                            $("#serverError").text(message);
-                        }
-                    }
-                );
-            });
-        }
-    }
     function showEditForm() {
         $("#modalEdit").modal();
     }
+
     function hideEditForm() {
         $("#modalEdit").modal('hide');
     }
-    $("#updateBtn").click(onUpdateProduct);
 </script>
