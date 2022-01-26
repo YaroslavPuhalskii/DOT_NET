@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -17,13 +18,15 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public PartialViewResult Load()
+        public PartialViewResult Load(int? page)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerIndexView>());
             var mapper = new Mapper(config);
-            var clients = mapper.Map<List<ManagerIndexView>>(unitOfWork.ManagerRepo.GetAll());
-
-            return PartialView(clients);
+            var managers = mapper.Map<List<ManagerIndexView>>(unitOfWork.ManagerRepo.GetAll());
+            
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return PartialView(managers.ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -41,9 +44,9 @@ namespace WebSales.Controllers
                 {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ManagerCreateView, Manager>());
                     var mapper = new Mapper(config);
-                    var client = mapper.Map<ManagerCreateView, Manager>(obj);
+                    var manager = mapper.Map<ManagerCreateView, Manager>(obj);
 
-                    unitOfWork.ManagerRepo.Insert(client);
+                    unitOfWork.ManagerRepo.Insert(manager);
                     unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -66,9 +69,9 @@ namespace WebSales.Controllers
                 {
                     var conf = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerEditView>());
                     var map = new Mapper(conf);
-                    var client = map.Map<Manager, ManagerEditView>(unitOfWork.ManagerRepo.GetById(id));
+                    var manager = map.Map<Manager, ManagerEditView>(unitOfWork.ManagerRepo.GetById(id));
 
-                    return PartialView(client);
+                    return PartialView(manager);
                 }
                 catch
                 {
@@ -89,9 +92,9 @@ namespace WebSales.Controllers
                 {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ManagerEditView, Manager>());
                     var map = new Mapper(config);
-                    var client = map.Map<ManagerEditView, Manager>(obj);
+                    var manager = map.Map<ManagerEditView, Manager>(obj);
 
-                    unitOfWork.ManagerRepo.Update(client);
+                    unitOfWork.ManagerRepo.Update(manager);
                     unitOfWork.Save();
 
                     return Json(new { result = true });

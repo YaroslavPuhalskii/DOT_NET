@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebSales.Models.ManagerIndexView>
+﻿@model PagedList.IPagedList<WebSales.Models.ManagerIndexView>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     bool isValidForAction = (Request.IsAuthenticated && User.IsInRole("Admin"));
@@ -38,3 +41,6 @@ else
 {
     <h2>Database is empty!</h2>
 }
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "data_sellers" }))

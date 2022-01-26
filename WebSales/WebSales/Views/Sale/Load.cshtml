@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebSales.Models.SaleIndexView>
+﻿@model PagedList.IPagedList<WebSales.Models.SaleIndexView>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     var isValidAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
@@ -95,8 +98,11 @@
                 }
             </tbody>
         </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "salesBlock" }))
     </div>
 </div>
+
 
 <script>
     $("#filterBtn").click(() => {

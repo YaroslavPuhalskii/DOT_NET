@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <div id="data_clients"> </div>
+        <div id="data_products"> </div>
     </div>
     <div class="col-sm-5">
         @if (User.IsInRole("Admin"))
@@ -53,7 +53,7 @@
 
         function load() {
             $("#loader").css('display', "display");
-            $("#data_clients").load('@Url.Action("Load", "Product")',
+            $("#data_products").load('@Url.Action("Load", "Product")',
                 function () {
                     $("#loader").css('display', "none");
                 }

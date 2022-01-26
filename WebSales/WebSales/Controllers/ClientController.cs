@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -17,13 +18,15 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public PartialViewResult Load()
+        public PartialViewResult Load(int? page)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientIndexView>());
             var mapper = new Mapper(config);
             var clients = mapper.Map<List<ClientIndexView>>(unitOfWork.ClientRepo.GetAll());
 
-            return PartialView(clients);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return PartialView(clients.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize(Roles = "Admin")]

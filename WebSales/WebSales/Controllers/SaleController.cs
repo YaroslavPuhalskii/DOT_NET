@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public PartialViewResult Load(SaleFilter saleFilter)
+        public PartialViewResult Load(SaleFilter saleFilter,int? page)
         {
             var sales = unitOfWork.SaleRepo.GetAll();
 
@@ -50,7 +51,9 @@ namespace WebSales.Controllers
 
             ViewBag.Filter = new SaleFilter();
 
-            return PartialView(salesView);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return PartialView(salesView.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize(Roles = "Admin")]
