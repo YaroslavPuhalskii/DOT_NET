@@ -8,6 +8,7 @@ using WebSales.DAL;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
 using WebSales.Models;
+using WebSales.Models.Client;
 
 namespace WebSales.Controllers
 {

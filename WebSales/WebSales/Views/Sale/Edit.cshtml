@@ -1,4 +1,4 @@
-﻿@model WebSales.Models.SaleEditView
+﻿@model WebSales.Models.Sale.SaleEditView
 
 @Scripts.Render("~/bundles/jqueryval")
 
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group" id="createForm">
                         @Html.LabelFor(m => m.Sum)
-                        @Html.TextAreaFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
+                        @Html.TextBoxFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
                         @Html.ValidationMessageFor(model => model.Sum)
                     </div>
                     <div class="form-group" id="createForm">
