@@ -20,19 +20,19 @@ namespace WebSales.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Display(Name = "Продавец")]
+        [Display(Name = "Manager name")]
         public string Manager { get; set; }
 
-        [Display(Name = "Клиeнт")]
+        [Display(Name = "Client name")]
         public string Client { get; set; }
 
-        [Display(Name = "Название продукта")]
+        [Display(Name = "Product name")]
         public string Product { get; set; }
 
-        [Display(Name = "Стоимость")]
+        [Display(Name = "Sum")]
         public int Sum { get; set; }
 
-        [Display(Name = "Дата продажи")]
+        [Display(Name = "Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
@@ -43,25 +43,25 @@ namespace WebSales.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Display(Name = "Клиент")]
-        [Required(ErrorMessage = "Выберите клиента")]
+        [Display(Name = "Client name")]
+        [Required(ErrorMessage = "Select client!")]
         public int ClientId { get; set; }
 
-        [Display(Name = "Менеджер")]
-        [Required(ErrorMessage = "Выберите менеджера")]
+        [Display(Name = "Manager name")]
+        [Required(ErrorMessage = "Select manager!")]
         public int ManagerId { get; set; }
 
-        [Display(Name = "Продукт")]
-        [Required(ErrorMessage = "Выберите продукт")]
+        [Display(Name = "Product name")]
+        [Required(ErrorMessage = "Select product!")]
         public int ProductId { get; set; }
 
-        [Display(Name = "Стоимость")]
-        [Required(ErrorMessage = "Введите стоимость")]
-        [Range(0, int.MaxValue, ErrorMessage = "Введите корректные данные")]
+        [Display(Name = "Sum")]
+        [Required(ErrorMessage = "Enter sum!")]
+        [Range(0, int.MaxValue, ErrorMessage = "Enter correct data!")]
         public int Sum { get; set; }
 
-        [Display(Name = "Дата продажи")]
-        [Required(ErrorMessage = "Введите дату продажи")]
+        [Display(Name = "Date")]
+        [Required(ErrorMessage = "Enter Date!")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
@@ -72,25 +72,25 @@ namespace WebSales.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Display(Name = "Менеджер")]
-        [Required(ErrorMessage = "Выберите менеджера")]
+        [Display(Name = "Manager")]
+        [Required(ErrorMessage = "Select manager!")]
         public int ManagerId { get; set; }
 
-        [Display(Name = "Клиент")]
-        [Required(ErrorMessage = "Выберите клиента")]
+        [Display(Name = "Client")]
+        [Required(ErrorMessage = "Select client!")]
         public int ClientId { get; set; }
 
-        [Display(Name = "Продукт")]
-        [Required(ErrorMessage = "Выберите продукт")]
+        [Display(Name = "Product")]
+        [Required(ErrorMessage = "Select product!")]
         public int ProductId { get; set; }
 
-        [Display(Name = "Стоимость")]
-        [Required(ErrorMessage = "Введите стоимость")]
-        [Range(1, int.MaxValue, ErrorMessage = "Введите корректные данные")]
+        [Display(Name = "Sum")]
+        [Required(ErrorMessage = "Enter sum!")]
+        [Range(1, int.MaxValue, ErrorMessage = "Enter correct data!")]
         public int Sum { get; set; }
 
-        [Display(Name = "Дата продажи")]
-        [Required(ErrorMessage = "Введите дату продажи")]
+        [Display(Name = "Date")]
+        [Required(ErrorMessage = "Enter Date!")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
