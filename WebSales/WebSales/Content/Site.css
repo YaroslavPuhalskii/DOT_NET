@@ -22,3 +22,45 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.close {
+    top: 20px;
+    left: 560px;
+    position: fixed;
+}
+
+#createBtn {
+    width: 300px;
+    position: relative;
+    left: 150px
+}
+
+#createForm {
+    width: 300px;
+    position: relative;
+    left: 150px
+}
+
+#updateBtn {
+    width: 300px;
+    position: relative;
+    left: 150px
+}
+
+#editeForm {
+    width: 300px;
+    position: relative;
+    left: 150px
+}
+
+#form_container {
+    margin: 1% auto 1%;
+}
+
+#filterBtn {
+    margin: 1% auto 1%;
+}
+
+.form-inline {
+    margin: 1% auto;
+}

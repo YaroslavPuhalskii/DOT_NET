@@ -1,25 +1,5 @@
 ﻿@model WebSales.Models.ClientCreateView
 
-<style>
-    .close {
-        top: 20px;
-        left: 560px;
-        position: fixed;
-    }
-
-    #createBtn {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-
-    #createForm {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-</style>
-
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -31,7 +11,7 @@
                 @using (Html.BeginForm())
                 {
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     <div class="form-group" id="createForm">
                         @Html.LabelFor(m => m.Name)
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })

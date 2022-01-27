@@ -2,8 +2,10 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WebSales.DAL;
+using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
 using WebSales.Models;
 
@@ -11,7 +13,7 @@ namespace WebSales.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
         public ViewResult Index()
         {
@@ -37,7 +39,7 @@ namespace WebSales.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult Create(ClientCreateView obj)
+        public JsonResult Create(ClientCreateView model)
         {
             if (ModelState.IsValid)
             {
@@ -45,7 +47,7 @@ namespace WebSales.Controllers
                 {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientCreateView, Client>());
                     var mapper = new Mapper(config);
-                    var client = mapper.Map<ClientCreateView, Client>(obj);
+                    var client = mapper.Map<ClientCreateView, Client>(model);
 
                     unitOfWork.ClientRepo.Insert(client);
                     unitOfWork.Save();
@@ -58,7 +60,7 @@ namespace WebSales.Controllers
                 }
             }
 
-            return Json(new { result = false, message = "Invalid model!" });
+            return Json(new { result = false, message = ModelState.Select(x => x.Value.Errors).First() });
         }
 
         [Authorize(Roles = "Admin")]
@@ -85,7 +87,7 @@ namespace WebSales.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult Edit(ClientEditView obj)
+        public JsonResult Edit(ClientEditView model)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +95,7 @@ namespace WebSales.Controllers
                 {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientEditView, Client>());
                     var map = new Mapper(config);
-                    var client = map.Map<ClientEditView, Client>(obj);
+                    var client = map.Map<ClientEditView, Client>(model);
 
                     unitOfWork.ClientRepo.Update(client);
                     unitOfWork.Save();

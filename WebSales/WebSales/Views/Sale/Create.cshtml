@@ -2,26 +2,6 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 
-<style>
-    #createForm {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-
-    .close {
-        top: 20px;
-        left: 560px;
-        position: fixed;
-    }
-
-    #createBtn {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-</style>
-
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -34,30 +14,32 @@
                     <label id="serverError"></label>
                     @Html.ValidationSummary(true)
 
-                    <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ClientId)
-                        @Html.DropDownListFor(m => m.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
-                        @Html.ValidationMessageFor(model => model.ClientId)
-                    </div>
-                    <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ManagerId)
-                        @Html.DropDownListFor(m => m.ManagerId, ViewBag.Managers as SelectList, new { @class = "form-control", @name = "Managers" })
-                        @Html.ValidationMessageFor(model => model.ManagerId)
-                    </div>
-                    <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ProductId)
-                        @Html.DropDownListFor(m => m.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
-                        @Html.ValidationMessageFor(model => model.ProductId)
-                    </div>
-                    <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.Sum)
-                        @Html.TextAreaFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
-                        @Html.ValidationMessageFor(model => model.Sum)
-                    </div>
-                    <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.Date)
-                        @Html.TextAreaFor(m => m.Date, new { @class = "form-control", @name = "Date" })
-                        @Html.ValidationMessageFor(model => model.Date)
+                    <div id="createForm">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ClientId)
+                            @Html.DropDownListFor(m => m.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
+                            @Html.ValidationMessageFor(model => model.ClientId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ManagerId)
+                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.Managers as SelectList, new { @class = "form-control", @name = "Managers" })
+                            @Html.ValidationMessageFor(model => model.ManagerId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ProductId)
+                            @Html.DropDownListFor(m => m.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
+                            @Html.ValidationMessageFor(model => model.ProductId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Sum)
+                            @Html.TextBoxFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
+                            @Html.ValidationMessageFor(model => model.Sum)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Date)
+                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @name = "Date" })
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
                     </div>
                     <label id="serverError" style="color: red;"></label>
                     <input id="createBtn" type="submit" class="btn btn-success" value="Add" />

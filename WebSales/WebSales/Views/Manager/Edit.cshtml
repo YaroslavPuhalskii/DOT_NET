@@ -1,26 +1,6 @@
 ﻿@model WebSales.Models.ManagerEditView
 @Scripts.Render("~/bundles/jqueryval")
 
-<style>
-    .close {
-        top: 20px;
-        left: 560px;
-        position: fixed;
-    }
-
-    #updateBtn {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-
-    #editeForm {
-        width: 300px;
-        position: relative;
-        left: 150px
-    }
-</style>
-
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -32,7 +12,7 @@
                 @using (Html.BeginForm())
                 {
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.Id)
                     <div class="form-group" id="editeForm">
                         @Html.LabelFor(m => m.Name)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebSales.DAL;
+using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
 using WebSales.Models;
 
@@ -12,19 +13,20 @@ namespace WebSales.Controllers
 {
     public class SaleController : Controller
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork unitOfWork = new UnitOfWork();
+
         public ViewResult Index()
         {
             return View();
         }
 
-        public PartialViewResult Load(SaleFilter saleFilter,int? page)
+        public PartialViewResult Load(SaleFilter saleFilter, int? page)
         {
             var sales = unitOfWork.SaleRepo.GetAll();
 
             if (saleFilter.Client != null)
             {
-                sales = sales.Where(x => x.Client.Name == saleFilter.Client).ToList();
+                sales = sales.Where(x => x.Client.Name == saleFilter.Client);
             }
 
             if (saleFilter.Product != null)

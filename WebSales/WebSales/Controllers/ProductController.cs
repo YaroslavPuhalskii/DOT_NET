@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using WebSales.DAL;
+using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
 using WebSales.Models;
 
@@ -11,7 +12,7 @@ namespace WebSales.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
         public ViewResult Index()
         {
