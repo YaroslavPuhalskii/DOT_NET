@@ -9,8 +9,7 @@ namespace WebSales.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Менеджер")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Длина строки от 2 до 50")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
     }
 
@@ -18,9 +17,10 @@ namespace WebSales.Models
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
         [Required]
-        [Display(Name = "Менджер")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Длина строки от 2 до 50")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Length from 2 to 50!")]
         public string Name { get; set; }
     }
 
@@ -30,8 +30,8 @@ namespace WebSales.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Длина строки от 2 до 50")]
-        [Display(Name = "Имя менеджера")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Length from 2 to 50!")]
         public string Name { get; set; }
     }
 }
