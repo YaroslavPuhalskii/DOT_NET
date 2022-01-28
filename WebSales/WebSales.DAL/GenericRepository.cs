@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace WebSales.DAL
 
         private readonly DbSet<T> _dbSet;
 
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public GenericRepository(DbContext context)
         {
             _context = context;
@@ -22,6 +25,7 @@ namespace WebSales.DAL
         {
             if (obj == null)
             {
+                _logger.Error($"Failed to delete : {nameof(obj)} is null!");
                 throw new ArgumentNullException($"{nameof(obj)} is null!");
             }
 
@@ -37,6 +41,7 @@ namespace WebSales.DAL
         {
             if (id == null)
             {
+                _logger.Error($"Failed to delete : {nameof(id)} is null!");
                 throw new ArgumentNullException($"{nameof(id)} is null!");
             }
 
@@ -57,6 +62,7 @@ namespace WebSales.DAL
         {
             if (id == null)
             {
+                _logger.Error($"Failed to get object by id : {nameof(id)} is null!");
                 throw new ArgumentNullException($"{nameof(id)} is null!");
             }
 
@@ -67,6 +73,7 @@ namespace WebSales.DAL
         {
             if (obj == null)
             {
+                _logger.Error($"Failed to insert : {nameof(obj)} is null!");
                 throw new ArgumentNullException($"{nameof(obj)} is null!");
             }
 
@@ -77,6 +84,7 @@ namespace WebSales.DAL
         {
             if (obj == null)
             {
+                _logger.Error($"Failed to update : {nameof(obj)} is null!");
                 throw new ArgumentNullException($"{nameof(obj)} is null!");
             }
 

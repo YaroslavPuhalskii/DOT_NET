@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NLog;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace WebSales.Controllers
 {
     public class SaleController : Controller
     {
+        private readonly IMapper _mapper;
+
         private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
-        private readonly IMapper _mapper;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         private const int _pageSize = 3;
 
@@ -100,10 +103,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when try to add a sale! {ex.Message}");
                     return Json(new { result = false, message = ex.Message });
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
             return Json(new { result = false, message = "Invalid model" });
         }
 
@@ -122,12 +127,14 @@ namespace WebSales.Controllers
 
                     return PartialView(sale);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to get sale by Id! {ex.Message}");
                     return PartialView("~/Views/Shared/Error.cshtml");
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Id less 1!");
             return PartialView("~/Views/Shared/Error.cshtml");
         }
 
@@ -148,27 +155,36 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a sale! {ex.Message}");
                     return Json(new { result = false, message = ex.Message });
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
             return Json(new { result = false, message = "Invalid model" });
         }
 
         [Authorize(Roles = "Admin")]
         public async Task<JsonResult> Delete(int id)
         {
-            try
+            if (id > 0)
             {
-                await unitOfWork.SaleRepo.Delete(id);
-                await unitOfWork.Save();
+                try
+                {
+                    await unitOfWork.SaleRepo.Delete(id);
+                    await unitOfWork.Save();
 
-                return Json(new { result = true });
+                    return Json(new { result = true });
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a sale! {ex.Message}");
+                    return Json(new { result = false, ex.Message });
+                }
             }
-            catch (Exception ex)
-            {
-                return Json(new { result = false, ex.Message });
-            }
+
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Id less 1!");
+            return Json(new { result = false, message = "Id less 1!" });
         }
     }
 }

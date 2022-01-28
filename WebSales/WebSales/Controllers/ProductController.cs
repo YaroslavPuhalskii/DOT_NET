@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using NLog;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
@@ -13,9 +15,11 @@ namespace WebSales.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly IMapper _mapper;
+
         private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
-        private readonly IMapper _mapper;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         private const int _pageSize = 3;
 
@@ -52,25 +56,27 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<JsonResult> Create(ProductCreateView obj)
+        public async Task<JsonResult> Create(ProductCreateView model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var client = _mapper.Map<ProductCreateView, Product>(obj);
+                    var client = _mapper.Map<ProductCreateView, Product>(model);
 
                     unitOfWork.ProductRepo.Insert(client);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when try to add a product! {ex.Message}");
                     return Json(new { result = false, message = "Server error, when try add client!" });
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
             return Json(new { result = false, message = "Invalid model!" });
         }
 
@@ -85,24 +91,26 @@ namespace WebSales.Controllers
 
                     return PartialView(client);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to get product by Id! {ex.Message}");
                     return PartialView("~/Views/Shared/Error.cshtml");
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Id less 1!");
             return PartialView("~/Views/Shared/Error.cshtml");
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<JsonResult> Edit(ProductEditView obj)
+        public async Task<JsonResult> Edit(ProductEditView model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var client = _mapper.Map<ProductEditView, Product>(obj);
+                    var client = _mapper.Map<ProductEditView, Product>(model);
 
                     unitOfWork.ProductRepo.Update(client);
                     await unitOfWork.Save();
@@ -111,10 +119,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a product! {ex.Message}");
                     return Json(new { result = false, message = ex.Message });
                 }
             }
 
+            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
             return Json(new { result = false, message = "Model is invalid" });
         }
 
@@ -132,11 +142,13 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
+                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a product! {ex.Message}");
                     return Json(new { result = true, message = ex.Message });
                 }
             }
 
-            return Json(new { result = false, message = "Id less 0!" });
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Id less 1!");
+            return Json(new { result = false, message = "Id less 1!" });
         }
     }
 }
