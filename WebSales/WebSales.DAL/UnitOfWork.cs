@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
 
@@ -26,9 +27,9 @@ namespace WebSales.DAL
 
         public IGenericRepository<Sale> SaleRepo => _saleRepo = _saleRepo ?? new GenericRepository<Sale>(_context);
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)

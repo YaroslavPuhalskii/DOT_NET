@@ -3,11 +3,11 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
-using WebSales.Models;
 using WebSales.Models.Client;
 
 namespace WebSales.Controllers
@@ -16,20 +16,34 @@ namespace WebSales.Controllers
     {
         private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
+        private readonly IMapper _mapper;
+
+        private const int _pageSize = 3;
+
+        public ClientController()
+        {
+            var config = new MapperConfiguration(cfg => 
+            {
+                cfg.CreateMap<Client, ClientIndexView>();
+                cfg.CreateMap<ClientCreateView, Client>();
+                cfg.CreateMap<Client, ClientEditView>();
+                cfg.CreateMap<ClientEditView, Client>();
+            });
+
+            _mapper = new Mapper(config);
+        }
+
         public ViewResult Index()
         {
             return View();
         }
 
-        public PartialViewResult Load(int? page)
+        public async Task<PartialViewResult> Load(int? page)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientIndexView>());
-            var mapper = new Mapper(config);
-            var clients = mapper.Map<List<ClientIndexView>>(unitOfWork.ClientRepo.GetAll());
+            var clients = _mapper.Map<List<ClientIndexView>>(await unitOfWork.ClientRepo.GetAll());
 
-            int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return PartialView(clients.ToPagedList(pageNumber, pageSize));
+            return PartialView(clients.ToPagedList(pageNumber, _pageSize));
         }
 
         [Authorize(Roles = "Admin")]
@@ -40,18 +54,16 @@ namespace WebSales.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult Create(ClientCreateView model)
+        public async Task<JsonResult> Create(ClientCreateView model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientCreateView, Client>());
-                    var mapper = new Mapper(config);
-                    var client = mapper.Map<ClientCreateView, Client>(model);
+                    var client = _mapper.Map<ClientCreateView, Client>(model);
 
                     unitOfWork.ClientRepo.Insert(client);
-                    unitOfWork.Save();
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }
@@ -65,15 +77,13 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public PartialViewResult Edit(int id)
+        public async Task<PartialViewResult> Edit(int id)
         {
             if (id > 0)
             {
                 try
                 {
-                    var conf = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientEditView>());
-                    var map = new Mapper(conf);
-                    var client = map.Map<Client, ClientEditView>(unitOfWork.ClientRepo.GetById(id));
+                    var client = _mapper.Map<Client, ClientEditView>(await unitOfWork.ClientRepo.GetById(id));
 
                     return PartialView(client);
                 }
@@ -88,18 +98,16 @@ namespace WebSales.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult Edit(ClientEditView model)
+        public async Task<JsonResult> Edit(ClientEditView model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientEditView, Client>());
-                    var map = new Mapper(config);
-                    var client = map.Map<ClientEditView, Client>(model);
+                    var client = _mapper.Map<ClientEditView, Client>(model);
 
                     unitOfWork.ClientRepo.Update(client);
-                    unitOfWork.Save();
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }
@@ -113,14 +121,14 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> Delete(int id)
         {
             if (id > 0)
             {
                 try
                 {
-                    unitOfWork.ClientRepo.Delete(id);
-                    unitOfWork.Save();
+                    await unitOfWork.ClientRepo.Delete(id);
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebSales.DAL.Abstractions
 {
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
 
-        T GetById(object id);
+        Task<T> GetById(object id);
 
         void Insert(T obj);
 
-        void Delete(object id);
+        Task Delete(object id);
 
         void Delete(T obj);
 

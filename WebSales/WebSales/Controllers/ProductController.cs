@@ -2,11 +2,11 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
-using WebSales.Models;
 using WebSales.Models.Product;
 
 namespace WebSales.Controllers
@@ -15,20 +15,34 @@ namespace WebSales.Controllers
     {
         private readonly IUnitOfWork unitOfWork = new UnitOfWork();
 
+        private readonly IMapper _mapper;
+
+        private const int _pageSize = 3;
+
+        public ProductController()
+        {
+            var config = new MapperConfiguration(cfg => 
+            {
+                cfg.CreateMap<Product, ProductIndexView>();
+                cfg.CreateMap<ProductCreateView, Product>();
+                cfg.CreateMap<Product, ProductEditView>();
+                cfg.CreateMap<ProductEditView, Product>();
+            });
+
+            _mapper = new Mapper(config);
+        }
+
         public ViewResult Index()
         {
             return View();
         }
 
-        public PartialViewResult Load(int? page)
+        public async Task<PartialViewResult> Load(int? page)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductIndexView>());
-            var mapper = new Mapper(config);
-            var products = mapper.Map<List<ProductIndexView>>(unitOfWork.ProductRepo.GetAll());
+            var products = _mapper.Map<List<ProductIndexView>>(await unitOfWork.ProductRepo.GetAll());
 
-            int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return PartialView(products.ToPagedList(pageNumber, pageSize));
+            return PartialView(products.ToPagedList(pageNumber, _pageSize));
         }
 
         [HttpGet]
@@ -38,18 +52,16 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public JsonResult Create(ProductCreateView obj)
+        public async Task<JsonResult> Create(ProductCreateView obj)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductCreateView, Product>());
-                    var mapper = new Mapper(config);
-                    var client = mapper.Map<ProductCreateView, Product>(obj);
+                    var client = _mapper.Map<ProductCreateView, Product>(obj);
 
                     unitOfWork.ProductRepo.Insert(client);
-                    unitOfWork.Save();
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }
@@ -63,15 +75,13 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public PartialViewResult Edit(int id)
+        public async Task<PartialViewResult> Edit(int id)
         {
             if (id > 0)
             {
                 try
                 {
-                    var conf = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductEditView>());
-                    var map = new Mapper(conf);
-                    var client = map.Map<Product, ProductEditView>(unitOfWork.ProductRepo.GetById(id));
+                    var client = _mapper.Map<Product, ProductEditView>(await unitOfWork.ProductRepo.GetById(id));
 
                     return PartialView(client);
                 }
@@ -86,18 +96,16 @@ namespace WebSales.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult Edit(ProductEditView obj)
+        public async Task<JsonResult> Edit(ProductEditView obj)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductEditView, Product>());
-                    var map = new Mapper(config);
-                    var client = map.Map<ProductEditView, Product>(obj);
+                    var client = _mapper.Map<ProductEditView, Product>(obj);
 
                     unitOfWork.ProductRepo.Update(client);
-                    unitOfWork.Save();
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }
@@ -111,14 +119,14 @@ namespace WebSales.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> Delete(int id)
         {
             if (id > 0)
             {
                 try
                 {
-                    unitOfWork.ProductRepo.Delete(id);
-                    unitOfWork.Save();
+                    await unitOfWork.ProductRepo.Delete(id);
+                    await unitOfWork.Save();
 
                     return Json(new { result = true });
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WebSales.DAL.Models;
 
 namespace WebSales.DAL.Abstractions
@@ -13,6 +14,6 @@ namespace WebSales.DAL.Abstractions
 
         IGenericRepository<Sale> SaleRepo { get; }
 
-        void Save();
+        Task Save();
     }
 }

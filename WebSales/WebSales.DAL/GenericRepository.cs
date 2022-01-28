@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
+using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 
 namespace WebSales.DAL
@@ -33,14 +33,14 @@ namespace WebSales.DAL
             _dbSet.Remove(obj);
         }
 
-        public void Delete(object id)
+        public async Task Delete(object id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException($"{nameof(id)} is null!");
             }
 
-            T entity = _dbSet.Find(id);
+            T entity = await _dbSet.FindAsync(id);
 
             if (entity != null)
             {
@@ -48,19 +48,19 @@ namespace WebSales.DAL
             }
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public T GetById(object id)
+        public async Task<T> GetById(object id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException($"{nameof(id)} is null!");
             }
 
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
         public void Insert(T obj)
