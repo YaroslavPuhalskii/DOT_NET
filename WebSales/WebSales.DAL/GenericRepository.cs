@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 
@@ -14,6 +15,8 @@ namespace WebSales.DAL
         private readonly DbSet<T> _dbSet;
 
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
+        public DbSet<T> GetDbSet => _dbSet;
 
         public GenericRepository(DbContext context)
         {

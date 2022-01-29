@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
 using WebSales.DAL.Abstractions;
+using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
 using WebSales.Models.Sale;
 
@@ -21,7 +22,7 @@ namespace WebSales.Controllers
 
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        private const int _pageSize = 3;
+        private const int _pageSize = 8;
 
         public SaleController()
         {
@@ -34,6 +35,7 @@ namespace WebSales.Controllers
                 cfg.CreateMap<SaleCreateView, Sale>();
                 cfg.CreateMap<Sale, SaleEditView>();
                 cfg.CreateMap<SaleEditView, Sale>();
+                cfg.CreateMap<SaleFilter, SaleFilterModel>();
             });
 
             _mapper = new Mapper(config);
@@ -46,27 +48,9 @@ namespace WebSales.Controllers
 
         public async Task<PartialViewResult> Load(SaleFilter saleFilter, int? page)
         {
-            var sales = await unitOfWork.SaleRepo.GetAll();
+            var sale = _mapper.Map<SaleFilter, SaleFilterModel>(saleFilter);
 
-            if (saleFilter.Client != null)
-            {
-                sales = sales.Where(x => x.Client.Name == saleFilter.Client);
-            }
-
-            if (saleFilter.Product != null)
-            {
-                sales = sales.Where(x => x.Product.Name == saleFilter.Product);
-            }
-
-            if (saleFilter.Manager != null)
-            {
-                sales = sales.Where(x => x.Manager.Name == saleFilter.Manager);
-            }
-
-            if (saleFilter.Sum > 0)
-            {
-                sales = sales.Where(x => x.Sum == saleFilter.Sum);
-            }
+            var sales = await unitOfWork.GetSaleRepo.GetSalesByFilter(sale);
 
             var salesView = _mapper.Map<IEnumerable<Sale>, List<SaleIndexView>>(sales);
 
@@ -79,15 +63,18 @@ namespace WebSales.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<PartialViewResult> Create()
         {
-            ViewBag.Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name");
-            ViewBag.Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name");
-            ViewBag.Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name");
+            var salesList = new SalesListViewModel()
+            {
+                Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name"),
+                Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name"),
+                Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name")
+            };
 
-            return PartialView();
+            return PartialView(salesList);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<JsonResult> Create(SaleCreateView model)
         {
             if (ModelState.IsValid)
@@ -96,7 +83,7 @@ namespace WebSales.Controllers
                 {
                     var sale = _mapper.Map<SaleCreateView, Sale>(model);
 
-                    unitOfWork.SaleRepo.Insert(sale);
+                    unitOfWork.GetSaleRepo.Insert(sale);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -119,13 +106,21 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    var sale = _mapper.Map<Sale, SaleEditView>(await unitOfWork.SaleRepo.GetById(id));
+                    var sale = _mapper.Map<Sale, SaleEditView>(await unitOfWork.GetSaleRepo.GetById(id));
 
-                    ViewBag.Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name");
-                    ViewBag.Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name");
-                    ViewBag.Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name");
+                    var saleList = new SalesListViewModel()
+                    {
+                        ManagerId = sale.ManagerId,
+                        ClientId = sale.ClientId,
+                        ProductId = sale.ProductId,
+                        Date = sale.Date,
+                        Sum  = sale.Sum,
+                        Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name"),
+                        Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name"),
+                        Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name")
+                    };
 
-                    return PartialView(sale);
+                    return PartialView(saleList);
                 }
                 catch (Exception ex)
                 {
@@ -148,7 +143,7 @@ namespace WebSales.Controllers
                 {
                     var sale = _mapper.Map<SaleEditView, Sale>(model);
 
-                    unitOfWork.SaleRepo.Update(sale);
+                    unitOfWork.GetSaleRepo.Update(sale);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -171,7 +166,7 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    await unitOfWork.SaleRepo.Delete(id);
+                    await unitOfWork.GetSaleRepo.Delete(id);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });

@@ -12,7 +12,7 @@ namespace WebSales.DAL.Abstractions
 
         IGenericRepository<Product> ProductRepo { get; }
 
-        IGenericRepository<Sale> SaleRepo { get; }
+        ISaleRepo GetSaleRepo { get; }
 
         Task Save();
     }

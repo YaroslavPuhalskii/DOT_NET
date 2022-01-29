@@ -78,7 +78,7 @@ namespace WebSales.Controllers
             }
 
             _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
-            return Json(new { result = false, message = ModelState.Select(x => x.Value.Errors).First() });
+            return Json(new { result = false, message = "Invalid model!" });
         }
 
         [Authorize(Roles = "Admin")]

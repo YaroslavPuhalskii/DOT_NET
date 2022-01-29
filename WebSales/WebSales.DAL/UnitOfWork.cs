@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Models;
+using WebSales.DAL.Repositories;
 
 namespace WebSales.DAL
 {
@@ -17,7 +18,7 @@ namespace WebSales.DAL
 
         private IGenericRepository<Product> _productRepo;
 
-        private IGenericRepository<Sale> _saleRepo;
+        private ISaleRepo _saleRepo;
 
         public IGenericRepository<Client> ClientRepo => _clientRepo = _clientRepo ?? new GenericRepository<Client>(_context);
 
@@ -25,7 +26,7 @@ namespace WebSales.DAL
 
         public IGenericRepository<Product> ProductRepo => _productRepo = _productRepo ?? new GenericRepository<Product>(_context);
 
-        public IGenericRepository<Sale> SaleRepo => _saleRepo = _saleRepo ?? new GenericRepository<Sale>(_context);
+        public ISaleRepo GetSaleRepo => _saleRepo = _saleRepo ?? new SaleRepo(_context);
 
         public async Task Save()
         {
