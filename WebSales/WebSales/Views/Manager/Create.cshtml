@@ -13,7 +13,7 @@
                 @using (Html.BeginForm())
                 {
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     <div class="form-group" id="createForm">
                         @Html.LabelFor(m => m.Name)
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })

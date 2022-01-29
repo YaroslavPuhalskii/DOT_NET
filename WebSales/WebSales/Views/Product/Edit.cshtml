@@ -12,7 +12,7 @@
                 @using (Html.BeginForm())
                 {
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.Id)
                     <div class="form-group" id="editeForm">
                         @Html.LabelFor(m => m.Name)
@@ -44,7 +44,7 @@
                     load();
                 }
                 else {
-                    var message = data.message != undefined ? data.message : "Error on server";
+                    var message = result.message != undefined ? result.message : "Error on server";
                     $("#serverError").text(message);
                 }
             }

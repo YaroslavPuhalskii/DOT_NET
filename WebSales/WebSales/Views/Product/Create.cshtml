@@ -7,13 +7,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="nameModalOperation" class="modal-title">Add proudct</h4>
+                <h4 id="nameModalOperation" class="modal-title">Add product</h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm())
                 {
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     <div class="form-group" id="createForm">
                         @Html.LabelFor(m => m.Name)
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })

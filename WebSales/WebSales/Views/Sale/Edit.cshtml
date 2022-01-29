@@ -1,4 +1,4 @@
-﻿@model WebSales.Models.Sale.SaleEditView
+﻿@model WebSales.Models.Sale.SalesListViewModel
 
 @Scripts.Render("~/bundles/jqueryval")
 
@@ -12,23 +12,23 @@
             <div class="modal-body">
                 <form id="saveForm">
                     <label id="serverError"></label>
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.Id)
 
                     <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ManagerId)
-                        @Html.DropDownListFor(m => m.ManagerId, ViewBag.Managers as SelectList, new { @class = "form-control", @name = "Managerss" })
-                        @Html.ValidationMessageFor(model => model.ManagerId)
+                        @Html.LabelFor(m => m.Managers)
+                        @Html.DropDownListFor(m => m.ManagerId, Model.Managers as SelectList, new { @class = "form-control", @name = "Managerss" })
+                        @Html.ValidationMessageFor(model => model.Managers)
                     </div>
                     <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ClientId)
-                        @Html.DropDownListFor(m => m.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
-                        @Html.ValidationMessageFor(model => model.ClientId)
+                        @Html.LabelFor(m => m.Clients)
+                        @Html.DropDownListFor(m => m.ClientId, Model.Clients, new { @class = "form-control", @name = "Clients" })
+                        @Html.ValidationMessageFor(model => model.Clients)
                     </div>
                     <div class="form-group" id="createForm">
-                        @Html.LabelFor(m => m.ProductId)
-                        @Html.DropDownListFor(m => m.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
-                        @Html.ValidationMessageFor(model => model.ProductId)
+                        @Html.LabelFor(m => m.Products)
+                        @Html.DropDownListFor(m => m.ProductId, Model.Products, new { @class = "form-control", @name = "Products" })
+                        @Html.ValidationMessageFor(model => model.Products)
                     </div>
                     <div class="form-group" id="createForm">
                         @Html.LabelFor(m => m.Sum)
@@ -66,8 +66,8 @@
                     load();
                 }
                 else {
-                    var message = data.message != undefined ? data.message : "Error on server";
-                    aler("Невозможно обновить продажу!");
+                    var message = result.message != undefined ? result.message : "Error on server";
+                    $("#serverError").text(message);
                 }
             }
         })

@@ -1,4 +1,4 @@
-﻿@model WebSales.Models.Sale.SaleCreateView
+﻿@model WebSales.Models.Sale.SalesListViewModel
 
 @Scripts.Render("~/bundles/jqueryval")
 
@@ -16,19 +16,19 @@
 
                     <div id="createForm">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ClientId)
-                            @Html.DropDownListFor(m => m.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
-                            @Html.ValidationMessageFor(model => model.ClientId)
+                            @Html.LabelFor(m => m.Clients)
+                            @Html.DropDownListFor(m => m.ClientId, Model.Clients, new { @class = "form-control", @name = "Clients" })
+                            @Html.ValidationMessageFor(model => model.Clients)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ManagerId)
-                            @Html.DropDownListFor(m => m.ManagerId, ViewBag.Managers as SelectList, new { @class = "form-control", @name = "Managers" })
-                            @Html.ValidationMessageFor(model => model.ManagerId)
+                            @Html.LabelFor(m => m.Managers)
+                            @Html.DropDownListFor(m => m.ManagerId, Model.Managers, new { @class = "form-control", @name = "Managers" })
+                            @Html.ValidationMessageFor(model => model.Managers)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ProductId)
-                            @Html.DropDownListFor(m => m.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
-                            @Html.ValidationMessageFor(model => model.ProductId)
+                            @Html.LabelFor(m => m.Products)
+                            @Html.DropDownListFor(m => m.ProductId, Model.Products, new { @class = "form-control", @name = "Products" })
+                            @Html.ValidationMessageFor(model => model.Products)
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(m => m.Sum)
