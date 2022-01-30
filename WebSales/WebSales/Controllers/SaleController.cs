@@ -65,9 +65,9 @@ namespace WebSales.Controllers
         {
             var salesList = new SalesListViewModel()
             {
-                Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name"),
-                Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name"),
-                Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name")
+                Clients = new SelectList(await unitOfWork.GetClientRepo.GetAll(), "Id", "Name"),
+                Products = new SelectList(await unitOfWork.GetProductRepo.GetAll(), "Id", "Name"),
+                Managers = new SelectList(await unitOfWork.GetManagerRepo.GetAll(), "Id", "Name")
             };
 
             return PartialView(salesList);
@@ -115,9 +115,9 @@ namespace WebSales.Controllers
                         ProductId = sale.ProductId,
                         Date = sale.Date,
                         Sum  = sale.Sum,
-                        Clients = new SelectList(await unitOfWork.ClientRepo.GetAll(), "Id", "Name"),
-                        Products = new SelectList(await unitOfWork.ProductRepo.GetAll(), "Id", "Name"),
-                        Managers = new SelectList(await unitOfWork.ManagerRepo.GetAll(), "Id", "Name")
+                        Clients = new SelectList(await unitOfWork.GetClientRepo.GetAll(), "Id", "Name"),
+                        Products = new SelectList(await unitOfWork.GetProductRepo.GetAll(), "Id", "Name"),
+                        Managers = new SelectList(await unitOfWork.GetManagerRepo.GetAll(), "Id", "Name")
                     };
 
                     return PartialView(saleList);

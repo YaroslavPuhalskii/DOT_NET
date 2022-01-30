@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
 using WebSales.DAL.Abstractions;
+using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
 using WebSales.Models.Manager;
 
@@ -21,7 +22,7 @@ namespace WebSales.Controllers
 
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        private const int _pageSize = 3;
+        private const int _pageSize = 8;
 
         public ManagerController()
         {
@@ -31,6 +32,7 @@ namespace WebSales.Controllers
                 cfg.CreateMap<ManagerCreateView, Manager>();
                 cfg.CreateMap<Manager, ManagerEditView>();
                 cfg.CreateMap<ManagerEditView, Manager>();
+                cfg.CreateMap<ManagerFilter, ManagerFilterModel>();
             });
 
             _mapper = new Mapper(config);
@@ -41,12 +43,18 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(int? page)
+        public async Task<PartialViewResult> Load(ManagerFilter managerFilter, int? page)
         {
-            var managers = _mapper.Map<List<ManagerIndexView>>(await unitOfWork.ManagerRepo.GetAll());
+            var filter = _mapper.Map<ManagerFilter, ManagerFilterModel>(managerFilter);
+
+            var managers = await unitOfWork.GetManagerRepo.GetManagersByFilter(filter);
+
+            var managerView = _mapper.Map<IEnumerable<Manager>, List<ManagerIndexView>>(managers);
+
+            ViewBag.Filter = new ManagerFilter();
 
             int pageNumber = (page ?? 1);
-            return PartialView(managers.ToPagedList(pageNumber, _pageSize));
+            return PartialView(managerView.ToPagedList(pageNumber, _pageSize));
         }
 
         [HttpGet]
@@ -64,7 +72,7 @@ namespace WebSales.Controllers
                 {
                     var manager = _mapper.Map<ManagerCreateView, Manager>(model);
 
-                    unitOfWork.ManagerRepo.Insert(manager);
+                    unitOfWork.GetManagerRepo.Insert(manager);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -87,7 +95,7 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    var manager = _mapper.Map<Manager, ManagerEditView>(await unitOfWork.ManagerRepo.GetById(id));
+                    var manager = _mapper.Map<Manager, ManagerEditView>(await unitOfWork.GetManagerRepo.GetById(id));
 
                     return PartialView(manager);
                 }
@@ -112,7 +120,7 @@ namespace WebSales.Controllers
                 {
                     var manager = _mapper.Map<ManagerEditView, Manager>(model);
 
-                    unitOfWork.ManagerRepo.Update(manager);
+                    unitOfWork.GetManagerRepo.Update(manager);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -135,7 +143,7 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    await unitOfWork.ManagerRepo.Delete(id);
+                    await unitOfWork.GetManagerRepo.Delete(id);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });

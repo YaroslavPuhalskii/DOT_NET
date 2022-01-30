@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebSales.DAL;
 using WebSales.DAL.Abstractions;
+using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
 using WebSales.Models.Product;
 
@@ -21,7 +22,7 @@ namespace WebSales.Controllers
 
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        private const int _pageSize = 3;
+        private const int _pageSize = 8;
 
         public ProductController()
         {
@@ -31,6 +32,7 @@ namespace WebSales.Controllers
                 cfg.CreateMap<ProductCreateView, Product>();
                 cfg.CreateMap<Product, ProductEditView>();
                 cfg.CreateMap<ProductEditView, Product>();
+                cfg.CreateMap<ProductFilter, ProductFilterModel>();
             });
 
             _mapper = new Mapper(config);
@@ -41,12 +43,18 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(int? page)
+        public async Task<PartialViewResult> Load(ProductFilter productFilter, int? page)
         {
-            var products = _mapper.Map<List<ProductIndexView>>(await unitOfWork.ProductRepo.GetAll());
+            var filter = _mapper.Map<ProductFilter, ProductFilterModel>(productFilter);
+
+            var products = await unitOfWork.GetProductRepo.GetProductsByFilter(filter);
+
+            var productView = _mapper.Map<IEnumerable<Product>, List<ProductIndexView>>(products);
+
+            ViewBag.Filter = new ProductFilter();
 
             int pageNumber = (page ?? 1);
-            return PartialView(products.ToPagedList(pageNumber, _pageSize));
+            return PartialView(productView.ToPagedList(pageNumber, _pageSize));
         }
 
         [HttpGet]
@@ -64,7 +72,7 @@ namespace WebSales.Controllers
                 {
                     var client = _mapper.Map<ProductCreateView, Product>(model);
 
-                    unitOfWork.ProductRepo.Insert(client);
+                    unitOfWork.GetProductRepo.Insert(client);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -87,7 +95,7 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    var client = _mapper.Map<Product, ProductEditView>(await unitOfWork.ProductRepo.GetById(id));
+                    var client = _mapper.Map<Product, ProductEditView>(await unitOfWork.GetProductRepo.GetById(id));
 
                     return PartialView(client);
                 }
@@ -112,7 +120,7 @@ namespace WebSales.Controllers
                 {
                     var client = _mapper.Map<ProductEditView, Product>(model);
 
-                    unitOfWork.ProductRepo.Update(client);
+                    unitOfWork.GetProductRepo.Update(client);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
@@ -135,7 +143,7 @@ namespace WebSales.Controllers
             {
                 try
                 {
-                    await unitOfWork.ProductRepo.Delete(id);
+                    await unitOfWork.GetProductRepo.Delete(id);
                     await unitOfWork.Save();
 
                     return Json(new { result = true });
