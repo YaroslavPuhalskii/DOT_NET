@@ -1,0 +1,53 @@
+﻿<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<div class="modal fade" id="modalChart" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="nameModalOperation" class="modal-title">Chart Client</h4>
+            </div>
+            <div class="modal-body">
+                <div id="chart_container">
+                    <canvas id="bar_chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#modalChart").ready(() => {
+        $("#modalChart").modal();
+    });
+
+    var repArray = @Html.Raw(Json.Encode(ViewBag.REP));
+        var ages = @Html.Raw(Json.Encode(ViewBag.AGES));
+
+        var ctx = $("#bar_chart");
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ages,
+                datasets: [{
+                    label: "Client age",
+                    data: repArray,
+                    backgroundColor: ["rgba(242,166,54,.5)","rgba(145,65,72,.5)","rgba(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(145,65,72)", "rgb(7425,92)"],
+                    borderWidth:1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+            }
+        });
+</script>

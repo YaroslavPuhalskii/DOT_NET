@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Charts</h2>
+
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" id="chartClient" class="btn btn-default">Client</button>
+    <button type="button" id="chartManager" class="btn btn-default">Manager</button>
+    <button type="button" id="chartProduct" class="btn btn-default">Product</button>
+</div>
+
+<div id="dialog_form"></div>
+
+@section scripts{
+    <script>
+        $("#chartClient").click(() => {
+            $("#dialog_form").load('@Url.Action("ClientCharts", "Charts")');
+        });
+
+        $("#chartManager").click(() => {
+            $("#dialog_form").load('@Url.Action("ManagerCharts", "Charts")');
+        });
+
+        $("#chartProduct").click(() => {
+            $("#dialog_form").load('@Url.Action("ProductCharts", "Charts")');
+        });
+    </script>
+}
