@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
-using WebSales.DAL.Models;
 using WebSales.DAL.Repositories;
 
 namespace WebSales.DAL
@@ -12,19 +11,19 @@ namespace WebSales.DAL
 
         private bool disposedValue;
 
-        private IGenericRepository<Client> _clientRepo;
+        private IClientRepo _clientRepo;
 
-        private IGenericRepository<Manager> _managerRepo;
+        private IManagerRepo _managerRepo;
 
-        private IGenericRepository<Product> _productRepo;
+        private IProductRepo _productRepo;
 
         private ISaleRepo _saleRepo;
 
-        public IGenericRepository<Client> ClientRepo => _clientRepo = _clientRepo ?? new GenericRepository<Client>(_context);
+        public IClientRepo GetClientRepo => _clientRepo = _clientRepo ?? new ClientRepo(_context);
 
-        public IGenericRepository<Manager> ManagerRepo => _managerRepo = _managerRepo ?? new GenericRepository<Manager>(_context);
+        public IManagerRepo GetManagerRepo => _managerRepo = _managerRepo ?? new ManagerRepo(_context);
 
-        public IGenericRepository<Product> ProductRepo => _productRepo = _productRepo ?? new GenericRepository<Product>(_context);
+        public IProductRepo GetProductRepo => _productRepo = _productRepo ?? new ProductRepo(_context);
 
         public ISaleRepo GetSaleRepo => _saleRepo = _saleRepo ?? new SaleRepo(_context);
 

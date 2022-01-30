@@ -1,9 +1,7 @@
-﻿namespace WebSales.DAL.Models
+﻿namespace WebSales.DAL.Filters
 {
-    public class Product
+    public class ProductFilterModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Category { get; set; }

@@ -8,6 +8,6 @@ namespace WebSales.DAL.Models
 
         public string Name { get; set; }
 
-        public ICollection<Sale> Sales { get; set; }
+        public int Age { get; set; }
     }
 }

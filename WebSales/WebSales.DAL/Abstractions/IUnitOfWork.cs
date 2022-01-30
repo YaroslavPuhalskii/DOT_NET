@@ -6,11 +6,11 @@ namespace WebSales.DAL.Abstractions
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Client> ClientRepo { get; }
+        IClientRepo GetClientRepo { get; }
 
-        IGenericRepository<Manager> ManagerRepo { get; }
+        IManagerRepo GetManagerRepo { get; }
 
-        IGenericRepository<Product> ProductRepo { get; }
+        IProductRepo GetProductRepo { get; }
 
         ISaleRepo GetSaleRepo { get; }
 
