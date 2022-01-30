@@ -33,18 +33,18 @@
         }
 
         function deleteSale(id) {
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Delete", "Sale")/' + id,
-            success: function (result) {
-                if (result.result) {
-                    load();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete", "Sale")/' + id,
+                success: function (result) {
+                    if (result.result) {
+                        load();
+                    }
+                    else {
+                        alert("Невозможно удалить продажу");
+                    }
                 }
-                else {
-                    alert("Невозможно удалить продажу");
-                }
-            }
-        });
+            });
         }
 
         function load(data) {

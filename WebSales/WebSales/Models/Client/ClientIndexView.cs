@@ -11,5 +11,9 @@ namespace WebSales.Models.Client
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Name")]
+        public int Age { get; set; }
     }
 }

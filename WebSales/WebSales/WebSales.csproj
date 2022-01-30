@@ -197,14 +197,17 @@
     <Compile Include="Models\AppDbInitializer.cs" />
     <Compile Include="Models\Client\ClientCreateView.cs" />
     <Compile Include="Models\Client\ClientEditView.cs" />
+    <Compile Include="Models\Client\ClientFilter.cs" />
     <Compile Include="Models\Client\ClientIndexView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Manager\ManagerCreateView.cs" />
     <Compile Include="Models\Manager\ManagerEditView.cs" />
+    <Compile Include="Models\Manager\ManagerFilter.cs" />
     <Compile Include="Models\Manager\ManagerIndexView.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product\ProductCreateView.cs" />
     <Compile Include="Models\Product\ProductEditView.cs" />
+    <Compile Include="Models\Product\ProductFilter.cs" />
     <Compile Include="Models\Product\ProductIndexView.cs" />
     <Compile Include="Models\Sale\SaleCreateView.cs" />
     <Compile Include="Models\Sale\SaleEditView.cs" />

@@ -11,5 +11,9 @@ namespace WebSales.Models.Manager
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Age")]
+        public int Age { get; set; }
     }
 }

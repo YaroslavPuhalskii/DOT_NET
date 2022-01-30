@@ -51,9 +51,9 @@
             });
         }
 
-        function load() {
+        function load(data) {
             $("#loader").css('display', "display");
-            $("#data_products").load('@Url.Action("Load", "Product")',
+            $("#data_products").load('@Url.Action("Load", "Product")/?' + data,
                 function () {
                     $("#loader").css('display', "none");
                 }

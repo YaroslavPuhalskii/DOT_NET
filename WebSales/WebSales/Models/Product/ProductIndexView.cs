@@ -11,5 +11,9 @@ namespace WebSales.Models.Product
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Category")]
+        public string Category { get; set; }
     }
 }

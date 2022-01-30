@@ -30,9 +30,9 @@
             load();
         });
 
-        function load() {
+        function load(data) {
             $("#loader").css('display', "display");
-            $("#data_clients").load('@Url.Action("Load", "Client")',
+            $("#data_clients").load('@Url.Action("Load", "Client")/?' + data,
                 function () {
                     $("#loader").css('display', "none");
                 }

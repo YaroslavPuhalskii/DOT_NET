@@ -7,6 +7,35 @@
     bool isValidForAction = (Request.IsAuthenticated && User.IsInRole("Admin"));
 }
 
+
+<div class="mainBtnContainer">
+    <button id="filterBtn" type="button" class="btn btn-success">Filters</button>
+</div>
+
+<div id="form_container" hidden class="col-sm-8">
+    <form id="form_filter">
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Name: </label>
+                @Html.TextBox("Name", ViewBag.Filter.Name as string, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Age: </label>
+                @Html.TextBox("Age", ViewBag.Filter.Age as string, new { @class = "form-control" })
+            </div>
+        </div>
+        <hr />
+        <div id="search_button" class="form-inline">
+            <div class="form-group row">
+                <div class="form-inline">
+                    <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
+                    <button id="cleanBtn" type="submit" class="btn btn-primary">Clean</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 @if (Model.Count() > 0)
 {
     <table class="table table-bordered">
@@ -14,6 +43,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Age</th>
                 @if (isValidForAction)
                 {
                     <th scope="col">Function</th>
@@ -26,6 +56,7 @@
                 <tr>
                     <th scope="row">@seller.Id</th>
                     <td>@seller.Name</td>
+                    <td>@seller.Age</td>
                     @if (isValidForAction)
                     {
                         <td>
@@ -44,3 +75,22 @@ else
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "data_sellers" }))
+
+<script>
+    $("#filterBtn").click(() => {
+        $("#form_container").toggle();
+    })
+
+    $("#searchBtn").click((event) => {
+        event.preventDefault();
+        $("#form_container").toggle();
+        load($("#form_filter").serialize());
+    })
+
+    $("#cleanBtn").click((event) => {
+        event.preventDefault();
+        $("#form_filter :input").each(function () {
+            $(this).val("");
+        })
+    })
+</script>

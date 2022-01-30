@@ -28,9 +28,9 @@
             load();
         });
 
-        function load() {
+        function load(data) {
             $("#loader").css('display', "display");
-            $("#data_sellers").load('@Url.Action("Load", "Manager")',
+            $("#data_sellers").load('@Url.Action("Load", "Manager")/?' + data,
                 function () {
                     $("#loader").css('display', "none");
                 }
