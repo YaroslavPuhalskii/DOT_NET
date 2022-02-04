@@ -4,7 +4,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    var isValidAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
+    var isAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
 }
 
 
@@ -45,7 +45,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Age</th>
-                @if (isValidAdmin)
+                @if (isAdmin)
                 {
                     <th scope="col">Function</th>
                 }
@@ -58,7 +58,7 @@
                     <th scope="row">@c.Id</th>
                     <td>@c.Name</td>
                     <td>@c.Age</td>
-                    @if (isValidAdmin)
+                    @if (isAdmin)
                     {
                         <td>
                             <a href="#" onclick="return openEditForm(@c.Id)">Edit</a> | <a href="#" onclick="return deleteClient(@c.Id)">Delete</a>

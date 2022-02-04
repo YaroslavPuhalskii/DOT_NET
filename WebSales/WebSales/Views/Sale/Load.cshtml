@@ -4,7 +4,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    var isValidAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
+    var isAdmin = (Request.IsAuthenticated && User.IsInRole("Admin"));
 }
 
 <link href="~/Content/bootstrap.css" rel="stylesheet">
@@ -58,7 +58,7 @@
                     <th scope="col">Manager</th>
                     <th scope="col">Price</th>
                     <th scope="col">Date</th>
-                    @if (isValidAdmin)
+                    @if (isAdmin)
                     {
                         <th scope="col">Function</th>
                     }
@@ -67,13 +67,13 @@
             <tbody>
                 @foreach (var sale in Model)
                 {
-                    <tr onclick="editSale(@sale.Id)">
+                    <tr">
                         <td>@sale.Client</td>
                         <td>@sale.Product</td>
                         <td>@sale.Manager</td>
                         <td>@sale.Sum</td>
                         <td>@Html.DisplayFor(m => sale.Date)</td>
-                        @if (isValidAdmin)
+                        @if (isAdmin)
                         {
                             <td>
                                 <a href="#" onclick="return editForm(@sale.Id)">Edit</a> | <a href="#" onclick="return deleteSale(@sale.Id)">Delete</a>

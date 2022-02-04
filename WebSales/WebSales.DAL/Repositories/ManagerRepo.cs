@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace WebSales.DAL.Repositories
 {
     public class ManagerRepo : GenericRepository<Manager>, IManagerRepo
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ManagerRepo(DbContext context) : base(context)
         { }
 
@@ -18,7 +21,8 @@ namespace WebSales.DAL.Repositories
         {
             if (managerFilter == null)
             {
-                throw new ArgumentNullException("");
+                _logger.Error($"{nameof(managerFilter)} can't be null!");
+                throw new ArgumentNullException($"{nameof(managerFilter)} can't be null!");
             }
 
             var managers = await GetAll();

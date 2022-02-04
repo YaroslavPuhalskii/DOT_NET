@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,16 +12,17 @@ namespace WebSales.DAL.Repositories
 {
     public class SaleRepo : GenericRepository<Sale>, ISaleRepo
     {
-        public SaleRepo(DbContext context) : base(context)
-        {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        }
+        public SaleRepo(DbContext context) : base(context)
+        { }
 
         public async Task<IEnumerable<Sale>> GetSalesByFilter(SaleFilterModel saleFilter)
         {
             if (saleFilter == null)
             {
-                throw new ArgumentNullException("");
+                _logger.Error($"{nameof(saleFilter)} can't be null!");
+                throw new ArgumentNullException($"{nameof(saleFilter)} can't be null!");
             }
 
             var sales = await GetAll();

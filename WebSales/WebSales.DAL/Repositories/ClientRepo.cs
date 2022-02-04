@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Filters;
@@ -12,6 +12,8 @@ namespace WebSales.DAL.Repositories
 {
     public class ClientRepo : GenericRepository<Client>, IClientRepo
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ClientRepo(DbContext context) : base(context)
         { }
 
@@ -19,22 +21,23 @@ namespace WebSales.DAL.Repositories
         {
             if (clientFilter == null)
             {
-                throw new ArgumentNullException("");
+                _logger.Error($"{nameof(clientFilter)} can't be null!");
+                throw new ArgumentNullException($"{nameof(clientFilter)} can't be null!");
             }
 
-            var clients = await GetAll();
-
+            var clients = GetDbSet;
+            IQueryable<Client> client = null;
             if (clientFilter.Name != null)
             {
-                clients = clients.Where(x => x.Name == clientFilter.Name);
+                client = clients.Where(x => x.Name == clientFilter.Name);
             }
 
             if (clientFilter.Age > 0)
             {
-                clients = clients.Where(x => x.Age == clientFilter.Age);
+                client = (client ?? clients).Where(x => x.Age == clientFilter.Age);
             }
 
-            return clients;
+            return client.ToList();
         }
     }
 }

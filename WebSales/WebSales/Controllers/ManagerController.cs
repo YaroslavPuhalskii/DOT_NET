@@ -79,12 +79,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when try to add a manager! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when try to add a manager!");
                     return Json(new { result = false, message = "Server error, when try to add a manager!" });
                 }
             }
 
-            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First().First().ErrorMessage}");
             return Json(new { result = false, message = "Invalid model!" });
         }
 
@@ -101,7 +101,7 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to get manager by Id! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when trying to get manager by Id : {id}!");
                     return PartialView("~/Views/Shared/Error.cshtml");
                 }
             }
@@ -127,12 +127,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a manager! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a manager!");
                     return Json(new { result = false, message = ex.Message });
                 }
             }
 
-            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
+            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First().First().ErrorMessage}");
             return Json(new { result = false, message = "Model is invalid" });
         }
 
@@ -150,7 +150,7 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a manager! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a manager!");
                     return Json(new { result = true, message = ex.Message });
                 }
             }

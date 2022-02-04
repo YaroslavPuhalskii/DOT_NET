@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace WebSales.DAL.Repositories
 {
     public class ProductRepo : GenericRepository<Product>, IProductRepo
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public ProductRepo(DbContext context) : base(context)
         { }
 
@@ -18,7 +21,8 @@ namespace WebSales.DAL.Repositories
         {
             if (productFilter == null)
             {
-                throw new ArgumentNullException("");
+                _logger.Error($"{nameof(productFilter)} can't be null!");
+                throw new ArgumentNullException($"{nameof(productFilter)} can't be null!");
             }
 
             var products = await GetAll();

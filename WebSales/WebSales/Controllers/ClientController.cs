@@ -80,12 +80,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when try add client! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when try add client!");
                     return Json(new { result = false, message = "Server error, when try add client!" });
                 }
             }
 
-            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
+            _logger.Error($"{DateTime.Now.ToLongTimeString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First().First().ErrorMessage}");
             return Json(new { result = false, message = "Invalid model!" });
         }
 
@@ -102,7 +102,7 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongDateString()} : Server error, when trying to get client by Id! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongDateString()} : Server error, when trying to get client by Id ({id})!");
                     return PartialView("~/Views/Shared/Error.cshtml");
                 }
             }
@@ -128,12 +128,12 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a client! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when trying to edit a client!");
                     return Json(new { result = false, message = ex.Message });
                 }
             }
 
-            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First()}");
+            _logger.Error($"{DateTime.Now.ToLongDateString()} : Invalid model {nameof(model)}! {ModelState.Select(x => x.Value.Errors).First().First().ErrorMessage}");
             return Json(new { result = false, message = "Model is invalid" });
         }
 
@@ -151,7 +151,7 @@ namespace WebSales.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a client! {ex.Message}");
+                    _logger.Error(ex, $"{DateTime.Now.ToLongTimeString()} : Server error, when trying to delete a client!");
                     return Json(new { result = true, message = ex.Message });
                 }
             }
