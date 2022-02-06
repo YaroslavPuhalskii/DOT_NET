@@ -9,6 +9,7 @@
     <button type="button" id="chartClient" class="btn btn-default">Client</button>
     <button type="button" id="chartManager" class="btn btn-default">Manager</button>
     <button type="button" id="chartProduct" class="btn btn-default">Product</button>
+    <button type="button" id="chartSale" class="btn btn-default">Sale</button>
 </div>
 
 <div id="dialog_form"></div>
@@ -25,6 +26,10 @@
 
         $("#chartProduct").click(() => {
             $("#dialog_form").load('@Url.Action("ProductCharts", "Charts")');
+        });
+
+        $("#chartSale").click(() => {
+            $("#dialog_form").load('@Url.Action("SaleCharts", "Charts")');
         });
     </script>
 }

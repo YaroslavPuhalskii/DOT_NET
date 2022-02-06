@@ -1,4 +1,4 @@
-﻿@model WebSales.Models.Chart.ClientChartModel
+﻿@model WebSales.Models.Chart.SaleChartModel
 
 <script src="~/Scripts/Chart.min.js"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
@@ -9,10 +9,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="nameModalOperation" class="modal-title">Chart Client</h4>
+                <h4 id="nameModalOperation" class="modal-title">Top 3 selling products</h4>
             </div>
             <div class="modal-body">
-                <div id="chart_container">
+                <div id="saleChart_container">
                     <canvas id="bar_chart"></canvas>
                 </div>
             </div>
@@ -25,31 +25,32 @@
         $("#modalChart").modal();
     });
 
-    var repArray = @Html.Raw(Json.Encode(Model.Counts));
-    var ages = @Html.Raw(Json.Encode(Model.Ages));
+    var counts = @Html.Raw(Json.Encode(Model.Count));
+    var names = @Html.Raw(Json.Encode(Model.Name));
 
     var ctx = $("#bar_chart");
     var barChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
+        labels: names,
         data: {
-            labels: ages,
+            labels: names,
             datasets: [{
                 label: "Count",
-                data: repArray,
-                backgroundColor: "rgba(242,166,54,.5)",
+                data: counts,
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
                 borderColor: "rgb(242,166,54)",
                 borderWidth: 1
             }]
         },
         options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
+            cutoutPercentage: 80,
+            animation: {
+                animateScale: true
+            }
         }
     });
 </script>

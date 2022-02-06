@@ -1,4 +1,6 @@
-﻿<script src="~/Scripts/Chart.min.js"></script>
+﻿@model WebSales.Models.Chart.ManagerChartModel
+
+<script src="~/Scripts/Chart.min.js"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 
@@ -23,8 +25,8 @@
         $("#modalChart").modal();
     });
 
-    var repArray = @Html.Raw(Json.Encode(ViewBag.REP));
-        var ages = @Html.Raw(Json.Encode(ViewBag.AGES));
+    var repArray = @Html.Raw(Json.Encode(Model.Counts));
+        var ages = @Html.Raw(Json.Encode(Model.Ages));
 
         var ctx = $("#bar_chart");
         var barChart = new Chart(ctx, {
@@ -32,11 +34,11 @@
             data: {
                 labels: ages,
                 datasets: [{
-                    label: "Manager age",
+                    label: "Count",
                     data: repArray,
-                    backgroundColor: ["rgba(242,166,54,.5)","rgba(145,65,72,.5)","rgba(74,25,92,.5)"],
-                    borderColor: ["rgb(242,166,54)", "rgb(145,65,72)", "rgb(7425,92)"],
-                    borderWidth:1
+                    backgroundColor: "rgba(145,65,72,.5)",
+                    borderColor: "rgb(145,65,72)",
+                    borderWidth: 1
                 }]
             },
             options: {
