@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
@@ -17,7 +16,7 @@ namespace WebSales.DAL.Repositories
         public ManagerRepo(DbContext context) : base(context)
         { }
 
-        public async Task<IEnumerable<Manager>> GetManagersByFilter(ManagerFilterModel managerFilter)
+        public IEnumerable<Manager> GetManagersByFilter(ManagerFilterModel managerFilter)
         {
             if (managerFilter == null)
             {
@@ -25,19 +24,20 @@ namespace WebSales.DAL.Repositories
                 throw new ArgumentNullException($"{nameof(managerFilter)} can't be null!");
             }
 
-            var managers = await GetAll();
+            var dbSet = GetDbSet;
+            IQueryable<Manager> managers = null;
 
             if (managerFilter.Name != null)
             {
-                managers = managers.Where(x => x.Name == managerFilter.Name);
+                managers = dbSet.Where(x => x.Name == managerFilter.Name);
             }
 
             if (managerFilter.Age > 0)
             {
-                managers = managers.Where(x => x.Age == managerFilter.Age);
+                managers = (managers ?? dbSet).Where(x => x.Age == managerFilter.Age);
             }
 
-            return managers;
+            return managers ?? dbSet;
         }
     }
 }

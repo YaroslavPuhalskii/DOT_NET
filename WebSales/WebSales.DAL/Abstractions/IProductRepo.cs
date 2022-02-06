@@ -7,6 +7,6 @@ namespace WebSales.DAL.Abstractions
 {
     public interface IProductRepo : IGenericRepository<Product>
     {
-        Task<IEnumerable<Product>> GetProductsByFilter(ProductFilterModel productFilter);
+        IEnumerable<Product> GetProductsByFilter(ProductFilterModel productFilter);
     }
 }

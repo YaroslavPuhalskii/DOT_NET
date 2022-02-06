@@ -9,5 +9,12 @@ namespace WebSales.DAL.Models
         public string Name { get; set; }
 
         public int Age { get; set; }
+
+        public ICollection<Sale> Sales { get; set; }
+
+        public Manager()
+        {
+            Sales = new HashSet<Sale>();
+        }
     }
 }

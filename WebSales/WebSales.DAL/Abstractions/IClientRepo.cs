@@ -7,6 +7,6 @@ namespace WebSales.DAL.Abstractions
 {
     public interface IClientRepo : IGenericRepository<Client>
     {
-        Task<IEnumerable<Client>> GetClientsByFilter(ClientFilterModel clientFilter);
+        IEnumerable<Client> GetClientsByFilter(ClientFilterModel clientFilter);
     }
 }

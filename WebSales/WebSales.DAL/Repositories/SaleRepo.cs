@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
@@ -17,7 +16,7 @@ namespace WebSales.DAL.Repositories
         public SaleRepo(DbContext context) : base(context)
         { }
 
-        public async Task<IEnumerable<Sale>> GetSalesByFilter(SaleFilterModel saleFilter)
+        public IEnumerable<Sale> GetSalesByFilter(SaleFilterModel saleFilter)
         {
             if (saleFilter == null)
             {
@@ -25,29 +24,30 @@ namespace WebSales.DAL.Repositories
                 throw new ArgumentNullException($"{nameof(saleFilter)} can't be null!");
             }
 
-            var sales = await GetAll();
+            var dbSet = GetDbSet;
+            IQueryable<Sale> sales = null;
 
             if (saleFilter.Client != null)
             {
-                sales =  sales.Where(x => x.Client.Name == saleFilter.Client);
+                sales = dbSet.Where(x => x.Client.Name == saleFilter.Client);
             }
 
             if (saleFilter.Product != null)
             {
-                sales = sales.Where(x => x.Product.Name == saleFilter.Product);
+                sales = (sales ?? dbSet).Where(x => x.Product.Name == saleFilter.Product);
             }
 
             if (saleFilter.Manager != null)
             {
-                sales = sales.Where(x => x.Manager.Name == saleFilter.Manager);
+                sales = (sales ?? dbSet).Where(x => x.Manager.Name == saleFilter.Manager);
             }
 
             if (saleFilter.Sum > 0)
             {
-                sales = sales.Where(x => x.Sum == saleFilter.Sum);
+                sales = (sales ?? dbSet).Where(x => x.Sum == saleFilter.Sum);
             }
 
-            return sales;
+            return sales ?? dbSet;
         }
     }
 }

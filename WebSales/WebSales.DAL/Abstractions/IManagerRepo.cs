@@ -7,6 +7,6 @@ namespace WebSales.DAL.Abstractions
 {
     public interface IManagerRepo : IGenericRepository<Manager>
     {
-        Task<IEnumerable<Manager>> GetManagersByFilter(ManagerFilterModel managerFilter);
+        IEnumerable<Manager> GetManagersByFilter(ManagerFilterModel managerFilter);
     }
 }

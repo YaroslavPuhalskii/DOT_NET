@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using WebSales.DAL.Abstractions;
 using WebSales.DAL.Filters;
 using WebSales.DAL.Models;
@@ -17,7 +16,7 @@ namespace WebSales.DAL.Repositories
         public ClientRepo(DbContext context) : base(context)
         { }
 
-        public async Task<IEnumerable<Client>> GetClientsByFilter(ClientFilterModel clientFilter)
+        public IEnumerable<Client> GetClientsByFilter(ClientFilterModel clientFilter)
         {
             if (clientFilter == null)
             {
@@ -25,19 +24,20 @@ namespace WebSales.DAL.Repositories
                 throw new ArgumentNullException($"{nameof(clientFilter)} can't be null!");
             }
 
-            var clients = GetDbSet;
-            IQueryable<Client> client = null;
+            var dbSet = GetDbSet;
+            IQueryable<Client> clients = null;
+
             if (clientFilter.Name != null)
             {
-                client = clients.Where(x => x.Name == clientFilter.Name);
+                clients = dbSet.Where(x => x.Name == clientFilter.Name);
             }
 
             if (clientFilter.Age > 0)
             {
-                client = (client ?? clients).Where(x => x.Age == clientFilter.Age);
+                clients = (clients ?? dbSet).Where(x => x.Age == clientFilter.Age);
             }
 
-            return client.ToList();
+            return clients ?? dbSet;
         }
     }
 }
