@@ -196,6 +196,10 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
+    <Compile Include="Models\Chart\ClientChartModel.cs" />
+    <Compile Include="Models\Chart\ManagerChartModel.cs" />
+    <Compile Include="Models\Chart\ProductChartModel.cs" />
+    <Compile Include="Models\Chart\SaleChartModel.cs" />
     <Compile Include="Models\Client\ClientCreateView.cs" />
     <Compile Include="Models\Client\ClientEditView.cs" />
     <Compile Include="Models\Client\ClientFilter.cs" />
@@ -312,6 +316,7 @@
     <Content Include="Views\Charts\ClientCharts.cshtml" />
     <Content Include="Views\Charts\ManagerCharts.cshtml" />
     <Content Include="Views\Charts\ProductCharts.cshtml" />
+    <Content Include="Views\Charts\SaleCharts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

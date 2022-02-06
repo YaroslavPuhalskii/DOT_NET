@@ -43,11 +43,11 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(ManagerFilter managerFilter, int? page)
+        public PartialViewResult Load(ManagerFilter managerFilter, int? page)
         {
             var filter = _mapper.Map<ManagerFilter, ManagerFilterModel>(managerFilter);
 
-            var managers = await unitOfWork.GetManagerRepo.GetManagersByFilter(filter);
+            var managers = unitOfWork.GetManagerRepo.GetManagersByFilter(filter);
 
             var managerView = _mapper.Map<IEnumerable<Manager>, List<ManagerIndexView>>(managers);
 

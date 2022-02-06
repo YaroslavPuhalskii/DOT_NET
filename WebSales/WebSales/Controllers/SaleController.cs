@@ -46,11 +46,11 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(SaleFilter saleFilter, int? page)
+        public PartialViewResult Load(SaleFilter saleFilter, int? page)
         {
             var sale = _mapper.Map<SaleFilter, SaleFilterModel>(saleFilter);
 
-            var sales = await unitOfWork.GetSaleRepo.GetSalesByFilter(sale);
+            var sales = unitOfWork.GetSaleRepo.GetSalesByFilter(sale);
 
             var salesView = _mapper.Map<IEnumerable<Sale>, List<SaleIndexView>>(sales);
 

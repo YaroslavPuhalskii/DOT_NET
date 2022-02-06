@@ -13,36 +13,33 @@
                 <form id="saveForm">
                     <label id="serverError"></label>
                     @Html.ValidationSummary(true)
-
-                    <div id="createForm">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Clients)
-                            @Html.DropDownListFor(m => m.ClientId, Model.Clients, new { @class = "form-control", @name = "Clients" })
-                            @Html.ValidationMessageFor(model => model.Clients)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Managers)
-                            @Html.DropDownListFor(m => m.ManagerId, Model.Managers, new { @class = "form-control", @name = "Managers" })
-                            @Html.ValidationMessageFor(model => model.Managers)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Products)
-                            @Html.DropDownListFor(m => m.ProductId, Model.Products, new { @class = "form-control", @name = "Products" })
-                            @Html.ValidationMessageFor(model => model.Products)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Sum)
-                            @Html.TextBoxFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
-                            @Html.ValidationMessageFor(model => model.Sum)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Date)
-                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @name = "Date" })
-                            @Html.ValidationMessageFor(model => model.Date)
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Clients)
+                        @Html.DropDownListFor(m => m.ClientId, Model.Clients, new { @class = "form-control", @name = "Clients" })
+                        @Html.ValidationMessageFor(model => model.Clients)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Managers)
+                        @Html.DropDownListFor(m => m.ManagerId, Model.Managers, new { @class = "form-control", @name = "Managers" })
+                        @Html.ValidationMessageFor(model => model.Managers)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Products)
+                        @Html.DropDownListFor(m => m.ProductId, Model.Products, new { @class = "form-control", @name = "Products" })
+                        @Html.ValidationMessageFor(model => model.Products)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Sum)
+                        @Html.TextBoxFor(m => m.Sum, new { @class = "form-control", @name = "Cost" })
+                        @Html.ValidationMessageFor(model => model.Sum)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Date)
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @name = "Date" })
+                        @Html.ValidationMessageFor(model => model.Date)
                     </div>
                     <label id="serverError" style="color: red;"></label>
-                    <input id="createBtn" type="submit" class="btn btn-success" value="Add" />
+                    <input id="btn" type="submit" class="btn btn-success" value="Add" />
                 </form>
             </div>
         </div>

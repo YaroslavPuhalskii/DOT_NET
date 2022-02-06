@@ -13,20 +13,18 @@
                 <form id="saveForm">
                     <label id="serverError"></label>
                     @Html.ValidationSummary(true)
-                    <div id="createForm">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Name)
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
-                            @Html.ValidationMessageFor(m => m.Name)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Age)
-                            @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @type = "text", @placeholder = "Enter age" })
-                            @Html.ValidationMessageFor(m => m.Age)
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Age)
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @type = "text", @placeholder = "Enter age" })
+                        @Html.ValidationMessageFor(m => m.Age)
                     </div>
                     <label id="serverError" style="color: red;"></label>
-                    <input id="createBtn" type="submit" class="btn btn-success" value="Create" />
+                    <input id="btn" type="submit" class="btn btn-success" value="Create" />
                 </form>
             </div>
         </div>

@@ -43,11 +43,11 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(ClientFilter clientFilter, int? page)
+        public PartialViewResult Load(ClientFilter clientFilter, int? page)
         {
             var filter = _mapper.Map<ClientFilter, ClientFilterModel>(clientFilter);
 
-            var clients = await unitOfWork.GetClientRepo.GetClientsByFilter(filter);
+            var clients = unitOfWork.GetClientRepo.GetClientsByFilter(filter);
 
             var clientView = _mapper.Map<IEnumerable<Client>, List<ClientIndexView>>(clients);
 

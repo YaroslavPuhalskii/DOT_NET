@@ -43,11 +43,11 @@ namespace WebSales.Controllers
             return View();
         }
 
-        public async Task<PartialViewResult> Load(ProductFilter productFilter, int? page)
+        public PartialViewResult Load(ProductFilter productFilter, int? page)
         {
             var filter = _mapper.Map<ProductFilter, ProductFilterModel>(productFilter);
 
-            var products = await unitOfWork.GetProductRepo.GetProductsByFilter(filter);
+            var products = unitOfWork.GetProductRepo.GetProductsByFilter(filter);
 
             var productView = _mapper.Map<IEnumerable<Product>, List<ProductIndexView>>(products);
 

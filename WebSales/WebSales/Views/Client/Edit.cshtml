@@ -14,19 +14,17 @@
                     <label id="serverError"></label>
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(x => x.Id)
-                    <div id="createForm">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Name)
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
-                            @Html.ValidationMessageFor(m => m.Name)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Age)
-                            @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
-                            @Html.ValidationMessageFor(m => m.Age)
-                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                        @Html.ValidationMessageFor(m => m.Name)
                     </div>
-                    <input id="updateBtn" type="submit" class="btn btn-success" value="Update" />
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Age)
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                        @Html.ValidationMessageFor(m => m.Age)
+                    </div>
+                    <input id="btn" type="submit" class="btn btn-success" value="Update" />
                 </form>
             </div>
         </div>
