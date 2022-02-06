@@ -1,2 +1,0 @@
-﻿Folder for managers. 
-The manager at least once a day uploads documents in the ".csv" format here.
