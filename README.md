@@ -1,7 +1,13 @@
-# DOT_NET
-:white_check_mark: Task 0 : [MediaLibraryApplication](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task0/MediaLibrary)    
-:white_check_mark: Task 1 : [Chef](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task1/Chef)    
-:white_check_mark: Task 2 : [TextParser](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task2/TextParser)    
-:white_check_mark: Task 3 : [ATC](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task3/ATC)    
-:white_check_mark: Task 4 : [Sales](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task4/Sales)    
-:black_square_button: Task 5 : [WebSales](https://github.com/YaroslavPuhalskii/DOT_NET/tree/task5/WebSales)   
+# Система отображения статистики продаж.     
+
+Web приложение основанное на ASP.NET MVC, в качестве наполнялки базы может использоваться приложение из предыдущей задачи.      
+
+- приложение читает данные о продажах из базы и отображает их в виде, удобном для анализа. Должны быть созданы контроллеры, представления и модели представлений для каждой сущности. Должны быть реализована возможность фильтрации как минимум по двух свойствам для каждой из сущностей.  
+ 
+- в системе должна присутствовать аутентификация пользователей. Должны существовать две роли – простой пользователь и администратор. Пользователь может только просматривать данные, не имеет права ничего редактировать. Администратор может изменять записи в базе данных.    
+
+- интерфейс для вывода информации продумать и реализовать самостоятельно (приветствуется использование JavaScript фреймфорков). Вывод информации в таблицы должен выполняться с помощью асинхронных AJAX запросов.    
+
+- обеспечить валидацию запросов на стороне клиента и сервера (проверка макс. длины, типов данных, формат даты)     
+
+- желательно построение диаграмм на основании имеющихся данных, оси - произвольные. Виды диаграмм выбрать самостоятельно.
